@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const http = axios.create({
     baseURL: "https://perenual.com/api/"
 });
@@ -15,6 +16,9 @@ export default{
         return http.get('species-list?page=' + nPage + '&key=' + apiKey);
     },
     getPlantDetails(nPlantId){
-        return http.get('species/details/' + nPlantId + '?key=' + apiKey)
-    }
+        return http.get('species/details/' + nPlantId + '?key=' + apiKey);
+    },
+   getIndoorPlants(nPage){
+         return http.get('species-list?page=' + nPage + '&key=' + apiKey + '&indoor=1')
+    },
 }
