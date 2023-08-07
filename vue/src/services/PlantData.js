@@ -4,7 +4,7 @@ const http = axios.create({
     baseURL: "https://perenual.com/api/"
 });
 
-const apiKey = 'sk-NPHb64cdc278bbc211769';
+const apiKey = 'sk-9krg64cea0dfc5fe81776';
 
 
 
