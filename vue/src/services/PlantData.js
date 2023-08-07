@@ -8,6 +8,7 @@ const apiKey = 'sk-cWXs64d07319aced21784';
 
 
 
+
 export default{
 
     getPlantData(nPage){
