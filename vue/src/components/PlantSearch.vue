@@ -11,11 +11,21 @@
             <input type="text" name="watering conditions" id="watering" v-model="filter.watering"/>
         
             <label for="indoorPlants"> Indoor Plants  </label>
-            <input type="checkbox" id="indoorPlants" v-on:change="checkIndoorPlants" v-model="compareIndoorPlantArray">
+            <input type="checkbox" id="indoorPlants" @click="checkIndoorPlants">
 
             <label for="alphabetically"> Sort Alphabetically  </label>
             <input type="checkbox" id="alphabetically" v-model="sortAlphabetically">
         </div>
+
+        <!-- <div v-if="indoorPlants != null" v-for="plant in indoorPlants" v-bind:key="plant.id">
+        <h2>{{indoorPlant.common_name}}</h2>
+        <p>{{indoorPlant.cycle}}</p>
+        <p>{{indoorPlant.watering}}</p>
+        <ul v-for="sunlight in indoorPlant.sunlight" v-bind:key="sunlight">
+            <ol>{{sunlight}}</ol>
+        </ul> -->
+    
+        <!-- </div> -->
     
       <div v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link v-bind:to=" {name: 'plant-detail', params: {id: plant.id}} ">
@@ -28,6 +38,14 @@
             <ol>{{sunlight}}</ol>
         </ul>
       </div>
+      <div id="page arrows">
+          <button id="pageDown" @click="decrementPage()">
+              Previous Page
+          </button>
+        <button id="pageUp" @click="incrementPage()">
+            Next Page
+        </button>
+      </div>
   </div>
 </template>
 
@@ -37,7 +55,9 @@ export default {
     data(){
         return{
             plants: [],
-            indoorPlants:[],
+            plantsCopy: [],
+            indoorPlants: [],
+            pagecounter: 1,
             sortAlphabetically: false,
             filter: {
                 common_name: "",
@@ -48,7 +68,7 @@ export default {
         }
     },
     created(){
-            plantData.getPlantData(2).then(response => {
+            plantData.getPlantData(this.pagecounter).then(response => {
                  this.plants = response.data.data.map(plantData => {
                    return{
                         id: plantData.id,
@@ -60,8 +80,9 @@ export default {
                         indoor: ''
                    }
                 })
-            
+                this.plantsCopy = this.plants
             })
+
     },
     methods:{
         checkThumbnail(default_image){
@@ -72,8 +93,44 @@ export default {
             return default_image;
             
         },
+        incrementPage(){
+            this.pagecounter++;
+            plantData.getPlantData(this.pagecounter).then(response => {
+                 this.plants = response.data.data.map(plantData => {
+                   return{
+                        id: plantData.id,
+                        common_name: plantData.common_name,
+                        cycle: plantData.cycle,
+                        watering: plantData.watering,
+                        sunlight: plantData.sunlight,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail,
+                        indoor: ''
+                   }
+                })
+                })
+                
+            
+        },
+        decrementPage(){
+            if(this.pagecounter > 1){
+                this.pagecounter--;
+                 plantData.getPlantData(this.pagecounter).then(response => {
+                 this.plants = response.data.data.map(plantData => {
+                   return{
+                        id: plantData.id,
+                        common_name: plantData.common_name,
+                        cycle: plantData.cycle,
+                        watering: plantData.watering,
+                        sunlight: plantData.sunlight,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail,
+                        indoor: ''
+                   }
+                })
+                })
+            }
+        },
         checkIndoorPlants(){
-            plantData.getIndoorPlants(1).then(response => {
+            plantData.getIndoorPlants(this.pagecounter).then(response => {
                  this.indoorPlants = response.data.data.map(plantData => {
                    return{
                         id: plantData.id,
@@ -86,7 +143,23 @@ export default {
                 })
             
             })
-        },
+            
+            {
+        //     plantData.getPlantData(this.pagecounter).then(response => {
+        //          this.plants = response.data.data.map(plantData => {
+        //            return{
+        //                 id: plantData.id,
+        //                 common_name: plantData.common_name,
+        //                 cycle: plantData.cycle,
+        //                 watering: plantData.watering,
+        //                 sunlight: plantData.sunlight,
+        //                 thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail,
+        //                 indoor: ''
+        //            }
+        //         })
+        //         })
+            }
+        }
     },
     computed:{
         //  sortedArray: function() {
@@ -114,31 +187,40 @@ export default {
                 filteredPlants = filteredPlants.filter((plant) => 
                 plant.watering.toLowerCase().includes(this.filter.watering.toLocaleLowerCase()))
             }
-
-            // if (this.sortAlphabetically) {
-            //     this.filteredPlants.sort((x, y) => {
-            //         return y.common_name - x.common_name;
-            //     });
-            // }
-
-            return filteredPlants
-        },
-        compareIndoorPlantArray(){
-            this.plants.forEach(element => {
-            this.indoorPlants.forEach(elements => {
-                if(element.id === elements.id){
-                this.element.indoor = "true";
-                } else{
-                    this.element.indoor = "false";
+            if (this.sortAlphabetically) {
+                filteredPlants.sort((a,b) =>
+                a.common_name.localeCompare(b.common_name, undefined, { sensitivity: 'base'}))
+                
                 }
-            })
-            });
-            console.log("indoor plants boolean check")
-            console.log(this.plants)
-            return this.plants
-        }
+               
+                return filteredPlants
+            },
 
-    },
+            
+        },
+        watch: {
+            sortAlphabetically(newValue) {
+                if (newValue){
+                    this.filteredList.sort((a,b) =>
+                    a.common_name.localeCompare(b.common_name, undefined, {sensitivity: 'base'}));
+                } else{
+                    this.sortAlphabetically = false;
+                    plantData.getPlantData(this.pagecounter).then(response => {
+                    this.plants = response.data.data.map(plantData => {
+                   return{
+                        id: plantData.id,
+                        common_name: plantData.common_name,
+                        cycle: plantData.cycle,
+                        watering: plantData.watering,
+                        sunlight: plantData.sunlight,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail,
+                        indoor: ''
+                   }
+                })
+                })
+            }
+            }},
+        
 }
 </script>
 

@@ -43,4 +43,5 @@ export default new Vuex.Store({
       state.activePlant = nPlantId;
     }
   }
+  ////////// USE THIS TO ROUTE /////
 })
