@@ -18,6 +18,7 @@ CREATE TABLE reviews (
 	title varchar(50) NOT NULL,
 	review_detail varchar(300) NOT NULL,
 	rating int NOT NULL,
+    plant_id int NOT NULL,
 
 	CONSTRAINT PK_reviews PRIMARY KEY (review_id),
 	CONSTRAINT FK_reviews FOREIGN KEY (username) REFERENCES users(username)

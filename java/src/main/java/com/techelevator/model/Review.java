@@ -7,18 +7,28 @@ public class Review {
     private String reviewDetail;
     private int rating;
     private int reviewId;
+    private int plantID;
 
 
-    public Review (String username, String title, String reviewDetail, int rating, int reviewId){
+    public Review (String username, String title, String reviewDetail, int rating, int reviewId, int plantID){
         this.username = username;
         this.title = title;
         this.reviewDetail = reviewDetail;
         this.rating = rating;
         this.reviewId = reviewId;
+        this.plantID = plantID;
     }
 
     public Review(){
 
+    }
+
+    public int getPlantID() {
+        return plantID;
+    }
+
+    public void setPlantID(int plantID) {
+        this.plantID = plantID;
     }
 
     public String getUsername() {
