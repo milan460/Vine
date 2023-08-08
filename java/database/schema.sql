@@ -1,6 +1,8 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS users;
+
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -10,4 +12,18 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE reviews (
+	review_id SERIAL,
+	username varchar(50) NOT NULL,
+	title varchar(50) NOT NULL,
+	review_detail varchar(300) NOT NULL,
+	rating int NOT NULL,
+
+	CONSTRAINT PK_reviews PRIMARY KEY (review_id),
+	CONSTRAINT FK_reviews FOREIGN KEY (username) REFERENCES users(username)
+);
+
+
+
 COMMIT TRANSACTION;
+
