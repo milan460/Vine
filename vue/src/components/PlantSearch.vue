@@ -89,17 +89,17 @@ export default {
         },
     },
     computed:{
-         sortedArray: function() {
-            function compare(a, b) {
-            if (a.name < b.name)
-                return -1;
-            if (a.name > b.name)
-                return 1;
-            return 0;
-            }
+        //  sortedArray: function() {
+        //     function compare(a, b) {
+        //     if (a.name < b.name)
+        //         return -1;
+        //     if (a.name > b.name)
+        //         return 1;
+        //     return 0;
+        //     }
 
-            return this.filteredList.sort(compare);
-            },
+          
+        //     },
         filteredList(){
             let filteredPlants = this.plants
             if (this.filter.common_name != ""){
