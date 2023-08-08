@@ -6,6 +6,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import DetailPage from '../views/DetailPageView.vue'
+import SearchPage from '../views/SearchPage.vue'
 
 Vue.use(Router)
 
@@ -62,6 +63,14 @@ const router = new Router({
         requiresAuth: false
       }
     },
+    {
+      path: "/plant/search",
+      name: "plant-search",
+      component: SearchPage,
+      meta: {
+        requiresAuth: false
+      }
+    }
     
     
   ]
