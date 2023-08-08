@@ -6,13 +6,15 @@ public class Review {
     private String title;
     private String reviewDetail;
     private int rating;
+    private int reviewId;
 
 
-    public Review (String username, String title, String reviewDetail, int rating){
+    public Review (String username, String title, String reviewDetail, int rating, int reviewId){
         this.username = username;
         this.title = title;
         this.reviewDetail = reviewDetail;
         this.rating = rating;
+        this.reviewId = reviewId;
     }
 
     public Review(){
@@ -49,5 +51,13 @@ public class Review {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 }
