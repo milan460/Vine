@@ -1,12 +1,8 @@
 <template>
   <div class="review-container">
-<h1>{{reviewObj.title}}</h1>
-<div class ="rating">
-    <img class ="ratingStar" src="../assets/star.png" v-bind:title="reviewObj.rating" v-for="n in reviewObj.rating" v-bind:key="n">
-
-</div>
-<h2>{{reviewObj.username}}</h2>
+<h1 id="title">{{reviewObj.title}} <img class ="ratingStar" src="../assets/star.png" v-bind:title="reviewObj.rating" v-for="n in reviewObj.rating" v-bind:key="n"></h1>
 <p>{{reviewObj.reviewDetail}}</p>
+<h6>{{reviewObj.username}}</h6>
   </div>
 </template>
 
@@ -35,9 +31,19 @@ export default {
 </script>
 
 <style>
-.review-container {
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
+.ratingStar {
+    height: 40px;
+    
 }
+
+#title {
+font-size: 40px;
+
+}
+
+p{
+    font-size: 20px;
+}
+
+
 </style>
