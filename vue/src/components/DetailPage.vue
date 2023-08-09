@@ -20,6 +20,7 @@
       <h2>Description</h2>
       <p>{{ plantObject.description }}</p>
     </div>
+
     <div id="tabs">
       <ul>
         <button @click="showreviews = !showreviews" id="review">Reviews</button>
@@ -27,7 +28,7 @@
         <button id="nursery">Nursery</button>
         <button id="garden">Add to Garden</button>
       </ul>
-    </div>
+    </div> 
     <review-page v-show ="showreviews" id="review" :plantId="currentPlantId"  />
   </div>
 </template>
@@ -112,5 +113,9 @@ export default {
 
 #garden {
   grid-area: garden;
+}
+
+.nav-extended{
+  grid-area: nav;
 }
 </style>
