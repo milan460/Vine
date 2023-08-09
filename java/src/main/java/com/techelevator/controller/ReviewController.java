@@ -37,10 +37,7 @@ public class ReviewController {
     @RequestMapping(path = "/review", method = RequestMethod.POST)
     public Review addReview(@RequestBody Review review, Principal principal){
         review.setUsername(principal.getName());
-<<<<<<< HEAD
 
-=======
->>>>>>> 1a63cbc3e10f8b6ad7da26d33bdecda0fc1e0df3
 
             reviewDao.addReview(review);
 
