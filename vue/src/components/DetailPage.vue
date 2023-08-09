@@ -55,6 +55,8 @@ export default {
       this.plantObject = response.data;
     });
   },
+  mounted(){
+  },
 };
 </script>
 

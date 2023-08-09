@@ -4,21 +4,24 @@
             <label for="common name">common name  </label>
             <input type="text" id="common name" v-model="filter.common_name"/>
 
-            <label for="cycle">cycle  </label>
-            <input type="text" id="cycle" v-model="filter.cycle"/>
+            <button @click="filterToggle"> Filter </button>
 
-            <label for="watering">watering conditions  </label>
-            <input type="text" name="watering conditions" id="watering" v-model="filter.watering"/>
-        
-            <label for="indoorPlants"> Indoor Plants  </label>
-            <input type="checkbox" id="indoorPlants" @change="checkIndoorPlants">
+            <div v-if="filterToggleOn">
+                <label for="cycle">cycle  </label>
+                <input type="text" id="cycle" v-model="filter.cycle"/>
 
-            <label for="outdoorPlants"> Outdoor Plants  </label>
-            <input type="checkbox" id="outdoorPlants" @change="checkOutdoorPlants">
+                <label for="watering">watering conditions  </label>
+                <input type="text" name="watering conditions" id="watering" v-model="filter.watering"/>
+            
+                <label for="indoorPlants"> Indoor Plants  </label>
+                <input type="checkbox" id="indoorPlants" @change="checkIndoorPlants">
 
-            <label for="ediblePlants"> Edible Plants</label>
-            <input type="checkbox" id="ediblePlants" @change="checkEdiblePlants">
+                <label for="outdoorPlants"> Outdoor Plants  </label>
+                <input type="checkbox" id="outdoorPlants" @change="checkOutdoorPlants">
 
+                <label for="ediblePlants"> Edible Plants</label>
+                <input type="checkbox" id="ediblePlants" @change="checkEdiblePlants">
+            </div>
         </div>
     
         <div class="plant-card-container" id="indoorPlants">
@@ -51,6 +54,7 @@ import plantData from '../services/PlantData.js'
 export default {
     data(){
         return{
+            filterToggleOn: false,
             plants: [],
             indoorPlants: [],
             indoorFilterOn: false,
@@ -85,6 +89,9 @@ export default {
 
     },
     methods:{
+        filterToggle(){
+            this.filterToggleOn = !this.filterToggleOn
+        },
         checkThumbnail(default_image){
             if(default_image === null){
                 return "https://perenual.com/storage/species_image/16_acer_griseum/thumbnail/5158906371_ed08a86876_b.jpg"
