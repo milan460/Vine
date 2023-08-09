@@ -16,36 +16,12 @@
             <label for="outdoorPlants"> Outdoor Plants  </label>
             <input type="checkbox" id="outdoorPlants" @change="checkOutdoorPlants">
 
-            <label for="alphabetically"> Sort Alphabetically  </label>
-            <input type="checkbox" id="alphabetically" v-model="sortAlphabetically">
-        </div>
+            <label for="ediblePlants"> Edible Plants</label>
+            <input type="checkbox" id="ediblePlants" @change="checkEdiblePlants">
 
-      
-        <div id="indoorPlants" v-show="indoorFilterOn && !outdoorFilterOn" v-for="plant in filteredList" v-bind:key=" 'I' + plant.id">
-            <router-link v-bind:to=" {name: 'plant-detail', params: {id: plant.id}} ">
-                <img :src="plant.thumbnail" alt="Plant Image">
-            </router-link>
-            <h2>{{plant.common_name}}</h2>
-            <p>{{plant.cycle}}</p>
-            <p>{{plant.watering}}</p>
-            <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
-                <ol>{{sunlight}}</ol>
-            </ul>
-        </div>
-
-        <div id="outdoorPlants" v-show="outdoorFilterOn && !indoorFilterOn" v-for="plant in filteredList" v-bind:key="'O' + plant.id">
-            <router-link v-bind:to=" {name: 'plant-detail', params: {id: plant.id}} ">
-                <img :src="plant.thumbnail" alt="Plant Image">
-            </router-link>
-            <h2>{{plant.common_name}}</h2>
-            <p>{{plant.cycle}}</p>
-            <p>{{plant.watering}}</p>
-            <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
-                <ol>{{sunlight}}</ol>
-            </ul>
         </div>
     
-        <div class="plant-card-container" id="indoorPlants" v-show="!indoorFilterOn && !outdoorFilterOn">
+        <div class="plant-card-container" id="indoorPlants">
       <div class="plant-card" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link v-bind:to=" {name: 'plant-detail', params: {id: plant.id}} ">
             <img :src="plant.thumbnail" alt="Plant Image">
@@ -80,6 +56,8 @@ export default {
             indoorFilterOn: false,
             outdoorPlants: [],
             outdoorFilterOn: false,
+            ediblePlants: [],
+            edibleFilterOn: false,
             pagecounter: 1,
             sortAlphabetically: false,
             filter: {
@@ -163,12 +141,27 @@ export default {
             
             })
             }
+            else if(this.edibleFilterOn && !this.indoorFilterOn && !this.indoorFilterOn){
+                plantData.getEdiblePlants(this.pagecounter, 1).then(response => {
+                 this.ediblePlants = response.data.data.map(plantData => {
+                   return{
+                        id: plantData.id,
+                        common_name: plantData.common_name,
+                        cycle: plantData.cycle,
+                        watering: plantData.watering,
+                        sunlight: plantData.sunlight,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail
+                   }
+                })
+            
+            })
+            }
     
         },
         decrementPage(){
             if(this.pagecounter > 1){
                 this.pagecounter--;
-                 if(!this.indoorFilterOn && !this.outdoorFilterOn){
+                 if(!this.indoorFilterOn && !this.outdoorFilterOn && !this.edibleFilterOn){
                 plantData.getPlantData(this.pagecounter).then(response => {
                     this.plants = response.data.data.map(plantData => {
                     return{
@@ -183,7 +176,7 @@ export default {
                     })
                     })
             }
-            else if(this.indoorFilterOn && !this.outdoorFilterOn){
+            else if(this.indoorFilterOn && !this.outdoorFilterOn && !this.edibleFilterOn){
                 plantData.getIndoorOrOutdoorPlants(this.pagecounter, 1).then(response => {
                  this.indoorPlants = response.data.data.map(plantData => {
                    return{
@@ -199,9 +192,24 @@ export default {
             })
             }
 
-            else if(!this.indoorFilterOn && this.outdoorFilterOn){
+            else if(!this.indoorFilterOn && this.outdoorFilterOn && !this.edibleFilterOn){
                 plantData.getIndoorOrOutdoorPlants(this.pagecounter, 0).then(response => {
                  this.outdoorPlants = response.data.data.map(plantData => {
+                   return{
+                        id: plantData.id,
+                        common_name: plantData.common_name,
+                        cycle: plantData.cycle,
+                        watering: plantData.watering,
+                        sunlight: plantData.sunlight,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail
+                   }
+                })
+            
+            })
+            }
+            else if(!this.indoorFilterOn && !this.indoorFilterOn && this.edibleFilterOn){
+                plantData.getEdiblePlants(this.pagecounter, 1).then(response => {
+                 this.ediblePlants = response.data.data.map(plantData => {
                    return{
                         id: plantData.id,
                         common_name: plantData.common_name,
@@ -250,6 +258,22 @@ export default {
             
             })
             
+        },
+        checkEdiblePlants(){
+            this.edibleFilterOn = !this.edibleFilterOn;
+            plantData.getEdiblePlants(this.pagecounter, 1).then(response => {
+                 this.ediblePlants = response.data.data.map(plantData => {
+                   return{
+                        id: plantData.id,
+                        common_name: plantData.common_name,
+                        cycle: plantData.cycle,
+                        watering: plantData.watering,
+                        sunlight: plantData.sunlight,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail
+                   }
+                })
+            
+            })
         }
     },
     computed:{
@@ -257,13 +281,15 @@ export default {
         filteredList(){
             let filteredPlants
         
-            if(this.indoorFilterOn && !this.outdoorFilterOn){
-                filteredPlants = this.indoorPlants
-            }
-            else if(this.outdoorFilterOn && !this.indoorFilterOn){
+            if(!this.edibleFilterOn && !this.indoorFilterOn && this.outdoorFilterOn){
                 filteredPlants = this.outdoorPlants
             }
-            else {
+            else if(!this.edibleFilterOn &&  !this.outdoorFilterOn && this.indoorFilterOn){
+                filteredPlants = this.indoorPlants
+            }
+            else if(this.edibleFilterOn && !this.outdoorFilterOn && !this.indoorFilterOn){
+                filteredPlants = this.ediblePlants
+            } else{
                 filteredPlants = this.plants
             }
 

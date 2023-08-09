@@ -21,4 +21,7 @@ export default{
    getIndoorOrOutdoorPlants(nPage, numParam){
          return http.get('species-list?page=' + nPage + '&key=' + apiKey + '&indoor=' + numParam)
     },
+    getEdiblePlants(nPage, nParam){
+        return http.get('species-list?page=' + nPage + '&key=' + apiKey + '&edible=' + nParam)
+    }
 }
