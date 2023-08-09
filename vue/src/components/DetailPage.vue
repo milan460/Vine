@@ -22,12 +22,28 @@
     </div>
 
     <div id="tabs">
-      <ul>
+        <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#reviews">Reviews</a></li>
+        <li class="tab col s3"><a class="active" href="#recommendations">Recommendations</a></li>
+        <li class="tab col s3"><a href="#nursery">Nursery</a></li>
+        <li class="tab col s3"><a href="#addToGarden">Add to Garden</a></li>
+      </ul>
+    </div>
+    <div id="test1" class="col s12">Reviews</div>
+    <div id="test2" class="col s12">Recommendations</div>
+    <div id="test3" class="col s12">Nursery</div>
+    <div id="test4" class="col s12">Add to Garden</div>
+  </div>
+        
+        
+      <!-- <ul>
         <button @click="showreviews = !showreviews" id="review">Reviews</button>
         <button id="rec">Recommendations</button>
         <button id="nursery">Nursery</button>
         <button id="garden">Add to Garden</button>
-      </ul>
+      </ul> -->
     </div> 
     <review-page v-show ="showreviews" id="review" :plantId="currentPlantId"  />
   </div>
@@ -36,6 +52,7 @@
 <script>
 import PlantData from "../services/PlantData";
 import ReviewPage from '../components/ReviewPage.vue'
+import M from 'materialize-css'
 export default {
   name: "plant-detail",
   components: {
@@ -55,6 +72,9 @@ export default {
       this.plantObject = response.data;
     });
   },
+  mounted () {
+    M.AutoInit()
+},
 };
 </script>
 

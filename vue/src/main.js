@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 import axios from 'axios'
+import 'materialize-css/dist/css/materialize.min.css'
+// import 'material-design-icons/iconfont/material-icons.css'
 
 Vue.config.productionTip = false
 
