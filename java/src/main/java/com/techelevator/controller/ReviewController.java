@@ -29,7 +29,7 @@ public class ReviewController {
     @RequestMapping(path = "/review", method = RequestMethod.POST)
     public Review addReview(@RequestBody Review review, Principal principal){
         review.setUsername(principal.getName());
-        
+
 
     }
 }
