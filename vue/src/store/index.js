@@ -20,7 +20,8 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    activePlant: 0
+    activePlant: 0,
+    plantsArray: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -43,4 +44,5 @@ export default new Vuex.Store({
       state.activePlant = nPlantId;
     }
   }
+  ////////// USE THIS TO ROUTE /////
 })

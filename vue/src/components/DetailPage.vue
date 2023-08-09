@@ -22,25 +22,30 @@
     </div>
     <div id="tabs">
       <ul>
-        <button id="review">Reviews</button>
+        <button @click="showreviews = !showreviews" id="review">Reviews</button>
         <button id="rec">Recommendations</button>
         <button id="nursery">Nursery</button>
         <button id="garden">Add to Garden</button>
       </ul>
     </div>
+    <review-page v-show ="showreviews" id="review" :plantId="currentPlantId"  />
   </div>
 </template>
 
 <script>
 import PlantData from "../services/PlantData";
-
+import ReviewPage from '../components/ReviewPage.vue'
 export default {
   name: "plant-detail",
+  components: {
+    ReviewPage
+  },
   data() {
     return {
       plantObject: "",
       currentPlantId: 0,
       imageURL: "",
+      showreviews: false,
     };
   },
   created() {
@@ -60,13 +65,16 @@ export default {
     ". header header ."
     ". pic icons ."
     ". description description ."
-    ". tab tab .";
+    ". tab tab ."
+    ". review . .";
+
     grid-template-rows: .3fr .3fr .3fr .3fr;
     grid-template-areas: 
     ". header header ."
     ". pic icons ."
     ". description description ."
     ". tab tab ."
+    ". review review ."
     ;
 }
 

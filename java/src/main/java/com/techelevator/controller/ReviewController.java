@@ -4,11 +4,15 @@ import com.techelevator.dao.ReviewDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
+@CrossOrigin
 @RestController
+@PreAuthorize("isAuthenticated()")
 public class ReviewController {
     @Autowired
     private final ReviewDao reviewDao;
@@ -20,16 +24,44 @@ public class ReviewController {
         this.reviewDao = reviewDao;
         this.userDao = userDao;
     }
+
+    @PreAuthorize("permitAll")
     @RequestMapping(path = "/review/{id}", method = RequestMethod.GET)
-    public Review getReview(@PathVariable int reviewId){
-        Review review = reviewDao.getReview(reviewId);
+    public Review getReview(@PathVariable int id){
+        Review review = reviewDao.getReviewByPlantId(id);
 
         return review;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/review", method = RequestMethod.POST)
     public Review addReview(@RequestBody Review review, Principal principal){
         review.setUsername(principal.getName());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1a63cbc3e10f8b6ad7da26d33bdecda0fc1e0df3
 
+            reviewDao.addReview(review);
+
+        return review;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(path="/review/{id}", method = RequestMethod.PUT)
+    public Review deleteReview (@PathVariable int reviewId, Principal principal){
+        Review review = new Review();
+
+        review.setUsername(principal.getName());
+        reviewDao.deleteReview(reviewId);
+        return review;
+    }
+
+    @PreAuthorize("permitAll")
+    @RequestMapping(path = "/review", method = RequestMethod.GET)
+    public List<Review> listOfReviews(){
+        return reviewDao.listOfReview();
+    }
+
+
 }

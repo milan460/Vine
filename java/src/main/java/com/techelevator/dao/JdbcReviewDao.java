@@ -18,46 +18,51 @@ public class JdbcReviewDao implements ReviewDao {
 
 
     @Override
-    public Review getReview(int reviewId) {
-        String sql = "SELECT username, title, review_detail, rating FROM reviews WHERE review_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, reviewId);
+    public Review getReviewByPlantId(int plantId) {
         Review review = null;
-        if(results.next()){
-            review = mapToRowReview(results);
-        }
+        String sql = "SELECT username, title, review_detail, rating, plant_id FROM reviews WHERE plant_id = ?";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, plantId);
 
+            if(results.next()){
+                review = mapToRowReview(results);
+            }
+        } catch(NullPointerException e) {
+            throw new NullPointerException("Review not found");
+        }
 
         return review;
     }
 
     @Override
     public void addReview(Review review) {
-        String sql = "INSERT INTO reviews (username, title, review_detail, rating) VALUES ('admin', 'Awful', 'idk', 1) RETURNING review_id ";
-        int newReview = jdbcTemplate.queryForObject(sql, int.class, review.getUsername(), review.getTitle(), review.getReviewDetail(), review.getRating());
-        review.setReviewId(newReview);
+        String sql = "INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES (?, ?, ?, ?, ?) RETURNING review_id ";
+        try{
+            int newReview = jdbcTemplate.queryForObject(sql, int.class, review.getUsername(), review.getTitle(), review.getReviewDetail(), review.getRating(), review.getPlantID());
+            review.setReviewId(newReview);
+        } catch (NullPointerException e){
+            throw new NullPointerException("Login to add a Review");
+        }
     }
 
-    @Override
-    public void updateReview(Review review) {
-        String sql = "UPDATE reviews SET username = ?, title = ?, review_detail = ?, rating = ? WHERE review_id = ?";
-        jdbcTemplate.update(sql, review.getUsername(), review.getTitle(), review.getReviewDetail(), review.getRating(), review.getReviewId());
-
-    }
-
-    @Override
-    public Review getRating(Review review) {
-      //Don't know if it's necessary or not
-        return null;
-    }
+//    @Override
+//    public Review getRating(Review review) {
+//      //figure it out
+//        return null;
+//    }
 
     @Override
     public List<Review> listOfReview() {
         List<Review> review = new ArrayList<>();
         String sql = "SELECT username, title, review_detail, rating FROM reviews";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while(results.next()){
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while(results.next()){
             Review review1 = mapToRowReview(results);
             review.add(review1);
+            }
+        } catch (NullPointerException e){
+            throw new NullPointerException("Reviews not found");
         }
         return review;
     }
@@ -65,7 +70,11 @@ public class JdbcReviewDao implements ReviewDao {
     @Override
     public void deleteReview(int reviewId) {
         String sql = "DELETE FROM reviews WHERE review_id = ?";
-        jdbcTemplate.update(sql, reviewId);
+        try{
+            jdbcTemplate.update(sql, reviewId);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Unable to delete the review");
+        }
 
     }
 
@@ -76,6 +85,7 @@ public class JdbcReviewDao implements ReviewDao {
         review.setTitle(sqlRowSet.getString("title"));
         review.setReviewDetail(sqlRowSet.getString("review_detail"));
         review.setRating(sqlRowSet.getInt("rating"));
+        review.setPlantID(sqlRowSet.getInt("plant_id"));
         return review;
     }
 }
