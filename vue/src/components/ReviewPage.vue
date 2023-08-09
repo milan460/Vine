@@ -1,6 +1,10 @@
 <template>
   <div class="review-container">
-<h1>{{reviewObj.title}} {{reviewObj.rating}}</h1>
+<h1>{{reviewObj.title}}</h1>
+<div class ="rating">
+    <img class ="ratingStar" src="../assets/star.png" v-bind:title="reviewObj.rating" v-for="n in reviewObj.rating" v-bind:key="n">
+
+</div>
 <h2>{{reviewObj.username}}</h2>
 <p>{{reviewObj.reviewDetail}}</p>
   </div>
