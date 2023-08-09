@@ -25,15 +25,15 @@ public class ReviewController {
         this.userDao = userDao;
     }
 
-    @PreAuthorize("permitAll")
-    @RequestMapping(path = "/review/{id}", method = RequestMethod.GET)
-    public Review getReview(@PathVariable int id){
-        Review review = reviewDao.getReviewByPlantId(id);
+//    @PreAuthorize("permitAll")
+//    @RequestMapping(path = "/review/{id}", method = RequestMethod.GET)
+//    public Review getReview(@PathVariable int id){
+//        Review review = reviewDao.getReviewByPlantId(id);
+//
+//        return review;
+//    }
 
-        return review;
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(path = "/review", method = RequestMethod.POST)
     public Review addReview(@RequestBody Review review, Principal principal){
         review.setUsername(principal.getName());
@@ -44,7 +44,7 @@ public class ReviewController {
         return review;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(path="/review/{id}", method = RequestMethod.PUT)
     public Review deleteReview (@PathVariable int reviewId, Principal principal){
         Review review = new Review();
@@ -55,9 +55,9 @@ public class ReviewController {
     }
 
     @PreAuthorize("permitAll")
-    @RequestMapping(path = "/review", method = RequestMethod.GET)
-    public List<Review> listOfReviews(){
-        return reviewDao.listOfReview();
+    @RequestMapping(path = "/review/{id}", method = RequestMethod.GET)
+    public List<Review> listOfReviews(@PathVariable int id){
+        return reviewDao.listOfReview(id);
     }
 
 

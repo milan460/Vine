@@ -17,22 +17,22 @@ public class JdbcReviewDao implements ReviewDao {
     }
 
 
-    @Override
-    public Review getReviewByPlantId(int plantId) {
-        Review review = null;
-        String sql = "SELECT username, title, review_detail, rating, plant_id FROM reviews WHERE plant_id = ?";
-        try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, plantId);
-
-            if(results.next()){
-                review = mapToRowReview(results);
-            }
-        } catch(NullPointerException e) {
-            throw new NullPointerException("Review not found");
-        }
-
-        return review;
-    }
+//    @Override
+//    public Review getReviewByPlantId(int plantId) {
+//        Review review = null;
+//        String sql = "SELECT username, title, review_detail, rating, plant_id FROM reviews WHERE plant_id = ?";
+//        try{
+//            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, plantId);
+//
+//            if(results.next()){
+//                review = mapToRowReview(results);
+//            }
+//        } catch(NullPointerException e) {
+//            throw new NullPointerException("Review not found");
+//        }
+//
+//        return review;
+//    }
 
     @Override
     public void addReview(Review review) {
@@ -52,11 +52,11 @@ public class JdbcReviewDao implements ReviewDao {
 //    }
 
     @Override
-    public List<Review> listOfReview() {
+    public List<Review> listOfReview(int plantId) {
         List<Review> review = new ArrayList<>();
-        String sql = "SELECT username, title, review_detail, rating FROM reviews";
+        String sql = "SELECT username, title, review_detail, rating, plant_id, review_id FROM reviews WHERE plant_id= ?";
         try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, plantId);
             while(results.next()){
             Review review1 = mapToRowReview(results);
             review.add(review1);
@@ -86,6 +86,7 @@ public class JdbcReviewDao implements ReviewDao {
         review.setReviewDetail(sqlRowSet.getString("review_detail"));
         review.setRating(sqlRowSet.getInt("rating"));
         review.setPlantID(sqlRowSet.getInt("plant_id"));
+        review.setReviewId(sqlRowSet.getInt("review_id"));
         return review;
     }
 }

@@ -2,9 +2,9 @@ import axios from 'axios';
 
 export default {
 
-  getReview(id) {
-    return axios.get(`/review/${id}`)
-  },
+  // getReview(id) {
+  //   return axios.get(`/review/${id}`)
+  // },
 
   addReview(review) {
     return axios.post('/review', review)
@@ -14,8 +14,8 @@ export default {
       return axios.put('/review/:id', reviewId)
   },
 
-  listOfReview() {
-      return axios.get('/review')
+  listOfReview(id) {
+      return axios.get(`/review/${id}`)
   }
 
 

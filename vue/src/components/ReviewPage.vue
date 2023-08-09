@@ -1,9 +1,11 @@
 <template>
-  <div class="review-container">
-<h1 id="title">{{reviewObj.title}} <img class ="ratingStar" src="../assets/star.png" v-bind:title="reviewObj.rating" v-for="n in reviewObj.rating" v-bind:key="n"></h1>
-<p>{{reviewObj.reviewDetail}}</p>
-<h6>{{reviewObj.username}}</h6>
+<div>
+  <div class="review-container" v-for="review in reviewObj" :key="review.reviewId">
+<h1 id="title">{{review.title}} <img class ="ratingStar" src="../assets/star.png" v-bind:title="review.rating" v-for="n in review.rating" v-bind:key="n"></h1>
+<p>{{review.reviewDetail}}</p>
+<h6>{{review.username}}</h6>
   </div>
+</div>
 </template>
 
 <script>
@@ -14,14 +16,25 @@ export default {
     props: ['plantId'],
     data(){
         return{
-            reviewObj: {},
-            currentReviewId: 0,
+            reviewObj: [
+            ],
+        
             
         }
     },
     created(){
-        ReviewService.getReview(this.plantId).then(response => {
-            this.reviewObj = response.data
+        ReviewService.listOfReview(this.plantId).then(response => {
+            this.reviewObj = response.data.map(reviews => {
+                return {
+                    username: reviews.username,
+                    title: reviews.title,
+                    reviewDetail: reviews.reviewDetail,
+                    rating: reviews.rating,
+                    reviewId: reviews.reviewId,
+                    plantId: reviews.plantID
+                
+                }
+            })
         }).catch(error => {
            alert(error.response.data.message)
 
