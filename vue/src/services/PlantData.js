@@ -18,7 +18,7 @@ export default{
     getPlantDetails(nPlantId){
         return http.get('species/details/' + nPlantId + '?key=' + apiKey);
     },
-   getIndoorPlants(nPage){
-         return http.get('species-list?page=' + nPage + '&key=' + apiKey + '&indoor=1')
+   getIndoorOrOutdoorPlants(nPage, numParam){
+         return http.get('species-list?page=' + nPage + '&key=' + apiKey + '&indoor=' + numParam)
     },
 }
