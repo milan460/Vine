@@ -322,12 +322,6 @@ onload = () => {
   box-sizing: border-box;
 }
 
-#app {
-  display: flex;
-  align-items: flex-start;
-  justify-items: flex-start;
-}
-
 .home {
   display: flex;
   align-items: flex-end;

@@ -12,11 +12,8 @@
     "bootstrap": "^5.3.1",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.9.1",
-<<<<<<< HEAD
-    "vue": "^2.6.12",
-=======
     "vue": "^2.7.14",
->>>>>>> dfd43a7e41184ebb624e92bda7e772ed2618db95
+
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
   },
