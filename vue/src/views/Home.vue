@@ -1,19 +1,19 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
-    
+    <the-body />
   </div>
 </template>
 
 <script>
+import TheBody from "../components/TheBody.vue";
+
 export default {
+  components: {
+    TheBody,
+  },
   name: "home",
-
-
 };
 </script>
 
 <style scoped>
-
 </style>

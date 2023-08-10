@@ -1,39 +1,68 @@
 <template>
-  <div>
+  <div id= "main">
         <div id="filters">
             <label for="common name">common name  </label>
             <input type="text" id="common name" v-model="filter.common_name"/>
 
-            <label for="cycle">cycle  </label>
-            <input type="text" id="cycle" v-model="filter.cycle"/>
+            <button @click="filterToggle"> Filter </button>
 
-            <label for="watering">watering conditions  </label>
-            <input type="text" name="watering conditions" id="watering" v-model="filter.watering"/>
-        
-            <label for="indoorPlants"> Indoor Plants  </label>
-            <input type="checkbox" id="indoorPlants" @change="checkIndoorPlants">
+            <div id="filterCheckbox" v-if="filterToggleOn">
 
-            <label for="outdoorPlants"> Outdoor Plants  </label>
-            <input type="checkbox" id="outdoorPlants" @change="checkOutdoorPlants">
+                <label for="indoorPlants"> Indoor Plants 
+                    <input type="checkbox" class="filled-in" checked="checked" id="indoorPlants" @change="checkIndoorPlants">
+                    <span></span>
+                </label>
+    
 
-            <label for="ediblePlants"> Edible Plants</label>
-            <input type="checkbox" id="ediblePlants" @change="checkEdiblePlants">
+                <label for="outdoorPlants"> Outdoor Plants  
+                    <input type="checkbox" class="filled-in" checked="checked" id="outdoorPlants" @change="checkOutdoorPlants">
+                    <span></span>
+                </label>
 
+                <label for="ediblePlants"> Edible Plants
+                    <input type="checkbox" class="filled-in" checked="checked" id="ediblePlants" @change="checkEdiblePlants">
+                    <span></span>
+                </label>
+            </div>
         </div>
     
-        <div class="plant-card-container" id="indoorPlants">
-      <div class="plant-card" v-for="plant in filteredList" v-bind:key="plant.id">
-        <router-link v-bind:to=" {name: 'plant-detail', params: {id: plant.id}} ">
-            <img :src="plant.thumbnail" alt="Plant Image">
-        </router-link>
-        <h2>{{plant.common_name}}</h2>
-        <p>{{plant.cycle}}</p>
-        <p>{{plant.watering}}</p>
-        <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
-            <ol>{{sunlight}}</ol>
-        </ul>
+
+    <div id="indoorPlants">
+        <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
+
+
+        <div>
+          <router-link
+            :to="{ name: 'plant-detail', params: { id: plant.id } }"
+          >
+            <b-card
+              :title="plant.common_name"
+              v-bind:img-src="plant.thumbnail"
+              alt="Plant Image"
+              img-top
+              tag="article"
+              style="max-width: 20rem"
+              class="mb-2 flex1" 
+            >
+              <b-card-text>
+                <p>{{ plant.cycle }}</p>
+                <p>{{ plant.watering }}</p>
+                <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
+                  <ol>
+                    {{sunlight}}
+                  </ol>
+                </ul>
+              </b-card-text>
+
+              <b-button href="#" variant="primary">Go somewhere</b-button>
+            </b-card>
+          </router-link>
+        </div>
+
       </div>
         </div>
+
+
       <div id="page arrows">
           <button id="pageDown" @click="decrementPage()">
               Previous Page
@@ -51,6 +80,7 @@ import plantData from '../services/PlantData.js'
 export default {
     data(){
         return{
+            filterToggleOn: false,
             plants: [],
             indoorPlants: [],
             indoorFilterOn: false,
@@ -77,17 +107,23 @@ export default {
                         cycle: plantData.cycle,
                         watering: plantData.watering,
                         sunlight: plantData.sunlight,
-                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.medium_url,
                    }
                 })
         
             })
 
     },
+    mounted () {
+
+    },
     methods:{
+        filterToggle(){
+            this.filterToggleOn = !this.filterToggleOn
+        },
         checkThumbnail(default_image){
             if(default_image === null){
-                return "https://perenual.com/storage/species_image/16_acer_griseum/thumbnail/5158906371_ed08a86876_b.jpg"
+                return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg"
             }
             
             return default_image;
@@ -345,19 +381,36 @@ export default {
 </script>
 
 <style>
+#main{
+
+}
+
+.flex1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
  #filters {
     margin-bottom: 20px;
+    margin-left: 20px;
   }
 
-  .plant-card-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns per row */
-    gap: 20px;
-    margin-top: 20px;
+  #filters div {
+      margin-left: 20px
+  }
+
+  #indoorPlants {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    margin: 20px;
+    justify-content: center; */
   }
 
   .plant-card {
     border: 1px solid #ccc;
+    max-width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     box-sizing: border-box;
