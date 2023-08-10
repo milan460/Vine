@@ -22,31 +22,20 @@ export default {
     created(){
         this.fetchReviews();
     },
+    computed: {
+    currentReviewId() {
+      return this.$store.state.currentReviewId;
+    },
+  },
     watch:{
-        // this.$store.state.currentReviewId: {
-
-        // }
-        watchReviewList(changeInValue){
-            if(changeInValue){
-                ReviewService.listOfReview(this.plantId).then(response => {
-            this.reviewObj = response.data.map(reviews => {
-                return {
-                    username: reviews.username,
-                    title: reviews.title,
-                    reviewDetail: reviews.reviewDetail,
-                    rating: reviews.rating,
-                    reviewId: reviews.reviewId,
-                    plantId: reviews.plantID
-                
-                }
-            })
-            })
-            .catch(error => {
-                 alert(error.response.data.message)
-
-                })
-            }
+        currentReviewId: {
+      immediate: true,
+      handler(newReviewId, oldReviewId) {
+        if (newReviewId !== oldReviewId) {
+          this.fetchReviews();
         }
+      },
+    },
     },
     methods:{
         fetchReviews(){
