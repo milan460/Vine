@@ -1,9 +1,9 @@
 <template>
-  <div>
-      <h1>Plants R Us</h1>
-  <b-card title="Card Title" no-body>
+  <div id="main">
+      <h1>Vine <img id="pic" src="../assets/logo.gif"> </h1>
+    <b-card id="nav" title="Card Title" no-body>
     <b-card-header header-tag="nav">
-      <b-nav card-header pills>
+      <b-nav  card-header pills>
         <b-nav-item id = "home" class = "active" active><router-link v-bind:to="{ name: 'home' }">Home</router-link></b-nav-item>
         <b-nav-item id = "home"><router-link v-bind:to=" { name: 'plant-search' } ">Search</router-link></b-nav-item>
         <b-nav-item id = "home"><router-link v-bind:to="{ name: 'login' }" v-if="$store.state.token == ''"
@@ -23,10 +23,25 @@ export default {
 </script>
 
 <style>
+#main{
+ background-color: rgb(206, 245, 206);
+
+}
+
+#pic{
+  height: 13vh;
+}
+
 #home > .active {
   background-color: rgb(157, 238, 157);
 }
-h1{
+#nav{
     background-color: rgb(206, 245, 206);
+
+    border:none;
+}
+
+h1{
+  text-align: center;
 }
 </style>
