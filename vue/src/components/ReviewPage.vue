@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="review-container" v-for="review in reviewObj" :key="review.reviewId">
-<h1 id="title">{{review.title}} <img class ="ratingStar" src="../assets/star.png" v-bind:title="review.rating" v-for="n in review.rating" v-bind:key="n"></h1>
-<p>{{review.reviewDetail}}</p>
-<h6>{{review.username}}</h6>
+    <h1 id="title">{{review.title}} <img class ="ratingStar" src="../assets/star.png" v-bind:title="review.rating" v-for="n in review.rating" v-bind:key="n"></h1>
+    <p>{{review.reviewDetail}}</p>
+    <h6>{{review.username}}</h6>
   </div>
 </div>
 </template>

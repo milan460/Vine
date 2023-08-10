@@ -29,17 +29,26 @@
         <button id="garden">Add to Garden</button>
       </ul>
     </div> 
-    <review-page v-show ="showreviews" id="review" :plantId="currentPlantId"  />
+
+    <div v-show="showreviews" id="review">
+      <review-page :plantId="currentPlantId"/> 
+      <button @click="showAddReviews = !showAddReviews" id="addReview">Add Review</button>
+      <create-review v-show="showAddReviews" id="createReview" :plantId="currentPlantId"></create-review>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import PlantData from "../services/PlantData";
 import ReviewPage from '../components/ReviewPage.vue'
+import CreateReview from './CreateReview.vue';
+
 export default {
   name: "plant-detail",
   components: {
-    ReviewPage
+    ReviewPage,
+    CreateReview
   },
   data() {
     return {
@@ -47,6 +56,7 @@ export default {
       currentPlantId: 0,
       imageURL: "",
       showreviews: false,
+      showAddReviews: false
     };
   },
   created() {
@@ -61,21 +71,24 @@ export default {
 <style>
 .main {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+  grid-template-columns: 0.5fr 1fr 1fr 0.5fr 0.5fr;
   grid-template-areas:
     ". header header ."
     ". pic icons ."
     ". description description ."
     ". tab tab ."
-    ". review . .";
+    ". review . ."
+    ". addReview . .";
 
-    grid-template-rows: .3fr .3fr .3fr .3fr;
+    grid-template-rows: .3fr .3fr .3fr .3fr .3fr;
     grid-template-areas: 
     ". header header ."
     ". pic icons ."
     ". description description ."
     ". tab tab ."
     ". review review ."
+    ". addReview addReview ."
+
     ;
 }
 
@@ -102,6 +115,10 @@ export default {
 
 #review {
   grid-area: review;
+}
+
+#addReview {
+  grid-area: addReview;
 }
 
 #rec {
