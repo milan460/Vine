@@ -70,7 +70,6 @@
 
 <script>
 import plantData from '../services/PlantData.js'
-import M from 'materialize-css'
 export default {
     data(){
         return{
@@ -109,7 +108,7 @@ export default {
 
     },
     mounted () {
-        M.AutoInit()
+
     },
     methods:{
         filterToggle(){
