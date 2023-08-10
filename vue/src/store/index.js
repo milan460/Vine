@@ -21,6 +21,7 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     activePlant: 0,
+    currentReviewId: 0,
     plantsArray: []
   },
   mutations: {
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     SET_ACTIVE_PLANT(state, nPlantId){
       state.activePlant = nPlantId;
     },
+    SET_REVIEW_ID(state, reviewId){
+      state.currentReviewId = reviewId
+    }
     
   }
   ////////// USE THIS TO ROUTE /////

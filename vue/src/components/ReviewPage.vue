@@ -25,32 +25,53 @@
 import ReviewService from "../services/ReviewService";
 
 export default {
-  name: "review-page",
-  props: ["plantId"],
-  data() {
-    return {
-      reviewObj: [],
-    };
+    name: 'review-page',
+    props: ['plantId'],
+    data(){
+        return{
+            reviewObj: [],
+        }
+    },
+    created(){
+        this.fetchReviews();
+    },
+    computed: {
+    currentReviewId() {
+      return this.$store.state.currentReviewId;
+    },
   },
-  created() {
-    ReviewService.listOfReview(this.plantId)
-      .then((response) => {
-        this.reviewObj = response.data.map((reviews) => {
-          return {
-            username: reviews.username,
-            title: reviews.title,
-            reviewDetail: reviews.reviewDetail,
-            rating: reviews.rating,
-            reviewId: reviews.reviewId,
-            plantId: reviews.plantID,
-          };
-        });
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
-  },
-};
+    watch:{
+        currentReviewId: {
+      immediate: true,
+      handler(newReviewId, oldReviewId) {
+        if (newReviewId !== oldReviewId) {
+          this.fetchReviews();
+        }
+      },
+    },
+    },
+    methods:{
+        fetchReviews(){
+            ReviewService.listOfReview(this.plantId).then(response => {
+                this.reviewObj = response.data.map(reviews => {
+                    return {
+                        username: reviews.username,
+                        title: reviews.title,
+                        reviewDetail: reviews.reviewDetail,
+                        rating: reviews.rating,
+                        reviewId: reviews.reviewId,
+                        plantId: reviews.plantID
+                    
+                    }
+                })
+            }).catch(error => {
+            alert(error.response.data.message)
+
+            })
+        }
+
+    }
+}
 </script>
 
 <style>

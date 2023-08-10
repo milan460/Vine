@@ -43,7 +43,6 @@
 import PlantData from "../services/PlantData";
 import ReviewPage from '../components/ReviewPage.vue'
 import CreateReview from './CreateReview.vue';
-
 export default {
   name: "plant-detail",
   components: {
@@ -65,8 +64,6 @@ export default {
       this.plantObject = response.data;
     });
   },
-
-
 };
 </script>
 

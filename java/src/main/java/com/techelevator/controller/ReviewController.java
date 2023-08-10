@@ -60,5 +60,11 @@ public class ReviewController {
         return reviewDao.listOfReview(id);
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(path = "/currentReviewId", method = RequestMethod.GET)
+    public int getRecentReviewId(){
+        return reviewDao.getRecentReviewId();
+    }
+
 
 }
