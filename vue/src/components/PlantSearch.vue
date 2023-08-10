@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id= "main">
         <div id="filters">
             <label for="common name">common name  </label>
             <input type="text" id="common name" v-model="filter.common_name"/>
@@ -28,29 +28,36 @@
     
 
     <div id="indoorPlants">
-        <div v-for="plant in filteredList" v-bind:key="plant.id">
+        <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
 
 
-        <div class='row'>
-            <div class='col s12 m7'>
-                <div class='card '>
-                    <div class='card-image'>
-                        <router-link v-bind:to=" {name: 'plant-detail', params: {id: plant.id}} ">
-                            <img :src="plant.thumbnail" alt="Plant Image">
-                            <span class="card-title">{{plant.common_name}}</span>
-                        </router-link>
-                    </div>
-                    <div class='card-content'>
-                        <p>{{plant.cycle}}</p>
-                        <p>{{plant.watering}}</p>
-                        <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
-                            <ol>{{sunlight}}</ol>
-                        </ul>
-                    </div>    
-                </div>
-            </div>
-      </div>
+        <div>
+          <router-link
+            :to="{ name: 'plant-detail', params: { id: plant.id } }"
+          >
+            <b-card
+              :title="plant.common_name"
+              v-bind:img-src="plant.thumbnail"
+              alt="Plant Image"
+              img-top
+              tag="article"
+              style="max-width: 20rem"
+              class="mb-2 flex1" 
+            >
+              <b-card-text>
+                <p>{{ plant.cycle }}</p>
+                <p>{{ plant.watering }}</p>
+                <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
+                  <ol>
+                    {{sunlight}}
+                  </ol>
+                </ul>
+              </b-card-text>
 
+              <b-button href="#" variant="primary">Go somewhere</b-button>
+            </b-card>
+          </router-link>
+        </div>
 
       </div>
         </div>
@@ -100,7 +107,7 @@ export default {
                         cycle: plantData.cycle,
                         watering: plantData.watering,
                         sunlight: plantData.sunlight,
-                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.thumbnail,
+                        thumbnail: plantData.default_image === null ? this.checkThumbnail(plantData.default_image) : plantData.default_image.medium_url,
                    }
                 })
         
@@ -116,7 +123,7 @@ export default {
         },
         checkThumbnail(default_image){
             if(default_image === null){
-                return "https://perenual.com/storage/species_image/16_acer_griseum/thumbnail/5158906371_ed08a86876_b.jpg"
+                return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg"
             }
             
             return default_image;
@@ -374,6 +381,17 @@ export default {
 </script>
 
 <style>
+#main{
+
+}
+
+.flex1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
  #filters {
     margin-bottom: 20px;
     margin-left: 20px;
@@ -384,10 +402,10 @@ export default {
   }
 
   #indoorPlants {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns per row */
-    gap: 20px;
-    margin-top: 20px;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    margin: 20px;
+    justify-content: center; */
   }
 
   .plant-card {

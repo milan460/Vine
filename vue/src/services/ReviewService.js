@@ -16,6 +16,10 @@ export default {
 
   listOfReview(id) {
       return axios.get(`/review/${id}`)
+  },
+
+  getRecentReviewId(){
+    return axios.get('/currentReviewId')
   }
 
 

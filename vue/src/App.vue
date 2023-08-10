@@ -1,10 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to=" { name: 'plant-search' } ">Search</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-    </div>
+    <the-header />
+    
+
     <router-view />
   </div>
 </template>
+
+
+<script>
+import TheHeader from "../src/components/TheHeader.vue";
+
+export default {
+  components: {
+    TheHeader,
+
+  },
+  method: {
+    pillButton() {
+      document.getElementsByClassName("active").onclick = function jsFunc() {
+        document.getElementsByClassName("active").style.backgroundColor =
+          "Purple";
+      };
+    },
+  },
+};
+</script>
+
+<style scoped>
+
+</style>

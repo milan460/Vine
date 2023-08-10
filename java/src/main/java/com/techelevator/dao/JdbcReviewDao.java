@@ -78,6 +78,25 @@ public class JdbcReviewDao implements ReviewDao {
 
     }
 
+    @Override
+    public int getRecentReviewId() {
+        int reviewId = 0;
+        String sql = "SELECT review_id FROM reviews\n" +
+                "ORDER BY review_id DESC\n" +
+                "LIMIT 1";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            if(results.next()){
+                reviewId = results.getInt("review_id");
+            }
+
+            }
+        catch (NullPointerException e) {
+            throw new NullPointerException("Unable to get recent review");
+        }
+        return reviewId;
+    }
+
     private Review mapToRowReview(SqlRowSet sqlRowSet){
         Review review = new Review();
 
