@@ -1,15 +1,28 @@
 <template>
-<div>
-  <div class="review-container" v-for="review in reviewObj" :key="review.reviewId">
-    <h1 id="title">{{review.title}} <img class ="ratingStar" src="../assets/star.png" v-bind:title="review.rating" v-for="n in review.rating" v-bind:key="n"></h1>
-    <p>{{review.reviewDetail}}</p>
-    <h6>{{review.username}}</h6>
+  <div>
+    <div
+      class="review-container"
+      v-for="review in reviewObj"
+      :key="review.reviewId"
+    >
+      <h1 id="title">
+        {{ review.title }}
+        <img
+          class="ratingStar"
+          src="../assets/leaf.png"
+          v-bind:title="review.rating"
+          v-for="n in review.rating"
+          v-bind:key="n"
+        />
+      </h1>
+      <p>{{ review.reviewDetail }}</p>
+      <h6>{{ review.username }}</h6>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import ReviewService from '../services/ReviewService';
+import ReviewService from "../services/ReviewService";
 
 export default {
     name: 'review-page',
@@ -63,18 +76,14 @@ export default {
 
 <style>
 .ratingStar {
-    height: 40px;
-    
+  height: 40px;
 }
 
 #title {
-font-size: 40px;
-
+  font-size: 40px;
 }
 
-p{
-    font-size: 20px;
+p {
+  font-size: 20px;
 }
-
-
 </style>
