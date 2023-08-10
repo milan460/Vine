@@ -13,7 +13,8 @@
 
         </div>
         <div>
-            <button type="submit" @click="submitReview(); setCurrentReviewId();">Submit</button>
+            <button type="submit" @click="submitReview(); setCurrentReviewId(); resetForm();">Submit</button>
+            <button type="cancel" @click="resetForm();">Cancel</button>
         </div>
     </form>
 </template>
@@ -21,9 +22,11 @@
 <script>
 import ReviewService from '../services/ReviewService'
 export default {
-    props:['plantId'],
+
+    props:['plantId', 'showTag'],
     data(){
         return {
+            showAddForm: false,
             review: {
                 username: this.$store.state.user.username,
                 title: '',
@@ -36,7 +39,8 @@ export default {
     computed:{
         reviewId(){
             return this.$store.state.currentReviewId
-        }
+        },
+       
     },
     methods:{
         setCurrentReviewId(){
@@ -49,6 +53,12 @@ export default {
             .catch(error => {
                 alert(error.response.data.message)
             })
+        },
+        resetForm(){
+            this.review.title = '',
+            this.review.reviewDetail = '',
+            this.review.rating = '',
+            this.$emit('form-submitted')
         },
        submitReview(){
            console.log("this is the review Id before")

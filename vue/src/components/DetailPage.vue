@@ -32,8 +32,8 @@
 
     <div v-show="showreviews" id="review">
       <review-page :plantId="currentPlantId"/> 
-      <button @click="showAddReviews = !showAddReviews" id="addReview">Add Review</button>
-      <create-review v-show="showAddReviews" id="createReview" :plantId="currentPlantId"></create-review>
+      <button @click="showForm = !showForm" id="addReview">Add Review</button>
+      <create-review @form-submitted="handleFormSubmitted" :show-tag="showForm" v-show="showForm" id="createReview" :plantId="currentPlantId" ></create-review>
     </div>
     
   </div>
@@ -45,6 +45,7 @@ import ReviewPage from '../components/ReviewPage.vue'
 import CreateReview from './CreateReview.vue';
 export default {
   name: "plant-detail",
+ 
   components: {
     ReviewPage,
     CreateReview
@@ -55,7 +56,8 @@ export default {
       currentPlantId: 0,
       imageURL: "",
       showreviews: false,
-      showAddReviews: false
+      showAddReviews: false,
+      showForm: false
     };
   },
   created() {
@@ -64,6 +66,14 @@ export default {
       this.plantObject = response.data;
     });
   },
+  methods:{
+    closeForm(){
+      this.closeForm = false
+    },
+    handleFormSubmitted(){
+      this.showForm = false;
+    }
+  }
 };
 </script>
 
