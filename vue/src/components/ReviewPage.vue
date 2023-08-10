@@ -16,14 +16,19 @@ export default {
     props: ['plantId'],
     data(){
         return{
-            reviewObj: [
-            ],
-        
-            
+            reviewObj: [],
         }
     },
     created(){
-        ReviewService.listOfReview(this.plantId).then(response => {
+        this.fetchReviews();
+    },
+    watch:{
+        // this.$store.state.currentReviewId: {
+
+        // }
+        watchReviewList(changeInValue){
+            if(changeInValue){
+                ReviewService.listOfReview(this.plantId).then(response => {
             this.reviewObj = response.data.map(reviews => {
                 return {
                     username: reviews.username,
@@ -35,10 +40,34 @@ export default {
                 
                 }
             })
-        }).catch(error => {
-           alert(error.response.data.message)
+            })
+            .catch(error => {
+                 alert(error.response.data.message)
 
-        })
+                })
+            }
+        }
+    },
+    methods:{
+        fetchReviews(){
+            ReviewService.listOfReview(this.plantId).then(response => {
+                this.reviewObj = response.data.map(reviews => {
+                    return {
+                        username: reviews.username,
+                        title: reviews.title,
+                        reviewDetail: reviews.reviewDetail,
+                        rating: reviews.rating,
+                        reviewId: reviews.reviewId,
+                        plantId: reviews.plantID
+                    
+                    }
+                })
+            }).catch(error => {
+            alert(error.response.data.message)
+
+            })
+        }
+
     }
 }
 </script>

@@ -12,6 +12,8 @@ public interface ReviewDao {
     List<Review> listOfReview(int plantId);
     void deleteReview (int reviewId);
 
+    int getRecentReviewId();
+
 
 
 
