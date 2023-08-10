@@ -36,7 +36,6 @@
 <script>
 import PlantData from "../services/PlantData";
 import ReviewPage from '../components/ReviewPage.vue'
-import M from 'materialize-css'
 export default {
   name: "plant-detail",
   components: {
@@ -56,9 +55,6 @@ export default {
       this.plantObject = response.data;
     });
   },
-  mounted () {
-    M.AutoInit()
-},
 };
 </script>
 
