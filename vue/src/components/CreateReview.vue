@@ -13,7 +13,7 @@
 
         </div>
         <div>
-            <button type="submit" @click="submitReview">Submit</button>
+            <button type="submit" @click="submitReview(); setCurrentReviewId();">Submit</button>
         </div>
     </form>
 </template>
@@ -34,6 +34,21 @@ export default {
         }
     },
     methods:{
+
+        setCurrentReviewId(){
+            ReviewService.getRecentReviewId().then(response => {
+                if(response.status === 200){
+                    this.$store.commit('SET_REVIEW_ID', response.data)
+
+                }
+
+            })
+            .catch(error => {
+                alert(error.response.data.message)
+            })
+        },
+
+
        submitReview(){
            console.log("this is the review Id before")
            console.log(this.$store.state.currentReviewId)
@@ -51,15 +66,11 @@ export default {
             console.log(this.$store.state.currentReviewId)
         },
 
-        setCurrentReviewId(){
-            ReviewService.getRecentReviewId().then(response => {
-                if(response.status === 200){
-                    this.$store.commit('SET_REVIEW_ID', response.data)
-                }
-            })
-            .catch(error => {
-                alert(error.response.data.message)
-            })
+        
+    },
+    computed:{
+        ReviewId(){
+            return this.$store.state.currentReviewId
         }
     }
 }
