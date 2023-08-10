@@ -9,7 +9,7 @@
         {{ review.title }}
         <img
           class="ratingStar"
-          src="../assets/star.png"
+          src="../assets/leaf.png"
           v-bind:title="review.rating"
           v-for="n in review.rating"
           v-bind:key="n"
@@ -25,18 +25,23 @@
 import ReviewService from "../services/ReviewService";
 
 export default {
-  name: "review-page",
-  props: ["plantId"],
-  data() {
-    return {
-      reviewObj: [],
-    };
+    name: 'review-page',
+    props: ['plantId'],
+    data(){
+        return{
+            reviewObj: [],
+        }
+    },
+    created(){
+        this.fetchReviews();
+    },
+    computed: {
+    currentReviewId() {
+      return this.$store.state.currentReviewId;
+    },
   },
-  created() {
-    this.fetchReviews();
-  },
-  watch: {
-    currentReviewId: {
+    watch:{
+        currentReviewId: {
       immediate: true,
       handler(newReviewId, oldReviewId) {
         if (newReviewId !== oldReviewId) {
@@ -44,33 +49,29 @@ export default {
         }
       },
     },
-  },
-  methods: {
-    fetchReviews() {
-      ReviewService.listOfReview(this.plantId)
-        .then((response) => {
-          this.reviewObj = response.data.map((reviews) => {
-            return {
-              username: reviews.username,
-              title: reviews.title,
-              reviewDetail: reviews.reviewDetail,
-              rating: reviews.rating,
-              reviewId: reviews.reviewId,
-              plantId: reviews.plantID,
-            };
-          });
-        })
-        .catch((error) => {
-          alert(error.response.data.message);
-        });
     },
-  },
-  computed: {
-    currentReviewId() {
-      return this.$store.state.currentReviewId;
-    },
-  },
-};
+    methods:{
+        fetchReviews(){
+            ReviewService.listOfReview(this.plantId).then(response => {
+                this.reviewObj = response.data.map(reviews => {
+                    return {
+                        username: reviews.username,
+                        title: reviews.title,
+                        reviewDetail: reviews.reviewDetail,
+                        rating: reviews.rating,
+                        reviewId: reviews.reviewId,
+                        plantId: reviews.plantID
+                    
+                    }
+                })
+            }).catch(error => {
+            alert(error.response.data.message)
+
+            })
+        }
+
+    }
+}
 </script>
 
 <style>

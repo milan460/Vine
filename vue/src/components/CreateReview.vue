@@ -13,7 +13,8 @@
 
         </div>
         <div>
-            <button type="submit" @click="submitReview(); setCurrentReviewId();">Submit</button>
+            <button type="submit" @click="submitReview(); setCurrentReviewId(); resetForm();">Submit</button>
+            <button type="cancel" @click="resetForm();">Cancel</button>
         </div>
     </form>
 </template>
@@ -21,9 +22,11 @@
 <script>
 import ReviewService from '../services/ReviewService'
 export default {
-    props:['plantId'],
+
+    props:['plantId', 'showTag'],
     data(){
         return {
+            showAddForm: false,
             review: {
                 username: this.$store.state.user.username,
                 title: '',
@@ -33,22 +36,30 @@ export default {
             }
         }
     },
+    computed:{
+        reviewId(){
+            return this.$store.state.currentReviewId
+        },
+       
+    },
     methods:{
-
         setCurrentReviewId(){
+            console.log('this has run')
             ReviewService.getRecentReviewId().then(response => {
                 if(response.status === 200){
                     this.$store.commit('SET_REVIEW_ID', response.data)
-
                 }
-
             })
             .catch(error => {
                 alert(error.response.data.message)
             })
         },
-
-
+        resetForm(){
+            this.review.title = '',
+            this.review.reviewDetail = '',
+            this.review.rating = '',
+            this.$emit('form-submitted')
+        },
        submitReview(){
            console.log("this is the review Id before")
            console.log(this.$store.state.currentReviewId)
@@ -66,12 +77,6 @@ export default {
             console.log(this.$store.state.currentReviewId)
         },
 
-        
-    },
-    computed:{
-        ReviewId(){
-            return this.$store.state.currentReviewId
-        }
     }
 }
 </script>
