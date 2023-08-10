@@ -8,6 +8,7 @@ public interface ReviewDao {
 //    Review getReviewByPlantId (int plantId);
     void addReview (Review review);
 
+
 //    Review getRating (Review review);
     List<Review> listOfReview(int plantId);
     void deleteReview (int reviewId);
