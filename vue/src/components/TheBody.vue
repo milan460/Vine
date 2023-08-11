@@ -89,10 +89,10 @@ export default {
 
 <style scoped>
 
-.main{
+/* .main{
    
 
-}
+} */
 #description{
     font-size: px;
 }

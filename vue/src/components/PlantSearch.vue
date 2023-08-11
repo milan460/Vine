@@ -2,45 +2,26 @@
   <div id="main">
     <div id="filters">
       <!-- <input type="text" id="common name" placeholder="Search"  /> -->
-      <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="filter.common_name"></b-form-input>
+      <b-form-input
+        size="sm"
+        class="mr-sm-2"
+        placeholder="Search"
+        v-model="filter.common_name"
+      ></b-form-input>
 
       <button id="button" @click="filterToggle">Filter</button>
 
       <div id="filterCheckbox" v-if="filterToggleOn">
         <label for="indoorPlants">
-          Indoor Plants
-          <input
-            type="checkbox"
-            class="filled-in"
-            checked="checked"
-            id="indoorPlants"
-            @change="checkIndoorPlants"
-          />
-          <span></span>
+          <button id="btn" @click="checkIndoorPlants">Indoor</button>
         </label>
 
         <label for="outdoorPlants">
-          Outdoor Plants
-          <input
-            type="checkbox"
-            class="filled-in"
-            checked="checked"
-            id="outdoorPlants"
-            @change="checkOutdoorPlants"
-          />
-          <span></span>
+          <button id="btn"  @click="checkOutdoorPlants">Outdoor</button>
         </label>
 
         <label for="ediblePlants">
-          Edible Plants
-          <input
-            type="checkbox"
-            class="filled-in"
-            checked="checked"
-            id="ediblePlants"
-            @change="checkEdiblePlants"
-          />
-          <span></span>
+          <button id="btn"  @click="checkEdiblePlants">Edible</button>
         </label>
       </div>
     </div>
@@ -61,25 +42,27 @@
             class="mb-2 flex1"
           >
             <b-card-text>
-              <img src="../assets/indoor-plants.png" v-if="checkIndoorPlants == true" :title="plant.indoor"> //indoor
+              <img id="water"
+                src="../assets/indoor-plants.png"
+                v-if="indoorFilterOn"
+                :title="plant.indoor"
+              />
               <img
-          class="ratingStar"
-          src="../assets/drop.png"
-          v-bind:title="plant.watering"
-        /> //watering
-              <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
-                <ol>
+                class="ratingStar"
+                src="../assets/drop.png"
+                v-bind:title="plant.watering"
+                v-if="plant.watering == 'Minimum'"
+              />
+              <img id="water" src="../assets/water.png" v-else>
                   <img
-          class="ratingStar"
-          src="../assets/sun.png"
-          v-bind:title="plant.sunlight"
-        /> //sunlight
-                </ol>
-
-              </ul>
+                    class="ratingStar"
+                    src="../assets/sun.png"
+                    v-bind:title="plant.sunlight" v-if="plant.sunlight == 'full sun'"
+                  />
+                  <img id="water" src="../assets/partly-cloudy.png" v-else>
             </b-card-text>
 
-            <b-button href="#" variant="primary">Go somewhere</b-button>
+            <b-button href="#" variant="primary">Add to Garden</b-button>
           </b-card>
         </router-link>
       </div>
@@ -494,53 +477,24 @@ export default {
   grid-area: filt;
 }
 
-#button{
+#button {
   width: 100px;
   height: 34px;
 }
-
-/* 
-  #indoorPlants {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas: 
-    "filt filt filt"
-    "cards cards cards"
-    "cards cards cards"
-    "cards cards cards"
-    "cards cards cards"
-    "cards cards cards"
-    ;
-  } */
-
-/* .plant-card {
-    border: 1px solid black;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  } */
-
-/* .plant-card img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .plant-card h2 {
-    font-size: 1.2em;
-    margin-top: 10px;
-  }
-
-  .plant-card p {
-    margin: 5px 0;
-  }
-
-  .plant-card ul {
-    margin: 5px 0;
-  }
-
-  .plant-card li {
-    margin: 5px 0;
-  } */
+#water{
+  height: 5vh;
+  margin: 2%;
+}
 
 #page-arrows {
   margin-top: 20px;
 }
+
+#btn{
+  width: 98%;
+  height: 5vh;
+  box-shadow: 5px 5px 5px gray;
+  margin-right: 50px;
+  }
+
 </style>

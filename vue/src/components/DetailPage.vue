@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <img id="backbtn" src="../assets/turn-back.png" @click="goBack">
     <header id="header">
+      <img id="backbtn" src="../assets/turn-back.png" @click="goBack">
       <h1>{{ plantObject.common_name }}</h1>
     </header>
     <img
@@ -24,10 +24,10 @@
 
     <div id="tabs">
       <ul>
-        <button @click="showreviews = !showreviews" id="review">Reviews</button>
-        <button id="rec">Recommendations</button>
-        <button id="nursery">Nursery</button>
-        <button id="garden">Add to Garden</button>
+        <button class="button active" @click="showreviews = !showreviews" id="review">Reviews</button>
+        <button class="button active" id="rec">Recommendations</button>
+        <button class="button active" id="nursery">Nursery</button>
+        <button class="button active" id="garden">Add to Garden</button>
       </ul>
     </div> 
 
@@ -75,9 +75,10 @@ export default {
       this.showForm = false;
     },
     goBack(){
-      this.$router.go(-1)
+      window.history.back()
     }
   }
+  
 };
 </script>
 
@@ -87,6 +88,7 @@ export default {
 }
 .main {
   display: grid;
+  row-gap: 10px;
   grid-template-columns: 0.5fr 1fr 1fr 0.5fr 0.5fr;
   grid-template-areas:
     ". header header ."
@@ -115,6 +117,9 @@ export default {
 #tabs {
   grid-area: tab;
   justify-items: spaced-evenly;
+  max-width: 95%;
+  box-shadow: 5px 5px 5px gray;
+  background-color: rgb(163, 231, 163);
 }
 
 #description {
@@ -135,6 +140,7 @@ export default {
 
 #addReview {
   grid-area: addReview;
+  box-shadow: 5px 5px 5px gray;
 }
 
 #rec {
@@ -155,7 +161,16 @@ export default {
 button {
  background-color: rgb(163, 231, 163);
  border: rgb(163, 231, 163);
- height: 20px;
+ height: 40px;
  width: 25%;
+ padding: 1%;
 }
+
+.button{
+  padding-top: 2%;
+}
+/* .active, .btn:hover {
+  background-color: rgb(127, 209, 127);
+  color: white;
+} */
 </style>

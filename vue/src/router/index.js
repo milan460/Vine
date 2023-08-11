@@ -64,7 +64,7 @@ const router = new Router({
       }
     },
     {
-      path: "/plant/search",
+      path: "/search",
       name: "plant-search",
       component: SearchPage,
       meta: {

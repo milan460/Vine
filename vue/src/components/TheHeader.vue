@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-      <h1>Vine <img id="pic" src="../assets/logo.gif"> </h1>
+      <h1 id="h1">Vine <img id="pic" src="../assets/logo.gif"> </h1>
     <b-card id="nav" title="Card Title" no-body>
     <b-card-header header-tag="nav">
       <b-nav  card-header pills>
@@ -37,11 +37,12 @@ export default {
 }
 #nav{
     background-color: rgb(206, 245, 206);
-
     border:none;
 }
 
-h1{
+#h1{
   text-align: center;
+  font-size: 60px;
+  height: 10vh;
 }
 </style>
