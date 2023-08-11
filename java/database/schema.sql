@@ -24,6 +24,16 @@ CREATE TABLE reviews (
 	CONSTRAINT FK_reviews FOREIGN KEY (username) REFERENCES users(username)
 );
 
+CREATE TABLE favorites(
+favorites_id SERIAL,
+plant_id int NOT NULL,
+username varchar(50) NOT NULL,
+
+CONSTRAINT PK_favorites PRIMARY KEY (favorites_id),
+CONSTRAINT FK_favorites FOREIGN KEY (username) REFERENCES users(username)
+
+);
+
 
 
 COMMIT TRANSACTION;
