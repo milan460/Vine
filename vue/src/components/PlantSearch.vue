@@ -455,7 +455,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .link {
   display: inline-block;
 }
@@ -505,6 +505,33 @@ export default {
   height: 5vh;
   box-shadow: 5px 5px 5px gray;
   margin-right: 50px;
+  }
+
+  .mr-sm-2{
+    width: 10vw
+
+  }
+  #pageDown{
+  width: 17%;
+  height: 2vh;
+  box-shadow: 5px 5px 5px gray;
+  text-align: center;
+  padding: 1.5%;
+  margin-left: 5%;
+ 
+
+
+  }
+
+  #pageUp{
+  width: 17%;
+  height: 2vh;
+  box-shadow: 5px 5px 5px gray;
+  margin-left: 55%;
+  text-align: center;
+  padding: 1.5%
+
+
   }
 
 </style>
