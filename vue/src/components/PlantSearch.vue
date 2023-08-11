@@ -1,7 +1,6 @@
 <template>
   <div id="main">
     <div id="filters">
-      <!-- <input type="text" id="common name" placeholder="Search"  /> -->
       <b-form-input
         size="sm"
         class="mr-sm-2"
