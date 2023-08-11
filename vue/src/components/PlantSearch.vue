@@ -454,7 +454,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .link {
   display: inline-block;
 }
@@ -506,7 +506,37 @@ export default {
   margin-right: 50px;
   }
 
+<<<<<<< HEAD
   /* #src{
     width: ;
   } */
+=======
+  .mr-sm-2{
+    width: 10vw
+
+  }
+  #pageDown{
+  width: 17%;
+  height: 2vh;
+  box-shadow: 5px 5px 5px gray;
+  text-align: center;
+  padding: 1.5%;
+  margin-left: 5%;
+ 
+
+
+  }
+
+  #pageUp{
+  width: 17%;
+  height: 2vh;
+  box-shadow: 5px 5px 5px gray;
+  margin-left: 55%;
+  text-align: center;
+  padding: 1.5%
+
+
+  }
+
+>>>>>>> b9aa032679d50ff8765077d41ab5cc3826d1590b
 </style>

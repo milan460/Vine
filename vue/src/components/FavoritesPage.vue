@@ -29,7 +29,7 @@
               </ul>
             </b-card-text>
 
-            <b-button href="#" variant="primary">Go somewhere</b-button>
+            <b-button href="#" @click="removeFromfavoritesDatabase" variant="primary">delete From Favorites</b-button>
           </b-card>
 
 
@@ -62,6 +62,8 @@ export default {
       this.favoriteList.forEach(favorite => {
         console.log("this is the plant Id")
         console.log(favorite.plantId)
+        console.log("this is the favoriteID")
+        console.log(favorite.favoriteId)
         PlantData.getPlantDetails(favorite.plantId).then(response =>{
           if(response.status === 200){
             console.log("Plant data")
@@ -70,7 +72,30 @@ export default {
           }
         })
       })
-    }
+    },
+    removeFromfavoritesDatabase(){
+      console.log("this is favoriteID")
+        console.log(this.favoriteList.favoriteId)
+      const deletedReviewId = FavoriteService.deleteFromFavorites(this.favoriteList.favoriteId).then((response) => {
+        if (response.status === 200){
+          console.log("this is the deleted reviewId")
+          console.log(deletedReviewId)
+        this.deleteFromFavoritesDisplay(deletedReviewId);
+        }
+      })
+    },
+
+    deleteFromFavoritesDisplay(deletedReviewId){
+     // Remove the entry with the deleted reviewId from favoriteList
+    this.favoriteList = this.favoriteList.filter(item => item.reviewId !== deletedReviewId);
+
+    // Remove the corresponding entry from plantObject based on the deleted reviewId
+    this.plantObject = this.plantObject.filter(plant => {
+      const matchingFavorite = this.favoriteList.find(favorite => favorite.plantId === plant.id);
+      return matchingFavorite !== undefined;
+    });
+  }
+    
      
   },
   created() {
