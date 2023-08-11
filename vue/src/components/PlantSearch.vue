@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <div id="filters">
-      <b-form-input
+      <b-form-input id="src"
         size="sm"
         class="mr-sm-2"
         placeholder="Search"
@@ -506,4 +506,7 @@ export default {
   margin-right: 50px;
   }
 
+  /* #src{
+    width: ;
+  } */
 </style>
