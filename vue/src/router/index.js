@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import DetailPage from '../views/DetailPageView.vue'
 import SearchPage from '../views/SearchPage.vue'
+import FavoritesPage from '../components/FavoritesPage.vue'
 
 Vue.use(Router)
 
@@ -64,11 +65,19 @@ const router = new Router({
       }
     },
     {
-      path: "/plant/search",
+      path: "/search",
       name: "plant-search",
       component: SearchPage,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/favorites-page",
+      name: "favorites-page",
+      component: FavoritesPage,
+      meta: {
+        requiresAuth: true
       }
     }
     

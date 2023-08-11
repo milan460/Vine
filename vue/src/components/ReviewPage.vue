@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div
-      class="review-container"
-      v-for="review in reviewObj"
-      :key="review.reviewId"
-    >
+    <div class="element" v-for="review in reviewObj" :key="review.reviewId">
       <h1 id="title">
         {{ review.title }}
         <img
@@ -16,7 +12,7 @@
         />
       </h1>
       <p>{{ review.reviewDetail }}</p>
-      <h6>{{ review.username }}</h6>
+      <h6><img id="user" src="../assets/user.png"> {{ review.username }}</h6>
     </div>
   </div>
 </template>
@@ -25,23 +21,23 @@
 import ReviewService from "../services/ReviewService";
 
 export default {
-    name: 'review-page',
-    props: ['plantId'],
-    data(){
-        return{
-            reviewObj: [],
-        }
-    },
-    created(){
-        this.fetchReviews();
-    },
-    computed: {
+  name: "review-page",
+  props: ["plantId"],
+  data() {
+    return {
+      reviewObj: [],
+    };
+  },
+  created() {
+    this.fetchReviews();
+  },
+  computed: {
     currentReviewId() {
       return this.$store.state.currentReviewId;
     },
   },
-    watch:{
-        currentReviewId: {
+  watch: {
+    currentReviewId: {
       immediate: true,
       handler(newReviewId, oldReviewId) {
         if (newReviewId !== oldReviewId) {
@@ -49,29 +45,28 @@ export default {
         }
       },
     },
+  },
+  methods: {
+    fetchReviews() {
+      ReviewService.listOfReview(this.plantId)
+        .then((response) => {
+          this.reviewObj = response.data.map((reviews) => {
+            return {
+              username: reviews.username,
+              title: reviews.title,
+              reviewDetail: reviews.reviewDetail,
+              rating: reviews.rating,
+              reviewId: reviews.reviewId,
+              plantId: reviews.plantID,
+            };
+          });
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
     },
-    methods:{
-        fetchReviews(){
-            ReviewService.listOfReview(this.plantId).then(response => {
-                this.reviewObj = response.data.map(reviews => {
-                    return {
-                        username: reviews.username,
-                        title: reviews.title,
-                        reviewDetail: reviews.reviewDetail,
-                        rating: reviews.rating,
-                        reviewId: reviews.reviewId,
-                        plantId: reviews.plantID
-                    
-                    }
-                })
-            }).catch(error => {
-            alert(error.response.data.message)
-
-            })
-        }
-
-    }
-}
+  },
+};
 </script>
 
 <style>
@@ -85,5 +80,18 @@ export default {
 
 p {
   font-size: 20px;
+}
+.element {
+  width: 95%;
+  height: 165px;
+  background-color: rgba(255, 255, 255, 1);
+  color: #000;
+  border-radius: 10px;
+  box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
+  margin-bottom: 1%;
+}
+
+#user{
+  height: 3vh;
 }
 </style>
