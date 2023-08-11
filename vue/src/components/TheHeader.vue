@@ -3,8 +3,9 @@
       <h1 id="h1">Vine <img id="pic" src="../assets/logo.gif"> </h1>
     <b-card id="nav" title="Card Title" no-body>
     <b-card-header header-tag="nav">
-      <b-nav card-header pills>
-        <b-nav-item id = "home" class = "link-dark active" active><router-link v-bind:to="{ name: 'home' }">Home</router-link></b-nav-item>
+
+      <b-nav  card-header pills>
+        <b-nav-item id = "home" class = "active link-dark" active><router-link v-bind:to="{ name: 'home' }">Home</router-link></b-nav-item>
         <b-nav-item id = "home"><router-link v-bind:to=" { name: 'plant-search' } ">Search</router-link></b-nav-item>
         <b-nav-item id = "home"><router-link v-bind:to="{ name: 'login' }" v-if="$store.state.token == ''"
         >Login</router-link
@@ -34,6 +35,7 @@ export default {
 
 #home > .active {
   background-color: rgb(157, 238, 157);
+
 }
 #nav{
     background-color: rgb(206, 245, 206);
