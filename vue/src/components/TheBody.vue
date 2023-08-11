@@ -1,107 +1,118 @@
 <template>
-<!-- <div class="main"> -->
-
-
   <div class="home">
-      <div class="canvas">
-  <div class="tree">
-    <div class="trunk">
-      <div class="branch">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
+    <div class="canvas">
+      <div class="tree">
+        <div class="trunk">
+          <div class="branch">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+          </div>
+          <div class="branch">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+          </div>
+          <div class="branch">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+          </div>
+          <div class="branch">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+          </div>
+          <div class="branch">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+          </div>
+          <div class="branch">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+          </div>
+          <div class="branch">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+          </div>
+          <div class="branch">
+            <div class="leaf"></div>
+          </div>
+        </div>
       </div>
-      <div class="branch">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
+      <div>
+        
       </div>
-      <div class="branch">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-      </div>
-      <div class="branch">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-      </div>
-      <div class="branch">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-      </div>
-      <div class="branch">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-      </div>
-      <div class="branch">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-      </div>
-      <div class="branch">
-        <div class="leaf"></div>
+      <div>
+        <p id="description">Start Your Own Garden Today</p>
+        <button id="search">
+          <router-link v-bind:to="{ name: 'plant-search' }">Search</router-link>
+        </button>
+    
       </div>
     </div>
   </div>
-</div>
-      <div>
-            <button id = "search"><router-link v-bind:to=" { name: 'plant-search' } ">Search</router-link></button>
-      </div>
-
-    
-      <div>
-          <p id = "description">Start Your Own Garden Today</p>
-      </div>
-
-   </div>
-   <!-- </div> -->
 </template>
 
 <script>
 export default {
-  name: "the-body"
+  name: "the-body",
 };
 // onload = () => {
 //   const c = setTimeout(() => {
 //     document.body.classList.remove("not-loaded");
 //     clearTimeout(c);
 //   }, 1000);
-// };  
-
+// };
 </script>
 
 <style scoped>
+.home {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 2fr 0.5fr;
+  grid-template-areas:
+    ". header header ."
+    ". canvas description ."
+    ". canvas search .";
+    width: 100vw;
+    background-color: rgb(206, 245, 206);
 
-/* .main{
-   
 
-} */
-#description{
     
 }
+#description {
+  grid-area: description;
+  font-size: 70px;
+  margin-left: 500px;
+  text-align: center;
+}
 
-#search{
-
-    width: 70px;
-    height: 30px;
-    font-size: 20px;
+#search {
+  grid-area: search;
+  width: 120px;
+  height: 60px;
+  font-size: 20px;
+  margin-left: 700px;
+  box-shadow: 5px 5px 5px gray;
+  background-color:rgb(157, 238, 157);
+  border-radius: 10px;
 }
 
 @keyframes leaf-odd-grow {
@@ -122,19 +133,22 @@ export default {
   }
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
 
 .canvas {
+  grid-area: canvas;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   min-height: 600px;
 
-  background-color:rgb(206, 245, 206);;
+  background-color: rgb(206, 245, 206);
+  margin-left: 200px;
 }
 
 .trunk,
@@ -145,7 +159,7 @@ html, body {
 
 .trunk {
   position: relative;
-  
+
   width: 10px;
   height: 500px;
   margin: 0 auto;
@@ -153,9 +167,9 @@ html, body {
 
 .branch {
   position: absolute;
-  
+
   width: 5px;
-  
+
   transform-origin: bottom center;
 }
 
@@ -169,7 +183,7 @@ html, body {
 
 .branch:nth-child(1) {
   top: 180px;
-  
+
   height: 180px;
 }
 
@@ -181,62 +195,62 @@ html, body {
 
 .branch:nth-child(3) {
   top: 120px;
-  
+
   height: 150px;
 }
 
 .branch:nth-child(4) {
   top: 100px;
-  
+
   height: 120px;
 }
 
 .branch:nth-child(5) {
   top: 60px;
-  
+
   height: 120px;
 }
 
 .branch:nth-child(6) {
   top: 55px;
-  
+
   height: 80px;
 }
 
 .branch:nth-child(7) {
   top: 10px;
-  
+
   height: 80px;
 }
 
 .branch:nth-child(8) {
   top: 5px;
-  
+
   height: 40px;
 }
 
 .leaf {
   position: absolute;
-  
+
   width: 15px;
   height: 15px;
-  
+
   border-radius: 75% 0 75% 0;
   background: linear-gradient(to right, #77ed9e, #53ad71);
 }
 
 .leaf:nth-child(odd) {
   left: 100%;
-  
+
   transform-origin: 0% 100%;
   animation-name: leaf-odd-grow;
   animation-duration: 4s;
   animation-fill-mode: both;
 }
 
-.leaf:nth-child(even) {  
+.leaf:nth-child(even) {
   left: -150%;
-  
+
   transform-origin: 50% 100%;
   animation-name: leaf-even-grow;
   animation-duration: 4s;
@@ -245,43 +259,43 @@ html, body {
 
 .leaf:nth-child(1) {
   top: 5px;
-  
+
   animation-delay: 3.5s;
 }
 
 .leaf:nth-child(2) {
   top: 20px;
-  
+
   animation-delay: 3s;
 }
 
 .leaf:nth-child(3) {
   top: 50px;
-  
+
   animation-delay: 2.5s;
 }
 
 .leaf:nth-child(4) {
   top: 65px;
-  
+
   animation-delay: 2s;
 }
 
 .leaf:nth-child(5) {
   top: 95px;
-  
+
   animation-delay: 1.5s;
 }
 
 .leaf:nth-child(6) {
   top: 110px;
-  
+
   animation-delay: 1s;
 }
 
 .leaf:nth-child(7) {
   top: 140px;
-  
+
   animation-delay: 0.5s;
 }
 </style>

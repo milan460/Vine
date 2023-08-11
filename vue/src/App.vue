@@ -28,8 +28,11 @@ export default {
 </script>
 
 <style scoped>
-a{
+
+a:link {
   color: black;
+  text-decoration: none;
+  
 }
 
 </style>
