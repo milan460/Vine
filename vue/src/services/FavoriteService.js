@@ -2,8 +2,15 @@ import axios from "axios";
 
 export default{
 
-AddtoFavorites(){
-    return axios.post('/favorites-add/')
+addToFavorites(nPlantId){
+
+    const requestData = {plantId: nPlantId};
+
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    return axios.post('/favorites-add/', requestData, { headers });
 },
 
 getFavoritesList(){

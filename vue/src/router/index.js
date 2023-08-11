@@ -7,7 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import DetailPage from '../views/DetailPageView.vue'
 import SearchPage from '../views/SearchPage.vue'
-import FavoritesPage from '../components/FavoritesPage.vue'
+import FavoritesPage from '../views/FavoritesPageView.vue'
 
 Vue.use(Router)
 
