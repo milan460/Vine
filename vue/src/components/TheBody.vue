@@ -94,7 +94,7 @@ export default {
 
 }
 #description{
-    font-size: px;
+    
 }
 
 #search{
