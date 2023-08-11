@@ -75,8 +75,6 @@ export default {
   },
   created() {
      this.showFavoritesList()
-     
-     
   },
 };
 </script>
