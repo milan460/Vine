@@ -28,5 +28,8 @@ export default {
 </script>
 
 <style scoped>
+a{
+  color: black;
+}
 
 </style>

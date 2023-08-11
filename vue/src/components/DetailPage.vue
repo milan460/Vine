@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <img id="backbtn" src="../assets/turn-back.png" @click="goBack">
     <header id="header">
       <h1>{{ plantObject.common_name }}</h1>
     </header>
@@ -52,9 +53,9 @@ export default {
   },
   data() {
     return {
-      plantObject: "",
+      plantObject: '',
       currentPlantId: 0,
-      imageURL: "",
+      imageURL: '',
       showreviews: false,
       showAddReviews: false,
       showForm: false
@@ -72,12 +73,18 @@ export default {
     },
     handleFormSubmitted(){
       this.showForm = false;
+    },
+    goBack(){
+      this.$router.go(-1)
     }
   }
 };
 </script>
 
 <style>
+#backbtn{
+  height: 5vh;
+}
 .main {
   display: grid;
   grid-template-columns: 0.5fr 1fr 1fr 0.5fr 0.5fr;
