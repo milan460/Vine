@@ -27,7 +27,7 @@
         <button class="button active" @click="showreviews = !showreviews" id="review">Reviews</button>
         <button class="button active" id="rec">Recommendations</button>
         <button class="button active" id="nursery">Nursery</button>
-        <button class="button active" id="garden">Add to Garden</button>
+        <button class="button active" @click="addToFavorites" id="garden">Add to Garden</button>
       </ul>
     </div> 
 
@@ -44,6 +44,7 @@
 import PlantData from "../services/PlantData";
 import ReviewPage from '../components/ReviewPage.vue'
 import CreateReview from './CreateReview.vue';
+import FavoriteService from '../services/FavoriteService';
 export default {
   name: "plant-detail",
  
@@ -76,6 +77,13 @@ export default {
     },
     goBack(){
       window.history.back()
+    },
+    addToFavorites(){
+    FavoriteService.addToFavorites(this.currentPlantId).then(response =>{
+      if (response.status === 201){
+        //alert("Was added to your garden")
+      }
+    })
     }
   }
   

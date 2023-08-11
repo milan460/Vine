@@ -61,8 +61,8 @@
                   />
                   <img id="water" src="../assets/partly-cloudy.png" v-else>
             </b-card-text>
-
-            <b-button href="#" variant="primary">Add to Garden</b-button>
+            
+            <b-button href="#"  @click="addToFavorites(plant.id)" variant="primary">Add to Garden</b-button>
           </b-card>
         </router-link>
       </div>
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import FavoriteService from '../services/FavoriteService.js';
 import plantData from "../services/PlantData.js";
 export default {
   data() {
@@ -354,6 +355,15 @@ export default {
         });
       });
     },
+    addToFavorites(plantId){
+    console.log("this is the plant Id")
+    console.log(plantId)
+    FavoriteService.addToFavorites(plantId).then(response =>{
+      if (response.status === 201){
+        //alert("Was added to your garden")
+      }
+    })
+    }
   },
   computed: {
     filteredList() {

@@ -36,10 +36,9 @@ public class FavoriteController {
         favoriteDao.deleteFromFavorites(favoriteId);
     }
     @PreAuthorize("hasRole('USER')")
-    @RequestMapping(path= "/favorites-add", method = RequestMethod.POST)
+    @RequestMapping(path= "/favorites-add/", method = RequestMethod.POST)
     public int addToFavorites(@RequestBody Favorite favorite, Principal principal){
         favorite.setUsername(principal.getName());
-
        return favoriteDao.addToFavorites(favorite);
     }
 
