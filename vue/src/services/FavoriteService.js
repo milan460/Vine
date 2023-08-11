@@ -17,8 +17,12 @@ getFavoritesList(){
     return axios.get('/favorites');
 },
 
-deleteFromFavorites(nPlantId){
-    return axios.delete('favorites/' + nPlantId)
+deleteFromFavorites(reviewId){
+
+    // const requestData = {}
+
+
+    return axios.delete('favorites/' + reviewId)
 }
 
 }
