@@ -29,6 +29,7 @@ favorites_id SERIAL,
 plant_id int NOT NULL,
 username varchar(50) NOT NULL,
 
+
 CONSTRAINT PK_favorites PRIMARY KEY (favorites_id),
 CONSTRAINT FK_favorites FOREIGN KEY (username) REFERENCES users(username)
 

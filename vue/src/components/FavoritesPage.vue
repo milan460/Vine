@@ -2,17 +2,10 @@
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
       <div>
-        <!-- <p>Plant Object: {{ favoriteItem.plantObj.id }}</p> -->
-         <ul>
-          <li v-for="item in item.plantObj" :key="item.id">
-            {{ item.common_name }}
-          </li>
-      </ul>
-        
-      </div>
-      <!-- <b-card
+
+      <b-card
             :title="favoriteItem.plantObj.common_name"
-            v-bind:img-src="favoriteItem.plantObj.default_image.original_url"
+            v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
             img-top
             tag="article"
@@ -20,7 +13,7 @@
             class="mb-2 flex1"
           >
             <b-card-text>
-              <img src="../assets/indoor-plants.png" v-if="checkIndoorPlants == true" :title="plant.indoor"> //indoor
+              <img src="../assets/indoor-plants.png" v-if="checkIndoorPlants === true" :title="plant.indoor"> //indoor
               <img
           class="ratingStar"
           src="../assets/drop.png"
@@ -38,10 +31,10 @@
               </ul>
             </b-card-text>
 
-            <b-button href="#" @click="removeFromfavoritesDatabase(favoriteList.favoriteId)" variant="primary">delete From Favorites</b-button>
-          </b-card> -->
+            <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
+          </b-card>
 
-
+      </div>
     </div>
   </div>
 </template>
@@ -66,14 +59,13 @@ export default {
   methods: {
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
-        console.log('this is the response data for favorite')
-        console.log(response.data)
         if (response.status === 200) {
           this.favoriteList = response.data.map( (favoriteItem) => {
             return {
               favoriteId: favoriteItem.favoriteId,
               plantId: favoriteItem.plantId,
               username: favoriteItem.username,
+              plantObj: favoriteItem.plantObj
             }
           });
           this.getPlantData()
@@ -83,45 +75,27 @@ export default {
 
     getPlantData(){
       this.favoriteList.forEach(favorite => {
-        console.log('this is the favorite Id')
-        console.log(favorite.favoriteId)
         PlantData.getPlantDetails(favorite.plantId).then(response =>{
           if(response.status === 200){
-            console.log('this is the respond data')
-            console.log(response.data)
             favorite.plantObj = response.data
           }
         })
       })
     },
     removeFromfavoritesDatabase(favoriteId){
-      console.log("this is favoriteID")
-        console.log(favoriteId)
-      FavoriteService.deleteFromFavoritesWithPlantId(this.favoriteList.favoriteId).then((response) => {
+      FavoriteService.deleteFromFavoritesWithPlantId(favoriteId).then((response) => {
         if (response.status === 200){
-          console.log("this is the deleted reviewId")
-          console.log(response)
-        // this.deleteFromFavoritesDisplay(deletedReviewId);
+        this.deleteFromFavoritesDisplay(favoriteId);
         }
       })
     },
 
-    deleteFromFavoritesDisplay(deletedReviewId){
+    deleteFromFavoritesDisplay(deletedFavoriteId){
      // Remove the entry with the deleted reviewId from favoriteList
-    this.favoriteList = this.favoriteList.filter(item => item.reviewId !== deletedReviewId);
-
-    // Remove the corresponding entry from plantObject based on the deleted reviewId
-    this.plantObject = this.plantObject.filter(plant => {
-      const matchingFavorite = this.favoriteList.find(favorite => favorite.plantId === plant.id);
-      return matchingFavorite !== undefined;
-    });
+    this.favoriteList = this.favoriteList.filter(item => item.favoriteId !== deletedFavoriteId);
   },
     testMethod(){
-      console.log('this is the favoriteList')
-      console.log(this.favoriteList)
-      this.favoriteList.forEach( (item) => {
-        console.log(item.plantObj)
-      })
+    
     }
     
      
