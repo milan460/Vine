@@ -1,9 +1,18 @@
 <template>
   <div>
-    <div v-for="plant in plantObject" v-bind:key="plant.id">
-      <b-card
-            :title="plant.common_name"
-            v-bind:img-src="plant.default_image.original_url"
+    <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
+      <div>
+        <!-- <p>Plant Object: {{ favoriteItem.plantObj.id }}</p> -->
+         <ul>
+          <li v-for="item in item.plantObj" :key="item.id">
+            {{ item.common_name }}
+          </li>
+      </ul>
+        
+      </div>
+      <!-- <b-card
+            :title="favoriteItem.plantObj.common_name"
+            v-bind:img-src="favoriteItem.plantObj.default_image.original_url"
             alt="Plant Image"
             img-top
             tag="article"
@@ -15,22 +24,22 @@
               <img
           class="ratingStar"
           src="../assets/drop.png"
-          v-bind:title="plant.watering"
+          v-bind:title="favoriteItem.plantObj.watering"
         /> //watering
-              <ul v-for="sunlight in plant.sunlight" v-bind:key="sunlight">
+              <ul v-for="sunlight in favoriteItem.plantObj.sunlight" v-bind:key="sunlight">
                 <ol>
                   <img
           class="ratingStar"
           src="../assets/sun.png"
-          v-bind:title="plant.sunlight"
+          v-bind:title="favoriteItem.plantObj.sunlight"
         /> //sunlight
                 </ol>
 
               </ul>
             </b-card-text>
 
-            <b-button href="#" variant="primary">Go somewhere</b-button>
-          </b-card>
+            <b-button href="#" @click="removeFromfavoritesDatabase(favoriteList.favoriteId)" variant="primary">delete From Favorites</b-button>
+          </b-card> -->
 
 
     </div>
@@ -43,16 +52,30 @@ import FavoriteService from "../services/FavoriteService";
 export default {
   data() {
     return {
-      favoriteList: [],
-      plantObject: [],
+      favoriteList: [
+        {
+          favoriteId: '',
+          plantId: '',
+          username: '',
+          plantObj: {}
+          }
+      ],
     };
   },
 
   methods: {
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
+        console.log('this is the response data for favorite')
+        console.log(response.data)
         if (response.status === 200) {
-          this.favoriteList = response.data;
+          this.favoriteList = response.data.map( (favoriteItem) => {
+            return {
+              favoriteId: favoriteItem.favoriteId,
+              plantId: favoriteItem.plantId,
+              username: favoriteItem.username,
+            }
+          });
           this.getPlantData()
         }
       });
@@ -60,17 +83,47 @@ export default {
 
     getPlantData(){
       this.favoriteList.forEach(favorite => {
-        console.log("this is the plant Id")
-        console.log(favorite.plantId)
+        console.log('this is the favorite Id')
+        console.log(favorite.favoriteId)
         PlantData.getPlantDetails(favorite.plantId).then(response =>{
           if(response.status === 200){
-            console.log("Plant data")
+            console.log('this is the respond data')
             console.log(response.data)
-            this.plantObject.push(response.data)
+            favorite.plantObj = response.data
           }
         })
       })
+    },
+    removeFromfavoritesDatabase(favoriteId){
+      console.log("this is favoriteID")
+        console.log(favoriteId)
+      FavoriteService.deleteFromFavoritesWithPlantId(this.favoriteList.favoriteId).then((response) => {
+        if (response.status === 200){
+          console.log("this is the deleted reviewId")
+          console.log(response)
+        // this.deleteFromFavoritesDisplay(deletedReviewId);
+        }
+      })
+    },
+
+    deleteFromFavoritesDisplay(deletedReviewId){
+     // Remove the entry with the deleted reviewId from favoriteList
+    this.favoriteList = this.favoriteList.filter(item => item.reviewId !== deletedReviewId);
+
+    // Remove the corresponding entry from plantObject based on the deleted reviewId
+    this.plantObject = this.plantObject.filter(plant => {
+      const matchingFavorite = this.favoriteList.find(favorite => favorite.plantId === plant.id);
+      return matchingFavorite !== undefined;
+    });
+  },
+    testMethod(){
+      console.log('this is the favoriteList')
+      console.log(this.favoriteList)
+      this.favoriteList.forEach( (item) => {
+        console.log(item.plantObj)
+      })
     }
+    
      
   },
   created() {

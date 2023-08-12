@@ -31,11 +31,11 @@ public class JdbcFavoriteDao implements FavoriteDao {
 
     @Override
     public void deleteFromFavorites(int favoriteId) {
-        String sql = "DELETE FROM favorites WHERE favorites_id = ?;";
+        String sql = "DELETE FROM favorites WHERE favorites_id = ?";
         try {
             jdbcTemplate.update(sql, favoriteId);
         } catch (Exception e) {
-            throw new DaoException("Unable to delete the favorites", e);
+            throw new DaoException("Unable to delete the favorites item", e);
         }
     }
 

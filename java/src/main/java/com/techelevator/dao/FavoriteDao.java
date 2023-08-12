@@ -9,7 +9,8 @@ public interface FavoriteDao {
 
  int addToFavorites(Favorite favorite);
 
- void deleteFromFavorites(int reviewId);
+ void deleteFromFavorites(int favoriteId);
+
  List<Favorite> getFavoritesList (String username);
 
 
