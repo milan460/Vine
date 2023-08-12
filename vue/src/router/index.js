@@ -8,6 +8,7 @@ import store from '../store/index'
 import DetailPage from '../views/DetailPageView.vue'
 import SearchPage from '../views/SearchPage.vue'
 import FavoritesPage from '../views/FavoritesPageView.vue'
+import Test from '../views/TestCSS.vue'
 
 Vue.use(Router)
 
@@ -76,6 +77,14 @@ const router = new Router({
       path: "/favorites-page",
       name: "favorites-page",
       component: FavoritesPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/test",
+      name: "test",
+      component: Test,
       meta: {
         requiresAuth: true
       }
