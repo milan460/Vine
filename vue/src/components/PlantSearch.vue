@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div id="page arrows">
+    <div id="page-arrows">
       <button id="pageDown" @click="decrementPage()">Previous Page</button>
       <button id="pageUp" @click="incrementPage()">Next Page</button>
     </div>
@@ -455,6 +455,10 @@ export default {
 </script>
 
 <style scoped>
+#main{
+  height: 100%;
+  background-color: rgb(206, 245, 206);
+}
 .link {
   display: inline-block;
 }
@@ -489,54 +493,36 @@ export default {
 #button {
   width: 100px;
   height: 34px;
+  background-color: rgb(206, 245, 206);
+  box-shadow: 5px 5px 5px gray;
 }
 #water{
   height: 5vh;
   margin: 2%;
 }
 
-#page-arrows {
-  margin-top: 20px;
+#pageDown, #pageUp{
+  margin: 1%;
+  background-color: rgb(174, 230, 174);
+  box-shadow: 3px 3px 3px rgb(167, 166, 166);
+  justify-content: space-between;
+}
+
+#pageUp{
+  margin-left: 83%;
 }
 
 #btn{
   width: 98%;
-  height: 5vh;
+  height: 4vh;
   box-shadow: 5px 5px 5px gray;
   margin-right: 50px;
-  }
+  background-color: rgb(206, 245, 206);
+}
 
-<<<<<<< HEAD
-  /* #src{
-    width: ;
-  } */
-=======
-  .mr-sm-2{
-    width: 10vw
-
-  }
-  #pageDown{
-  width: 17%;
-  height: 2vh;
+#src{
+  width: 55vw;
   box-shadow: 5px 5px 5px gray;
-  text-align: center;
-  padding: 1.5%;
-  margin-left: 5%;
- 
+}
 
-
-  }
-
-  #pageUp{
-  width: 17%;
-  height: 2vh;
-  box-shadow: 5px 5px 5px gray;
-  margin-left: 55%;
-  text-align: center;
-  padding: 1.5%
-
-
-  }
-
->>>>>>> b9aa032679d50ff8765077d41ab5cc3826d1590b
 </style>
