@@ -7,9 +7,9 @@ INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('
 INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('user', 'Awful', 'I hate it', 1, 3);
 INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('admin', 'Okay', 'It was ight', 3, 1);
 
-INSERT INTO favorites (plant_id, username) VALUES ('1', 'user');
+INSERT INTO favorites (plant_id, username, owned_plant, listed_for_sale) VALUES ('1', 'user', false, false);
 INSERT INTO favorites (plant_id, username) VALUES ('2', 'user');
-INSERT INTO favorites (plant_id, username) VALUES ('1', 'admin');
-INSERT INTO favorites (plant_id, username) VALUES ('2', 'admin');
+INSERT INTO favorites (plant_id, username, owned_plant, listed_for_sale) VALUES ('1', 'admin', false, false);
+INSERT INTO favorites (plant_id, username, owned_plant, listed_for_sale) VALUES ('2', 'admin', false, false);
 
 COMMIT TRANSACTION;
