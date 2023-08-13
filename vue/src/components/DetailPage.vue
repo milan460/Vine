@@ -1,7 +1,9 @@
 <template>
   <div class="main">
+    <div id="backbtn">
+      <img id="backbtn" src="../assets/arrow.png" @click="goBack" /> Back
+    </div>
     <header id="header">
-      <img id="backbtn" src="../assets/turn-back.png" @click="goBack">
       <h1>{{ plantObject.common_name }}</h1>
     </header>
     <img
@@ -10,12 +12,47 @@
       alt="Image of Plant"
     />
     <div class="icon-details">
-      <p>{{ plantObject.watering }}</p>
-      <p>{{ plantObject.sunlight }}</p>
-      <!-- <p>figure out edible</p> -->
-      <p>{{ plantObject.flowers }}</p>
-      <p>{{ plantObject.indoor }}</p>
-      <!-- v-if statements for edible and indoor/outdoor -->
+      <img
+        class="ratingStar"
+        src="../assets/drop.png"
+        v-bind:title="plantObject.watering"
+        v-if="plantObject.watering == 'Minimum'"
+      />
+      <img id="water" src="../assets/water.png" v-else />
+
+      <img
+        class="ratingStar"
+        src="../assets/sun.png"
+        v-bind:title="plantObject.sunlight"
+        v-if="plantObject.sunlight == 'full sun'"
+      />
+      <img id="water" src="../assets/partly-cloudy.png" v-else />
+      <img
+        id="water"
+        src="../assets/salad.png"
+        v-if="!edibleFilterOn"
+        :title="plantObject.edible_leaf"
+      />
+      <img
+        id="water"
+        src="../assets/fruits.png"
+        v-if="!edibleFilterOn"
+        :title="plantObject.edible_fruit"
+      />
+
+      <!-- <img
+      id="water"
+        src="../assets/sakura.png"
+        v-if="!flowers"
+        :title="plantObject.flowers"
+      /> -->
+
+      <img
+        id="water"
+        src="../assets/indoor-plants.png"
+        v-if="!indoorFilterOn"
+        :title="plantObject.indoor"
+      />
     </div>
     <div id="description">
       <h2>Description</h2>
@@ -24,42 +61,68 @@
 
     <div id="tabs">
       <ul>
-        <button class="button active" @click="showreviews = !showreviews" id="review">Reviews</button>
+        <button
+          class="button active"
+          @click="showreviews = !showreviews"
+          id="review"
+        >
+          Reviews
+        </button>
         <button class="button active" id="rec">Recommendations</button>
         <button class="button active" id="nursery">Nursery</button>
-        <button class="button active" @click="addToFavorites" id="garden">Add to Garden</button>
+        <button class="button active" @click="addToFavorites" id="garden">
+          Add to Garden
+        </button>
       </ul>
-    </div> 
+    </div>
 
     <div v-show="showreviews" id="review">
-      <review-page :plantId="currentPlantId"/> 
+      <review-page :plantId="currentPlantId" />
       <button @click="showForm = !showForm" id="addReview">Add Review</button>
-      <create-review @form-submitted="handleFormSubmitted" :show-tag="showForm" v-show="showForm" id="createReview" :plantId="currentPlantId" ></create-review>
+      <create-review
+        @form-submitted="handleFormSubmitted"
+        :show-tag="showForm"
+        v-show="showForm"
+        id="createReview"
+        :plantId="currentPlantId"
+      ></create-review>
     </div>
-    
   </div>
 </template>
 
 <script>
 import PlantData from "../services/PlantData";
-import ReviewPage from '../components/ReviewPage.vue'
-import CreateReview from './CreateReview.vue';
-import FavoriteService from '../services/FavoriteService';
+import ReviewPage from "../components/ReviewPage.vue";
+import CreateReview from "./CreateReview.vue";
+import FavoriteService from "../services/FavoriteService";
+
 export default {
   name: "plant-detail",
- 
+
   components: {
     ReviewPage,
-    CreateReview
+    CreateReview,
   },
+
   data() {
     return {
-      plantObject: '',
+      plantObject: "",
       currentPlantId: 0,
-      imageURL: '',
+      imageURL: "",
       showreviews: false,
       showAddReviews: false,
-      showForm: false
+      showForm: false,
+      indoorFilterOn: false,
+      ediblePlants: [],
+      edibleFilterOn: false,
+      flowers: false,
+
+      filter: {
+        common_name: "",
+        cycle: "",
+        watering: "",
+        sunlight: "",
+      },
     };
   },
   created() {
@@ -68,54 +131,53 @@ export default {
       this.plantObject = response.data;
     });
   },
-  methods:{
-    closeForm(){
-      this.closeForm = false
+  methods: {
+    closeForm() {
+      this.closeForm = false;
     },
-    handleFormSubmitted(){
+    handleFormSubmitted() {
       this.showForm = false;
     },
-    goBack(){
-      window.history.back()
+    goBack() {
+      window.history.back();
     },
-    addToFavorites(){
-    FavoriteService.addToFavorites(this.currentPlantId).then(response =>{
-      if (response.status === 201){
-        //alert("Was added to your garden")
-      }
-    })
-    }
-  }
-  
+    addToFavorites() {
+      FavoriteService.addToFavorites(this.currentPlantId).then((response) => {
+        if (response.status === 201) {
+          //alert("Was added to your garden")
+        }
+      });
+    },
+  },
 };
 </script>
 
 <style>
-#backbtn{
-  height: 5vh;
+#backbtn {
+  grid-area: btn;
+  height: 3vh;
+  margin-left: 10%;
 }
 .main {
   display: grid;
   row-gap: 10px;
   grid-template-columns: 0.5fr 1fr 1fr 0.5fr 0.5fr;
   grid-template-areas:
-    ". header header ."
+    "btn header header ."
     ". pic icons ."
     ". description description ."
     ". tab tab ."
     ". review . ."
     ". addReview . .";
 
-    grid-template-rows: .3fr .3fr .3fr .3fr .3fr;
-    grid-template-areas: 
-    ". header header ."
+  grid-template-rows: 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr;
+  grid-template-areas:
+    "btn header header ."
     ". pic icons ."
     ". description description ."
     ". tab tab ."
     ". review review ."
-    ". addReview addReview ."
-
-    ;
+    ". addReview addReview .";
 }
 
 #pic {
@@ -163,19 +225,23 @@ export default {
   grid-area: garden;
 }
 
-.nav-extended{
+.nav-extended {
   grid-area: nav;
 }
 button {
- background-color: rgb(163, 231, 163);
- border: rgb(163, 231, 163);
- height: 40px;
- width: 25%;
- padding: 1%;
+  background-color: rgb(163, 231, 163);
+  border: rgb(163, 231, 163);
+  height: 40px;
+  width: 25%;
+  padding: 1%;
 }
 
-.button{
+.button {
   padding-top: 2%;
+}
+#water {
+  height: 5vh;
+  margin: 2%;
 }
 /* .active, .btn:hover {
   background-color: rgb(127, 209, 127);

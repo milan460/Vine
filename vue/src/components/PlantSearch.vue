@@ -61,7 +61,7 @@
                   <img id="water" src="../assets/partly-cloudy.png" v-else>
             </b-card-text>
             
-            <b-button href="#"  @click="addToFavorites(plant.id)" variant="primary">Add to Garden</b-button>
+            <b-button href="#"  @click="addToFavorites(plant.id)" variant="primary" v-if="!isLoggedIn">Add to Garden</b-button>
           </b-card>
         </router-link>
       </div>
@@ -77,6 +77,8 @@
 <script>
 import FavoriteService from '../services/FavoriteService.js';
 import plantData from "../services/PlantData.js";
+// import AuthService from "../services/AuthService.js";
+
 export default {
   data() {
     return {
@@ -90,6 +92,7 @@ export default {
       edibleFilterOn: false,
       pagecounter: 1,
       sortAlphabetically: false,
+      isLoggedIn: false,
       filter: {
         common_name: "",
         cycle: "",
@@ -358,9 +361,15 @@ export default {
     console.log("this is the plant Id")
     console.log(plantId)
     FavoriteService.addToFavorites(plantId).then(response =>{
-      if (response.status === 201){
+      if(!this.isLoggedIn){
+         if (response.status === 201){
         //alert("Was added to your garden")
       }
+      else{
+        this.$router.push('/login');
+      }
+      }
+     
     })
     }
   },
@@ -495,6 +504,9 @@ export default {
   height: 34px;
   background-color: rgb(206, 245, 206);
   box-shadow: 5px 5px 5px gray;
+  border: black 1px solid;
+  
+
 }
 #water{
   height: 5vh;
@@ -518,6 +530,7 @@ export default {
   box-shadow: 5px 5px 5px gray;
   margin-right: 50px;
   background-color: rgb(206, 245, 206);
+  border: black 1px solid;
 }
 
 #src{
