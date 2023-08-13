@@ -90,7 +90,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #backbtn{
   height: 5vh;
 }
