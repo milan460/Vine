@@ -18,7 +18,7 @@ public class FavoriteController {
 
     @Autowired
     private final FavoriteDao favoriteDao;
-
+    @Autowired
     private final UserDao userDao;
 
     public FavoriteController(FavoriteDao favoriteDao, UserDao userDao) {
