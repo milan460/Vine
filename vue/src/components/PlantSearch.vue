@@ -61,7 +61,7 @@
                   <img id="water" src="../assets/partly-cloudy.png" v-else>
             </b-card-text>
             
-            <b-button href="#"  @click="addToFavorites(plant.id)" variant="primary" v-if="!isLoggedIn">Add to Garden</b-button>
+            <b-button href="#"  @click="addToFavorites(plant.id)" variant="primary" >Add to Garden</b-button>
           </b-card>
         </router-link>
       </div>
@@ -77,7 +77,7 @@
 <script>
 import FavoriteService from '../services/FavoriteService.js';
 import plantData from "../services/PlantData.js";
-// import AuthService from "../services/AuthService.js";
+// import ToastedNotification from './ToastedNotification.vue';
 
 export default {
   data() {
@@ -361,13 +361,15 @@ export default {
     console.log("this is the plant Id")
     console.log(plantId)
     FavoriteService.addToFavorites(plantId).then(response =>{
-      if(!this.isLoggedIn){
-         if (response.status === 201){
-        //alert("Was added to your garden")
-      }
-      else{
-        this.$router.push('/login');
-      }
+      // if(!this.isLoggedIn){
+         
+      // }
+      // else{
+      //   this.$router.push('/login');
+      // }
+      // }
+      if (response.status === 201){
+       this.$toast.show("Add to GArden ")
       }
      
     })
