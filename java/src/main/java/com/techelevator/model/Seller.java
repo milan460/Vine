@@ -5,42 +5,42 @@ import java.util.Objects;
 
 public class Seller {
 
-    private int sellerId;
-    private int favoriteId;
-    private int plantId;
+    private int plantSellerId;
     private String username;
+    private int plantId;
+    private String description;
 
     private BigDecimal price;
 
-    private boolean isAvailable;
+    private int stockQuantity;
 
-    public Seller(int sellerId,int favoriteId, int plantId, String userName, BigDecimal price, boolean isAvailable){
-        this.sellerId = sellerId;
-        this.favoriteId = favoriteId;
+    public Seller(int plantSellerId, String username, int plantId, String description, BigDecimal price, int stockQuantity) {
+        this.plantSellerId = plantSellerId;
+        this.username = username;
         this.plantId = plantId;
-        this.username = userName;
+        this.description = description;
         this.price = price;
-        this.isAvailable = isAvailable;
+        this.stockQuantity = stockQuantity;
     }
 
-    public Seller(){
+    public Seller() {
 
     }
 
-    public int getSellerId() {
-        return sellerId;
+    public int getPlantSellerId() {
+        return plantSellerId;
     }
 
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
+    public void setPlantSellerId(int plantSellerId) {
+        this.plantSellerId = plantSellerId;
     }
 
-    public int getFavoriteId() {
-        return favoriteId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFavoriteId(int favoriteId) {
-        this.favoriteId = favoriteId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getPlantId() {
@@ -51,12 +51,12 @@ public class Seller {
         this.plantId = plantId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUsername(String userName) {
-        this.username = userName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getPrice() {
@@ -67,23 +67,23 @@ public class Seller {
         this.price = price;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public int getStockQuantity() {
+        return stockQuantity;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     @Override
     public String toString() {
         return "Seller{" +
-                "sellerId=" + sellerId +
-                ", favoriteId=" + favoriteId +
-                ", plantId=" + plantId +
+                "plantSellerId=" + plantSellerId +
                 ", username='" + username + '\'' +
+                ", plantId=" + plantId +
+                ", description='" + description + '\'' +
                 ", price=" + price +
-                ", isAvailable=" + isAvailable +
+                ", stockQuantity=" + stockQuantity +
                 '}';
     }
 
@@ -92,11 +92,11 @@ public class Seller {
         if (this == o) return true;
         if (!(o instanceof Seller)) return false;
         Seller seller = (Seller) o;
-        return sellerId == seller.sellerId && favoriteId == seller.favoriteId && plantId == seller.plantId && isAvailable == seller.isAvailable && username.equals(seller.username) && price.equals(seller.price);
+        return plantSellerId == seller.plantSellerId && plantId == seller.plantId && stockQuantity == seller.stockQuantity && username.equals(seller.username) && description.equals(seller.description) && price.equals(seller.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sellerId, favoriteId, plantId, username, price, isAvailable);
+        return Objects.hash(plantSellerId, username, plantId, description, price, stockQuantity);
     }
 }

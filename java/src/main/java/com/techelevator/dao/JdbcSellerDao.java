@@ -21,7 +21,8 @@ public class JdbcSellerDao implements SellerDao{
     @Override
     public List<Seller> getAllSellersPlants() {
         List<Seller> listOfAllPlantsBeingSold = new ArrayList<>();
-        String sql = "SELECT * FROM sellers";
+        String sql = "SELECT * FROM plant_sellers JOIN favorites ON favorites.favorite_id = sellers.favorite" +
+                "WHERE owned_plants = true";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -38,29 +39,34 @@ public class JdbcSellerDao implements SellerDao{
         return  listOfAllPlantsBeingSold;
     }
 
+
     @Override
     public int addListing(Seller seller) {
-        int newsellerId = 0;
-        String sql = "INSERT INTO sellers (plant_id, username, price)\n" +
-                "VALUES (?, ?, ?) RETURNING seller_id";
+        int newPlantSellerId = 0;
+        String sql = "INSERT INTO plant_sellers (username, plant_id, description, price, stock_quantity)\n" +
+                "VALUES (?, ?, ?, ?, ?) \n" +
+                "RETURNING plant_seller_id";
 
         try{
-            newsellerId = jdbcTemplate.queryForObject(sql, int.class, seller.getPlantId(), seller.getUsername(), seller.getPrice());
-            seller.setSellerId(newsellerId);
+            newPlantSellerId = jdbcTemplate.queryForObject(sql, int.class, seller.getUsername(), seller.getPlantId(), seller.getDescription(), seller.getPrice(), seller.getStockQuantity());
+            seller.setPlantSellerId(newPlantSellerId);
         }
         catch (Exception e){
             e.printStackTrace();
             throw new DaoException("Cannot find seller plants", e);
         }
-        return newsellerId;
+        return newPlantSellerId;
     }
 
     private Seller mapToRowSeller(SqlRowSet sqlRowSet){
         Seller seller = new Seller();
 
-        seller.setUsername(sqlRowSet.getString("username"));
+        seller.setPlantSellerId(sqlRowSet.getInt("plant_seller_id"));
         seller.setPlantId(sqlRowSet.getInt("plant_id"));
+        seller.setUsername(sqlRowSet.getString("username"));
+        seller.setDescription(sqlRowSet.getString("description"));
         seller.setPrice(sqlRowSet.getBigDecimal("price"));
+        seller.setStockQuantity(sqlRowSet.getInt("stock_quantity"));
 
         return seller;
     }

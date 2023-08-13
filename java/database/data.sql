@@ -12,9 +12,9 @@ INSERT INTO favorites (plant_id, username) VALUES (2, 'user');
 INSERT INTO favorites (plant_id, username, owned_plant, listed_for_sale) VALUES (1, 'admin', false, false);
 INSERT INTO favorites (plant_id, username, owned_plant, listed_for_sale) VALUES (2, 'admin', false, false);
 
-INSERT INTO sellers (plant_id, username, price) VALUES (10, 'user', 25.00);
-INSERT INTO sellers (plant_id, username, price) VALUES (21, 'user', 10.50);
-INSERT INTO sellers (plant_id, username, price) VALUES (2, 'user', 2.45);
-INSERT INTO sellers (plant_id, username, price) VALUES (2, 'admin', 100.25);
+INSERT INTO plant_sellers (username, plant_id, description, price, stock_quantity) VALUES ('user', 10, 'buy this plant', 25.00, 1);
+INSERT INTO plant_sellers (username, plant_id, description, price, stock_quantity) VALUES ('user', 2, '', 50.00, 1);
+INSERT INTO plant_sellers (username, plant_id, description, price, stock_quantity) VALUES ('user', 24, 'cool', 15.24, 1);
+INSERT INTO plant_sellers (username, plant_id, description, price, stock_quantity) VALUES ('user', 45, 'test', 256.76, 1);
 
 COMMIT TRANSACTION;

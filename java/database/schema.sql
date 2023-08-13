@@ -33,59 +33,12 @@ favorites_id SERIAL,
 plant_id int NOT NULL,
 username varchar(50) NOT NULL,
 owned_plant boolean NOT NULL DEFAULT false,
-listed_for_sale boolean NOT NULL DEFAULT false,
+
 
 CONSTRAINT PK_favorites PRIMARY KEY (favorites_id),
 CONSTRAINT FK_favorites FOREIGN KEY (username) REFERENCES users(username)
 
 );
-
---CREATE TABLE plants(
---plant_id int NOT NULL,
---
---);
-
-
---CREATE TABLE buyers(
---    plant_id int,
---    username varchar(50) NOT NULL
---
---
---);
-
-CREATE TABLE sellers(
-    seller_id SERIAL,
-    plant_id int,
-    username varchar(50) NOT NULL,
-    price money NOT NULL DEFAULT 0.00,
-
-CONSTRAINT FK_username FOREIGN KEY (username) REFERENCES users(username),
-CONSTRAINT PK_sellers PRIMARY KEY (seller_id)
-);
-
-
-
---CREATE TABLE sellers(
---favorites_id int NOT NULL,
---plant_id int NOT NULL,
---username varchar(50) NOT NULL,
---price money NOT NULL DEFAULT 0.00,
---is_available boolean NOT NULL DEFAULT false,
---
---
---CONSTRAINT FK_sellers_favorites FOREIGN KEY (favorites_id) REFERENCES favorites(favorites_id),
---CONSTRAINT FK_sellers FOREIGN KEY (username) REFERENCES users(username)
---);
-
---CREATE TABLE transaction(
---transaction_id SERIAL NOT NULL,
---transaction_type varchar(100),
---buyer_id int NOT NULL,
---seller_id int NOT NULL,
---plant_id int NOT NULL,
---
---CONSTRAINT PK_transaction PRIMARY KEY (transaction_id)
---);
 
 
 

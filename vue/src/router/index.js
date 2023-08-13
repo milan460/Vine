@@ -9,7 +9,7 @@ import DetailPage from '../views/DetailPageView.vue'
 import SearchPage from '../views/SearchPage.vue'
 import FavoritesPage from '../views/FavoritesPageView.vue'
 import Test from '../views/TestCSS.vue'
-
+import MarketPlaceView from '../views/MarketPlaceView.vue'
 Vue.use(Router)
 
 /**
@@ -85,6 +85,14 @@ const router = new Router({
       path: "/test",
       name: "test",
       component: Test,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/marketplace",
+      name: "marketplace",
+      component: MarketPlaceView,
       meta: {
         requiresAuth: true
       }
