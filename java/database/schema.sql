@@ -55,6 +55,7 @@ CREATE TABLE transaction(
 transaction_id SERIAL NOT NULL,
 transaction_type varchar(100),
 
+
 CONSTRAINT PK_transaction PRIMARY KEY (transaction_id)
 );
 
