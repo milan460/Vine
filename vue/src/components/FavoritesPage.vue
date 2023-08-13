@@ -60,6 +60,8 @@ export default {
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
         if (response.status === 200) {
+          console.log('this is the response error')
+          console.log(response)
           this.favoriteList = response.data.map( (favoriteItem) => {
             return {
               favoriteId: favoriteItem.favoriteId,
