@@ -2,7 +2,7 @@
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
       
-       <!-- <b-card
+       <b-card
             :title="favoriteItem.plantObj.common_name"
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
@@ -31,7 +31,7 @@
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
-          </b-card> -->
+          </b-card>
     </div>
   </div>
 </template>
