@@ -8,7 +8,7 @@
     </header>
     <img
       id="pic"
-      v-bind:src="plantObject.default_image.medium_url"
+      v-bind:src="plantObject.default_image.regular_url"
       alt="Image of Plant"
     />
     <div class="icon-details">
@@ -170,7 +170,7 @@ export default {
     ". review . ."
     ". addReview . .";
 
-  grid-template-rows: 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr;
+  grid-template-rows: 0.3fr 0.3fr 0.3fr 0.3fr 0.1fr;
   grid-template-areas:
     "btn header header ."
     ". pic icons ."
@@ -184,7 +184,6 @@ export default {
   grid-area: pic;
   height: 50vh;
   width: 30vw;
-
 }
 
 #tabs {

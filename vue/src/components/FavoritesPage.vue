@@ -21,8 +21,13 @@
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">Delete</b-button>
+<<<<<<< HEAD
             <b-button href="#" @click="updateOwned(favoriteItem.favoriteId)" variant="secondary">Owned?</b-button>
             <b-button href="#" v-if="favoriteItem.ownedPlant === true" @click="sendToSellerForm" variant="secondary">Sell</b-button>
+=======
+            <b-button href="#" @click="updateOwned(favoriteItem.favoriteId)" variant="secondary">Own this Plant?</b-button>
+            <b-button href="#" v-if="favoriteItem.ownedPlant === true" @click="sendToSellerForm" variant="secondary">Sell this Plant?</b-button>
+>>>>>>> e6201ded961d2a96b27a3cf9fe2d4375ef91c873
           </b-card>
     </div>
     

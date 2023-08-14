@@ -11,7 +11,7 @@ import FavoritesPage from '../views/FavoritesPageView.vue'
 import Test from '../views/TestCSS.vue'
 import MarketPlaceView from '../views/MarketPlaceView.vue'
 import CheckoutPageView from '../views/CheckoutPageView.vue'
-import SellerFormView from '../views/SellerFormView.vue'
+import SellerPortalView from '../views/SellerPortalView.vue'
 Vue.use(Router)
 
 /**
@@ -110,7 +110,7 @@ const router = new Router({
     {
       path: "/listing",
       name: "listing",
-      component: SellerFormView,
+      component: SellerPortalView,
       meta: {
         requiresAuth: true
       }
