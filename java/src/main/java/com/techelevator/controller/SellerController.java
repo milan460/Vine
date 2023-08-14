@@ -40,7 +40,7 @@ public class SellerController {
 
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(path = "/deleteListing/{favoriteId}", method = RequestMethod.DELETE)
-    public void addNewListing(@PathVariable int favoriteId){
+    public void deleteListing(@PathVariable int favoriteId){
         sellerDao.deleteListing(favoriteId);
     }
 }

@@ -21,6 +21,7 @@
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
+            <b-button href="#" @click="updateOwned(favoriteItem.favoriteId)" variant="secondary">Own this Plant?</b-button>
           </b-card>
     </div>
     
@@ -52,6 +53,14 @@ export default {
   },
 
   methods: {
+    updateOwned(favoriteId){
+      FavoriteService.updateFavoriteOwnedPlant(favoriteId).then( (response) => {
+        console.log(response)
+        if(response.status === 200){
+          console.log('this went thru')
+        }
+      })
+    },
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
         if (response.status === 200) {
