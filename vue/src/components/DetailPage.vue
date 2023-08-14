@@ -69,7 +69,7 @@
           Reviews
         </button>
         <button class="button active" id="rec">Recommendations</button>
-        <button class="button active" id="nursery">Nursery</button>
+        <button class="button active" id="nursery">Plant Shop</button>
         <button class="button active" @click="addToFavorites" id="garden">
           Add to Garden
         </button>
@@ -78,7 +78,7 @@
 
     <div v-show="showreviews" id="review">
       <review-page :plantId="currentPlantId" />
-      <button @click="showForm = !showForm" id="addReview">Add Review</button>
+      <button v-if="$store.state.token != ''"  @click="showForm = !showForm" id="addReview">Add Review</button>
       <create-review
         @form-submitted="handleFormSubmitted"
         :show-tag="showForm"
@@ -182,6 +182,9 @@ export default {
 
 #pic {
   grid-area: pic;
+  height: 50vh;
+  width: 30vw;
+
 }
 
 #tabs {
@@ -228,6 +231,7 @@ export default {
 .nav-extended {
   grid-area: nav;
 }
+
 button {
   background-color: rgb(163, 231, 163);
   border: rgb(163, 231, 163);
@@ -239,12 +243,10 @@ button {
 .button {
   padding-top: 2%;
 }
+
 #water {
   height: 5vh;
   margin: 2%;
 }
-/* .active, .btn:hover {
-  background-color: rgb(127, 209, 127);
-  color: white;
-} */
+
 </style>

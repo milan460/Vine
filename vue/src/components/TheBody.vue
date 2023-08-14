@@ -303,7 +303,7 @@
       </div>
     
       <div>
-          <p id = "description">Start Your Own Garden Today</p>
+          <p id = "description">Begin your own garden journey today and witness the magic unfold. Kick-start your garden using Vine.</p>
           <button id = "search"><router-link v-bind:to=" { name: 'plant-search' } ">Search</router-link></button>
       </div>
 
@@ -329,13 +329,15 @@ onload = () => {
 
 #description {
   font-size: 48px;
-  width: 40vh;
+  text-align: center;
+  width: 60vh;
+  margin-left: 75%;
 }
 
 #search {
   width: 120px;
   height: 60px;
-  margin-left: 250px;
+  margin-left: 75%;
   font-size: 20px;
   box-shadow: 5px 5px 5px gray;
   background-color: rgb(157, 238, 157);

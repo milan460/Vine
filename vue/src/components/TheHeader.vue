@@ -8,8 +8,8 @@
         
         <b-nav-item id = "home"><router-link class="link" v-bind:to="{ name: 'home' }">Home</router-link></b-nav-item>
         <b-nav-item id = "home"><router-link class="link" v-bind:to=" { name: 'plant-search' } ">Search</router-link></b-nav-item>
+        <b-nav-item id = "home"><router-link class="link" v-bind:to=" { name: 'marketplace' }" >Plant Shop</router-link></b-nav-item>
         <b-nav-item id = "home"><router-link class="link" v-bind:to=" { name: 'favorites-page' }" v-if="$store.state.token != ''">Personal Garden</router-link></b-nav-item>
-        <b-nav-item id = "home"><router-link class="link" v-bind:to=" { name: 'marketplace' }" v-if="$store.state.token != ''">MarketPlace</router-link></b-nav-item>
         <b-nav-item id = "home"><router-link class="link" v-bind:to="{ name: 'login' }" v-if="$store.state.token == ''">Login</router-link>
         <router-link class="link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link></b-nav-item>
         
@@ -34,7 +34,7 @@ export default {
 
 }
 
-#pic{
+#pic {
   height: 13vh;
 }
 
