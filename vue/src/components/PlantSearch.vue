@@ -1,7 +1,8 @@
 <template>
   <div id="main">
     <div id="filters">
-      <b-form-input id="src"
+      <b-form-input
+        id="src"
         size="sm"
         class="mr-sm-2"
         placeholder="Search"
@@ -16,15 +17,15 @@
         </label>
 
         <label for="outdoorPlants">
-          <button id="btn"  @click="checkOutdoorPlants">Outdoor</button>
+          <button id="btn" @click="checkOutdoorPlants">Outdoor</button>
         </label>
 
         <label for="ediblePlants">
-          <button id="btn"  @click="checkEdiblePlants">Edible</button>
+          <button id="btn" @click="checkEdiblePlants">Edible</button>
         </label>
       </div>
     </div>
-
+    <b-alert @click="favoriteAdded = false" v-show="favoriteAdded" variant="success" show>Success Alert</b-alert>
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link
@@ -41,7 +42,8 @@
             class="mb-2 flex1"
           >
             <b-card-text>
-              <img id="water"
+              <img
+                id="water"
                 src="../assets/indoor-plants.png"
                 v-if="indoorFilterOn"
                 :title="plant.indoor"
@@ -52,16 +54,22 @@
                 v-bind:title="plant.watering"
                 v-if="plant.watering == 'Minimum'"
               />
-              <img id="water" src="../assets/water.png" v-else>
-                  <img
-                    class="ratingStar"
-                    src="../assets/sun.png"
-                    v-bind:title="plant.sunlight" v-if="plant.sunlight == 'full sun'"
-                  />
-                  <img id="water" src="../assets/partly-cloudy.png" v-else>
+              <img id="water" src="../assets/water.png" v-else />
+              <img
+                class="ratingStar"
+                src="../assets/sun.png"
+                v-bind:title="plant.sunlight"
+                v-if="plant.sunlight == 'full sun'"
+              />
+              <img id="water" src="../assets/partly-cloudy.png" v-else />
             </b-card-text>
-            
-            <b-button href="#"  @click="addToFavorites(plant.id)" variant="primary" >Add to Garden</b-button>
+
+            <b-button
+              href="#"
+              @click="addToFavorites(plant.id)"
+              variant="primary"
+              >Add to Garden</b-button
+            >
           </b-card>
         </router-link>
       </div>
@@ -75,9 +83,8 @@
 </template>
 
 <script>
-import FavoriteService from '../services/FavoriteService.js';
+import FavoriteService from "../services/FavoriteService.js";
 import plantData from "../services/PlantData.js";
-// import ToastedNotification from './ToastedNotification.vue';
 
 export default {
   data() {
@@ -99,6 +106,7 @@ export default {
         watering: "",
         sunlight: "",
       },
+      favoriteAdded: false
     };
   },
   created() {
@@ -357,23 +365,18 @@ export default {
         });
       });
     },
-    addToFavorites(plantId){
-    console.log("this is the plant Id")
-    console.log(plantId)
-    FavoriteService.addToFavorites(plantId).then(response =>{
-      // if(!this.isLoggedIn){
-         
-      // }
-      // else{
-      //   this.$router.push('/login');
-      // }
-      // }
-      if (response.status === 201){
-       this.$toast.show("Add to GArden ")
-      }
-     
-    })
-    }
+    addToFavorites(plantId) {
+      FavoriteService.addToFavorites(plantId).then(() => {
+        // if(!this.isLoggedIn){
+
+        // }
+        // else{
+        //   this.$router.push('/login');
+        // }
+        // }
+        this.favoriteAdded = true;
+      });
+    },
   },
   computed: {
     filteredList() {
@@ -466,7 +469,7 @@ export default {
 </script>
 
 <style scoped>
-#main{
+#main {
   height: 100%;
   background-color: rgb(206, 245, 206);
 }
@@ -507,26 +510,25 @@ export default {
   background-color: rgb(206, 245, 206);
   box-shadow: 5px 5px 5px gray;
   border: black 1px solid;
-  
-
 }
-#water{
+#water {
   height: 5vh;
   margin: 2%;
 }
 
-#pageDown, #pageUp{
+#pageDown,
+#pageUp {
   margin: 1%;
   background-color: rgb(174, 230, 174);
   box-shadow: 3px 3px 3px rgb(167, 166, 166);
   justify-content: space-between;
 }
 
-#pageUp{
+#pageUp {
   margin-left: 83%;
 }
 
-#btn{
+#btn {
   width: 98%;
   height: 4vh;
   box-shadow: 5px 5px 5px gray;
@@ -535,9 +537,8 @@ export default {
   border: black 1px solid;
 }
 
-#src{
+#src {
   width: 55vw;
   box-shadow: 5px 5px 5px gray;
 }
-
 </style>

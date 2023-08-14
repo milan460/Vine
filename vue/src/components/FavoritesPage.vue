@@ -6,10 +6,17 @@
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
            img-left class="mb-3"
-            style="max-width: 20rem"
+            
          
           >
             <b-card-text>
+              <strong >Watering Instructions: </strong>
+              {{favoriteItem.wateringInstructions}}
+              <strong> Sun Instructions: </strong>
+              {{favoriteItem.sunInstructions}}
+               <strong> Pruning Instructions: </strong>
+               {{favoriteItem.pruningInstructions}}
+              
               
             </b-card-text>
 
@@ -23,7 +30,7 @@
 </template>
 
 <script>
-import PlantData from "../services/PlantData"
+import PlantData from "../services/PlantData.js"
 import FavoriteService from "../services/FavoriteService";
 // import PlantCare from "../components/PlantCare.vue"
 
@@ -58,22 +65,61 @@ export default {
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
         if (response.status === 200) {
-          console.log('this is the response error')
-          console.log(response)
           this.favoriteList = response.data.map( (favoriteItem) => {
             return {
               favoriteId: favoriteItem.favoriteId,
               plantId: favoriteItem.plantId,
               username: favoriteItem.username,
               ownedPlant: favoriteItem.ownedPlant,
-              plantObj: favoriteItem.plantObj
+              plantObj: favoriteItem.plantObj,
+              wateringInstructions: "",
+              sunInstructions: "",
+              pruningInstructions: ""
             }
           });
           this.getPlantData()
-          console.log('this is the favorite list')
-          console.log(this.favoriteList)
+          this.getWateringInstructions()
+          this.getSunInstructions()
+          this.getPruningInstructions()
         }
       });
+    },
+
+    getWateringInstructions(){
+      this.favoriteList.forEach(favorite => {
+        PlantData.getPlantCareData(favorite.plantId).then(response => {
+       favorite.wateringInstructions = response.data.data[0].section[0].description
+     }).catch(error => {
+       console.log(error)
+     })
+
+      })
+     
+
+    },
+    getSunInstructions(){
+      this.favoriteList.forEach(favorite => {
+        PlantData.getPlantCareData(favorite.plantId).then(response => {
+       favorite.sunInstructions = response.data.data[0].section[1].description
+     }).catch(error => {
+       console.log(error)
+     })
+
+      })
+     
+
+    },
+    getPruningInstructions(){
+      this.favoriteList.forEach(favorite => {
+        PlantData.getPlantCareData(favorite.plantId).then(response => {
+       favorite.pruningInstructions = response.data.data[0].section[2].description
+     }).catch(error => {
+       console.log(error)
+     })
+
+      })
+     
+
     },
 
     getPlantData(){

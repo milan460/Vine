@@ -23,5 +23,8 @@ export default{
     },
     getEdiblePlants(nPage, nParam){
         return http.get('species-list?page=' + nPage + '&key=' + apiKey + '&edible=' + nParam)
+    },
+    getPlantCareData(nPlantId){
+        return http.get('species-care-guide-list?key=' + apiKey + '&species_id=' + nPlantId)
     }
 }
