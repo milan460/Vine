@@ -17,17 +17,16 @@
           <b-nav-item id="home"
             ><router-link
               class="link"
-              v-bind:to="{ name: 'favorites-page' }"
-              v-if="$store.state.token != ''"
-              >Personal Garden</router-link
+              v-bind:to="{ name: 'marketplace' }"
+              >Plant Shop</router-link
             ></b-nav-item
           >
           <b-nav-item id="home"
             ><router-link
               class="link"
-              v-bind:to="{ name: 'marketplace' }"
+              v-bind:to="{ name: 'favorites-page' }"
               v-if="$store.state.token != ''"
-              >MarketPlace</router-link
+              >Personal Garden</router-link
             ></b-nav-item
           >
           <b-nav-item id="home"
