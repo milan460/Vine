@@ -31,10 +31,6 @@
       show
       >Success Alert</b-alert
     >
-<<<<<<< HEAD
-
-=======
->>>>>>> e6201ded961d2a96b27a3cf9fe2d4375ef91c873
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link
@@ -71,10 +67,6 @@
                   />
                   <img id="water" src="../assets/partly-cloudy.png" v-else>
             </b-card-text>
-<<<<<<< HEAD
-            
-            <b-button href="#" v-if="$store.state.token != ''" @click="addToFavorites(plant.id)" variant="primary">Add to Garden</b-button>
-=======
 
             <b-button
             v-if="$store.state.token != ''"
@@ -83,7 +75,6 @@
               variant="primary"
               >Add to Garden</b-button
             >
->>>>>>> e6201ded961d2a96b27a3cf9fe2d4375ef91c873
           </b-card>
         </router-link>
       </div>
@@ -121,10 +112,7 @@ export default {
         imageURL: "",
 
       },
-<<<<<<< HEAD
-=======
       favoriteAdded: false,
->>>>>>> e6201ded961d2a96b27a3cf9fe2d4375ef91c873
     };
   },
   created() {
@@ -383,17 +371,6 @@ export default {
         });
       });
     },
-<<<<<<< HEAD
-    addToFavorites(plantId){
-    console.log("this is the plant Id")
-    console.log(plantId)
-    FavoriteService.addToFavorites(plantId).then(response =>{
-      if (response.status === 201){
-        //alert("Was added to your garden")
-      }
-    })
-    }
-=======
     addToFavorites(plantId) {
         FavoriteService.addToFavorites(plantId).then((response) => {
           if (response.status === 201) {
@@ -403,7 +380,6 @@ export default {
         
       
     },
->>>>>>> e6201ded961d2a96b27a3cf9fe2d4375ef91c873
   },
   computed: {
     filteredList() {
@@ -496,15 +472,7 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
 #main{
-=======
-
-b-card{
-   box-shadow: 10px 10px 10px gray;
-}
-#main {
->>>>>>> e6201ded961d2a96b27a3cf9fe2d4375ef91c873
   height: 100%;
   background-color: rgb(206, 245, 206);
 }
