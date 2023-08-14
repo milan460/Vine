@@ -31,7 +31,7 @@ public class FavoriteController {
         return favoriteDao.getFavoritesList(principal.getName());
     }
     @PreAuthorize("hasRole('USER')")
-    @RequestMapping(path="/favorites/{favoriteId}", method = RequestMethod.DELETE)
+    @RequestMapping(path="/deleteFavorites/{favoriteId}", method = RequestMethod.DELETE)
     public void deleteFavorite(@PathVariable int favoriteId){
         favoriteDao.deleteFromFavorites(favoriteId);
     }

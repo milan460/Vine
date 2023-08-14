@@ -9,4 +9,6 @@ public interface SellerDao {
     List<Seller> getAllSellersPlants();
 
     void addListing(Seller seller);
+
+    void deleteListing(int favoritesId);
 }
