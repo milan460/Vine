@@ -6,16 +6,25 @@ public class Favorite {
     private int favoriteId;
     private int plantId;
     private String username;
+    private boolean ownedPlant;
 
 
-    public Favorite(int favoriteId, int plantId, String username) {
+    public Favorite(int favoriteId, int plantId, String username, boolean ownedPlant) {
         this.favoriteId = favoriteId;
         this.plantId = plantId;
         this.username = username;
+        this.ownedPlant = ownedPlant;
     }
 
-    public Favorite(){
+    public Favorite() {
+    }
 
+    public int getFavoriteId() {
+        return favoriteId;
+    }
+
+    public void setFavoriteId(int favoriteId) {
+        this.favoriteId = favoriteId;
     }
 
     public int getPlantId() {
@@ -34,12 +43,12 @@ public class Favorite {
         this.username = username;
     }
 
-    public int getFavoriteId() {
-        return favoriteId;
+    public boolean isOwnedPlant() {
+        return ownedPlant;
     }
 
-    public void setFavoriteId(int favoriteId) {
-        this.favoriteId = favoriteId;
+    public void setOwnedPlant(boolean ownedPlants) {
+        this.ownedPlant = ownedPlants;
     }
 
     @Override
@@ -48,19 +57,20 @@ public class Favorite {
                 "favoriteId=" + favoriteId +
                 ", plantId=" + plantId +
                 ", username='" + username + '\'' +
+                ", ownedPlants=" + ownedPlant +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Favorite)) return false;
         Favorite favorite = (Favorite) o;
-        return favoriteId == favorite.favoriteId && plantId == favorite.plantId && username.equals(favorite.username);
+        return favoriteId == favorite.favoriteId && plantId == favorite.plantId && ownedPlant == favorite.ownedPlant && username.equals(favorite.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(favoriteId, plantId, username);
+        return Objects.hash(favoriteId, plantId, username, ownedPlant);
     }
 }

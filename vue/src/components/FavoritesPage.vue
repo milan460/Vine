@@ -1,9 +1,8 @@
 <template>
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
-      <div>
-
-      <b-card
+      
+       <!-- <b-card
             :title="favoriteItem.plantObj.common_name"
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
@@ -32,9 +31,7 @@
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
-          </b-card>
-
-      </div>
+          </b-card> -->
     </div>
   </div>
 </template>
@@ -50,8 +47,9 @@ export default {
           favoriteId: '',
           plantId: '',
           username: '',
+          ownedPlant: '',
           plantObj: {}
-          }
+        }
       ],
     };
   },
@@ -67,10 +65,13 @@ export default {
               favoriteId: favoriteItem.favoriteId,
               plantId: favoriteItem.plantId,
               username: favoriteItem.username,
+              ownedPlant: favoriteItem.ownedPlant,
               plantObj: favoriteItem.plantObj
             }
           });
           this.getPlantData()
+          console.log('this is the favorite list')
+          console.log(this.favoriteList)
         }
       });
     },
