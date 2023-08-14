@@ -11,6 +11,8 @@ public interface FavoriteDao {
 
  void deleteFromFavorites(int favoriteId);
 
+ void updateFavorites(Favorite favorite);
+
  List<Favorite> getFavoritesList (String username);
 
 

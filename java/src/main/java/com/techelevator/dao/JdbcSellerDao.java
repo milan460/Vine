@@ -49,7 +49,7 @@ public class JdbcSellerDao implements SellerDao{
                 "VALUES (?, ?, ?, ?, ?) ";
 
         try{
-           jdbcTemplate.update(sql, seller.getFavorites_id(), seller.getDescription(), seller.getPrice(), seller.isAvailable(),seller.getStockQuantity());
+           jdbcTemplate.update(sql, seller.getFavoritesId(), seller.getDescription(), seller.getPrice(), seller.isAvailable(),seller.getStockQuantity());
 
         }
         catch (Exception e){
@@ -58,10 +58,24 @@ public class JdbcSellerDao implements SellerDao{
         }
     }
 
+    @Override
+    public void deleteListing(int favoriteId) {
+        String sql = "DELETE FROM sellers\n" +
+                "WHERE favorites_id = ?";
+
+        try{
+            jdbcTemplate.update(sql, favoriteId);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new DaoException("Cannot delete listing", e);
+        }
+    }
+
     private Seller mapToRowSeller(SqlRowSet sqlRowSet){
         Seller seller = new Seller();
 
-        seller.setFavorites_id(sqlRowSet.getInt("favorites_id"));
+        seller.setFavoritesId(sqlRowSet.getInt("favorites_id"));
         seller.setDescription(sqlRowSet.getString("description"));
         seller.setPrice(sqlRowSet.getBigDecimal("price"));
         seller.setAvailable(sqlRowSet.getBoolean("is_available"));

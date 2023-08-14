@@ -7,7 +7,6 @@ import com.techelevator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.util.List;
 
@@ -19,6 +18,7 @@ public class SellerController {
     private final SellerDao sellerDao;
     @Autowired
     private final UserDao userDao;
+
 
     public SellerController(SellerDao sellerDao, UserDao userDao){
         this.sellerDao = sellerDao;
@@ -36,5 +36,11 @@ public class SellerController {
     public void addNewListing(@RequestBody Seller seller, Principal principal){
         seller.setUsername(principal.getName());
         sellerDao.addListing(seller);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(path = "/deleteListing/{favoriteId}", method = RequestMethod.DELETE)
+    public void addNewListing(@PathVariable int favoriteId){
+        sellerDao.deleteListing(favoriteId);
     }
 }
