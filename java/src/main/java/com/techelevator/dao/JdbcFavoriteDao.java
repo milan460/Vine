@@ -40,6 +40,35 @@ public class JdbcFavoriteDao implements FavoriteDao {
     }
 
     @Override
+    public void updateFavoritesUsername(Favorite favorite) {
+        String sql = "UPDATE favorites\n" +
+                "SET username = ?\n" +
+                "WHERE favorites_id = ? AND owned_plant = true";
+
+        try{
+            jdbcTemplate.update(sql, favorite.getUsername(), favorite.getFavoriteId());
+        }
+
+        catch (Exception e) {
+            throw new DaoException("Unable to delete the favorites item", e);
+        }
+
+    }
+
+    @Override
+    public void updateFavoriteOwnedPlants(Favorite favorite) {
+        String sql = "UPDATE favorites\n" +
+                "SET owned_plant = true\n" +
+                "WHERE favorites_id = ?";
+        try{
+            jdbcTemplate.update(sql, favorite.getFavoriteId());
+        }
+        catch (Exception e) {
+            throw new DaoException("Unable to delete the favorites item", e);
+        }
+    }
+
+    @Override
     public List<Favorite> getFavoritesList(String username) {
         List<Favorite> favorites = new ArrayList<>();
         String sql = "SELECT * FROM favorites WHERE username = ?;";
@@ -52,8 +81,6 @@ public class JdbcFavoriteDao implements FavoriteDao {
         } catch (Exception e){
             e.printStackTrace();
             throw new DaoException("Cannot get the favorites list", e);
-
-
         }
         return favorites;
     }

@@ -14,6 +14,8 @@ INSERT INTO favorites (plant_id, username, owned_plant) VALUES (2, 'admin', true
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (24, 'user', false);
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (89, 'user', false);
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (10, 'admin', false);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (12, 'user', true);
+
 
 INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (1,  'buy this plant', 25.00, false, 1);
 INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (2, '', 50.00, true, 1);

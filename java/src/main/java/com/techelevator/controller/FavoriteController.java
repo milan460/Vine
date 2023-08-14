@@ -42,6 +42,23 @@ public class FavoriteController {
        return favoriteDao.addToFavorites(favorite);
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(path= "/updateFavorite", method = RequestMethod.PUT)
+    public void updateFavorites(@RequestBody Favorite favorite, Principal principal){
+        favorite.setUsername(principal.getName());
+        favoriteDao.updateFavoritesUsername(favorite);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(path= "/updateOwned", method = RequestMethod.PUT)
+    public void updateFavoritesOwnedPlant(@RequestBody Favorite favorite){
+        favoriteDao.updateFavoriteOwnedPlants(favorite);
+    }
+
+
+
+
+
 
 
 

@@ -23,6 +23,26 @@ deleteFromFavoritesWithPlantId(plantId){
 
 
     return axios.delete('favorites/' + plantId)
+},
+
+updateFavoritesUsername(favoriteId){
+    const requestData = {favoriteId: favoriteId};
+    
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    return axios.put('/updateFavorite', requestData, {headers})
+},
+
+updateFavoriteOwnedPlant(favoriteId){
+    const requestData = {favoriteId: favoriteId};
+    
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    return axios.put('/updateOwned', requestData, {headers})
 }
 
 }

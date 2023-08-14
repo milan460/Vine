@@ -7,6 +7,10 @@ export default{
     },
 
     addListing(listing){
-        return axios.post('addListing', listing)
+        return axios.post('/addListing', listing)
+    },
+
+    deleteListing(favoriteId){
+        return axios.delete('/deleteListing/' + favoriteId)
     }
 }
