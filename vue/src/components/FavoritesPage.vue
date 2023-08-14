@@ -31,7 +31,6 @@
 <script>
 import PlantData from "../services/PlantData.js"
 import FavoriteService from "../services/FavoriteService";
-// import PlantCare from "../components/PlantCare.vue"
 
 export default {
   components: {
