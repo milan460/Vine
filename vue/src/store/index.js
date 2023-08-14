@@ -22,7 +22,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     activePlant: 0,
     currentReviewId: 0,
-    plantsArray: []
+    plantsArray: [],
+    cartArray: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -47,9 +48,9 @@ export default new Vuex.Store({
     SET_REVIEW_ID(state, reviewId){
       state.currentReviewId = reviewId
     },
-    SET_FAVORITE_PLANT(state, favoriteId){
-      state.currentFavoriteId = favoriteId;
-    }
+    // SET_FAVORITE_PLANT(state, favoriteId){
+    //   state.currentFavoriteId = favoriteId;
+    // }
     
   }
   ////////// USE THIS TO ROUTE /////

@@ -8,5 +8,7 @@ import java.util.List;
 public interface SellerDao {
     List<Seller> getAllSellersPlants();
 
-    int addListing(Seller seller);
+    void addListing(Seller seller);
+
+    void deleteListing(int favoritesId);
 }

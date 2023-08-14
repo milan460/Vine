@@ -1,9 +1,8 @@
 <template>
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
-      <div>
-        {{this.currentPlantId}}
-      <!-- <b-card
+
+       <b-card
             :title="favoriteItem.plantObj.common_name"
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
@@ -32,9 +31,7 @@
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
-          </b-card> -->
-      </div>
-      <plant-care :plantId="currentPlantId" />
+          </b-card>
     </div>
     
   </div>
@@ -43,11 +40,11 @@
 <script>
 import PlantData from "../services/PlantData"
 import FavoriteService from "../services/FavoriteService";
-import PlantCare from "../components/PlantCare.vue"
+// import PlantCare from "../components/PlantCare.vue"
 
 export default {
   components: {
-    PlantCare
+    // PlantCare
   },
   data() {
     return {
@@ -56,9 +53,9 @@ export default {
           favoriteId: '',
           plantId: '',
           username: '',
+          ownedPlant: '',
           plantObj: {}
-          
-          }
+        }
       ],
       currentPlantId: 0
     };
@@ -75,10 +72,13 @@ export default {
               favoriteId: favoriteItem.favoriteId,
               plantId: favoriteItem.plantId,
               username: favoriteItem.username,
+              ownedPlant: favoriteItem.ownedPlant,
               plantObj: favoriteItem.plantObj
             }
           });
           this.getPlantData()
+          console.log('this is the favorite list')
+          console.log(this.favoriteList)
         }
       });
     },
@@ -104,9 +104,13 @@ export default {
      // Remove the entry with the deleted reviewId from favoriteList
     this.favoriteList = this.favoriteList.filter(item => item.favoriteId !== deletedFavoriteId);
   },
-    testMethod(){
-    
-    }
+  checkThumbnail(default_image) {
+      if (default_image === null) {
+        return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
+      }
+
+      return default_image;
+    },
     
      
   },
@@ -117,5 +121,5 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style scoped>
+</style> 
