@@ -11,6 +11,7 @@ import FavoritesPage from '../views/FavoritesPageView.vue'
 import Test from '../views/TestCSS.vue'
 import MarketPlaceView from '../views/MarketPlaceView.vue'
 import CheckoutPageView from '../views/CheckoutPageView.vue'
+import SellerFormView from '../views/SellerFormView.vue'
 Vue.use(Router)
 
 /**
@@ -102,6 +103,14 @@ const router = new Router({
       path: "/checkout",
       name: "checkout",
       component: CheckoutPageView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/listing",
+      name: "listing",
+      component: SellerFormView,
       meta: {
         requiresAuth: true
       }
