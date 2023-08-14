@@ -1,46 +1,35 @@
 <template>
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
-
        <b-card
             :title="favoriteItem.plantObj.common_name"
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
-            img-top
-            tag="article"
+           img-left class="mb-3"
             style="max-width: 20rem"
-            class="mb-2 flex1"
+         
           >
             <b-card-text>
-              <img src="../assets/indoor-plants.png" v-if="checkIndoorPlants === true" :title="plant.indoor"> //indoor
-              <img
-          class="ratingStar"
-          src="../assets/drop.png"
-          v-bind:title="favoriteItem.plantObj.watering"
-        /> //watering
-              <ul v-for="sunlight in favoriteItem.plantObj.sunlight" v-bind:key="sunlight">
-                <ol>
-                  <img
-          class="ratingStar"
-          src="../assets/sun.png"
-          v-bind:title="favoriteItem.plantObj.sunlight"
-        /> //sunlight
-                </ol>
-
-              </ul>
+              
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
             <b-button href="#" @click="updateOwned(favoriteItem.favoriteId)" variant="secondary">Own this Plant?</b-button>
           </b-card>
     </div>
+    
   </div>
 </template>
 
 <script>
 import PlantData from "../services/PlantData"
 import FavoriteService from "../services/FavoriteService";
+// import PlantCare from "../components/PlantCare.vue"
+
 export default {
+  components: {
+    // PlantCare
+  },
   data() {
     return {
       favoriteList: [
@@ -52,6 +41,7 @@ export default {
           plantObj: {}
         }
       ],
+      currentPlantId: 0
     };
   },
 
@@ -117,10 +107,11 @@ export default {
      
   },
   created() {
-     this.showFavoritesList()
+     this.showFavoritesList(),
+     this.currentPlantId = this.$store.state.active;
   },
 };
 </script>
 
-<style>
-</style>
+<style scoped>
+</style> 
