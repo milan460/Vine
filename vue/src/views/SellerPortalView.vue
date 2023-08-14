@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SellerForm from '../components/SellerForm.vue'
+import SellerForm from '../components/SellerPortal.vue'
 export default {
 components:{
     SellerForm
