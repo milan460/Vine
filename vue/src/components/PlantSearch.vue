@@ -25,14 +25,20 @@
         </label>
       </div>
     </div>
-    <b-alert @click="favoriteAdded = false" v-show="favoriteAdded" variant="success" show>Success Alert</b-alert>
+    <b-alert
+      @click="favoriteAdded = false"
+      v-show="favoriteAdded"
+      variant="success"
+      show
+      >Success Alert</b-alert
+    >
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link
           class="link"
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
         >
-          <b-card
+          <b-card id="card"
             :title="plant.common_name"
             v-bind:img-src="plant.thumbnail"
             alt="Plant Image"
@@ -65,6 +71,7 @@
             </b-card-text>
 
             <b-button
+            v-if="$store.state.token != ''"
               href="#"
               @click="addToFavorites(plant.id)"
               variant="primary"
@@ -106,7 +113,7 @@ export default {
         watering: "",
         sunlight: "",
       },
-      favoriteAdded: false
+      favoriteAdded: false,
     };
   },
   created() {
@@ -149,10 +156,10 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.thumbnail,
+                  : plantData.default_image.medium_url,
               indoor: "",
             };
           });
@@ -168,10 +175,10 @@ export default {
                 cycle: plantData.cycle,
                 watering: plantData.watering,
                 sunlight: plantData.sunlight,
-                thumbnail:
+                medium_url:
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
-                    : plantData.default_image.thumbnail,
+                    : plantData.default_image.medium_url,
               };
             });
           });
@@ -186,10 +193,10 @@ export default {
                 cycle: plantData.cycle,
                 watering: plantData.watering,
                 sunlight: plantData.sunlight,
-                thumbnail:
+                medium_url:
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
-                    : plantData.default_image.thumbnail,
+                    : plantData.default_image.medium_url,
               };
             });
           });
@@ -206,10 +213,10 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.thumbnail,
+                  : plantData.default_image.medium_url,
             };
           });
         });
@@ -231,10 +238,10 @@ export default {
                 cycle: plantData.cycle,
                 watering: plantData.watering,
                 sunlight: plantData.sunlight,
-                thumbnail:
+                medium_url:
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
-                    : plantData.default_image.thumbnail,
+                    : plantData.default_image.medium_url,
                 indoor: "",
               };
             });
@@ -254,10 +261,10 @@ export default {
                   cycle: plantData.cycle,
                   watering: plantData.watering,
                   sunlight: plantData.sunlight,
-                  thumbnail:
+                  medium_url:
                     plantData.default_image === null
                       ? this.checkThumbnail(plantData.default_image)
-                      : plantData.default_image.thumbnail,
+                      : plantData.default_image.medium_url,
                 };
               });
             });
@@ -276,10 +283,10 @@ export default {
                   cycle: plantData.cycle,
                   watering: plantData.watering,
                   sunlight: plantData.sunlight,
-                  thumbnail:
+                  medium_url:
                     plantData.default_image === null
                       ? this.checkThumbnail(plantData.default_image)
-                      : plantData.default_image.thumbnail,
+                      : plantData.default_image.medium_url,
                 };
               });
             });
@@ -296,10 +303,10 @@ export default {
                 cycle: plantData.cycle,
                 watering: plantData.watering,
                 sunlight: plantData.sunlight,
-                thumbnail:
+                medium_url:
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
-                    : plantData.default_image.thumbnail,
+                    : plantData.default_image.medium_url,
               };
             });
           });
@@ -318,10 +325,10 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.thumbnail,
+                  : plantData.default_image.medium_url,
             };
           });
         });
@@ -339,10 +346,10 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.thumbnail,
+                  : plantData.default_image.medium_url,
             };
           });
         });
@@ -357,25 +364,22 @@ export default {
             cycle: plantData.cycle,
             watering: plantData.watering,
             sunlight: plantData.sunlight,
-            thumbnail:
+            medium_url:
               plantData.default_image === null
                 ? this.checkThumbnail(plantData.default_image)
-                : plantData.default_image.thumbnail,
+                : plantData.default_image.medium_url,
           };
         });
       });
     },
     addToFavorites(plantId) {
-      FavoriteService.addToFavorites(plantId).then(() => {
-        // if(!this.isLoggedIn){
-
-        // }
-        // else{
-        //   this.$router.push('/login');
-        // }
-        // }
-        this.favoriteAdded = true;
-      });
+        FavoriteService.addToFavorites(plantId).then((response) => {
+          if (response.status === 201) {
+            this.favoriteAdded = true;
+          }
+        });
+        
+      
     },
   },
   computed: {
@@ -454,10 +458,10 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.thumbnail,
+                  : plantData.default_image.medium_url,
               indoor: "",
             };
           });
@@ -469,6 +473,10 @@ export default {
 </script>
 
 <style scoped>
+
+b-card{
+   box-shadow: 10px 10px 10px gray;
+}
 #main {
   height: 100%;
   background-color: rgb(206, 245, 206);
@@ -487,6 +495,16 @@ export default {
   display: flex;
   flex-basis: 30%;
   padding: 3%;
+  
+}
+#card{
+   box-shadow: 5px 5px 5px gray;
+   border: black solid 1px;
+}
+#card > img{
+  width: 20.75vw;
+  height: 43vh;
+
 }
 
 #main {

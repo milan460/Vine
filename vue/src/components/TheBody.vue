@@ -303,7 +303,7 @@
       </div>
     
       <div>
-          <p id = "description">Start Your Own Garden Today</p>
+          <p id = "description">Begin your own garden journey today and witness the magic unfold. Kick-start your garden using Vine.</p>
           <button id = "search"><router-link v-bind:to=" { name: 'plant-search' } ">Search</router-link></button>
       </div>
 
@@ -329,13 +329,15 @@ onload = () => {
 
 #description {
   font-size: 48px;
-  width: 40vh;
+  text-align: center;
+  width: 60vh;
+  margin-left: 75%;
 }
 
 #search {
   width: 120px;
   height: 60px;
-  margin-left: 250px;
+  margin-left: 75%;
   font-size: 20px;
   box-shadow: 5px 5px 5px gray;
   background-color: rgb(157, 238, 157);
@@ -365,23 +367,13 @@ onload = () => {
   background-color: rgb(206, 245, 206);
   overflow: hidden;
   perspective: 1000px;
+ 
 }
 
-/* .night {
-  position: fixed;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 100%;
-  filter: blur(0.1vmin);
-  background-image: radial-gradient(ellipse at top, transparent 0%, var(--dark-color)), radial-gradient(ellipse at bottom, var(--dark-color), rgba(145, 233, 255, 0.2)), repeating-linear-gradient(220deg, black 0px, black 19px, transparent 19px, transparent 22px), repeating-linear-gradient(189deg, black 0px, black 19px, transparent 19px, transparent 22px), repeating-linear-gradient(148deg, black 0px, black 19px, transparent 19px, transparent 22px), linear-gradient(90deg, #00fffa, #f0f0f0);
-} */
 
 .flowers {
   position: relative;
   transform: scale(0.7);
-  margin-right: 600px;
   margin-top: 400px;
 }
 

@@ -95,7 +95,7 @@ const router = new Router({
       name: "marketplace",
       component: MarketPlaceView,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {

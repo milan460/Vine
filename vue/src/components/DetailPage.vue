@@ -8,7 +8,7 @@
     </header>
     <img
       id="pic"
-      v-bind:src="plantObject.default_image.medium_url"
+      v-bind:src="plantObject.default_image.regular_url"
       alt="Image of Plant"
     />
     <div class="icon-details">
@@ -69,7 +69,7 @@
           Reviews
         </button>
         <button class="button active" id="rec">Recommendations</button>
-        <button class="button active" id="nursery">Nursery</button>
+        <button class="button active" id="nursery">Plant Shop</button>
         <button class="button active" @click="addToFavorites" id="garden">
           Add to Garden
         </button>
@@ -78,7 +78,7 @@
 
     <div v-show="showreviews" id="review">
       <review-page :plantId="currentPlantId" />
-      <button @click="showForm = !showForm" id="addReview">Add Review</button>
+      <button  v-if="$store.state.token != ''" @click="showForm = !showForm" id="addReview">Add Review</button>
       <create-review
         @form-submitted="handleFormSubmitted"
         :show-tag="showForm"
@@ -170,7 +170,7 @@ export default {
     ". review . ."
     ". addReview . .";
 
-  grid-template-rows: 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr;
+  grid-template-rows: 0.3fr 0.3fr 0.3fr 0.3fr 0.1fr;
   grid-template-areas:
     "btn header header ."
     ". pic icons ."
@@ -182,6 +182,8 @@ export default {
 
 #pic {
   grid-area: pic;
+  height: 50vh;
+  width: 30vw;
 }
 
 #tabs {
