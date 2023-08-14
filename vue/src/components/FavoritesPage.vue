@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
-      
-       <!-- <b-card
+
+       <b-card
             :title="favoriteItem.plantObj.common_name"
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
@@ -31,7 +31,7 @@
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
-          </b-card> -->
+          </b-card>
     </div>
   </div>
 </template>
@@ -97,9 +97,13 @@ export default {
      // Remove the entry with the deleted reviewId from favoriteList
     this.favoriteList = this.favoriteList.filter(item => item.favoriteId !== deletedFavoriteId);
   },
-    testMethod(){
-    
-    }
+  checkThumbnail(default_image) {
+      if (default_image === null) {
+        return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
+      }
+
+      return default_image;
+    },
     
      
   },
