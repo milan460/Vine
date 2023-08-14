@@ -46,6 +46,9 @@ export default new Vuex.Store({
     },
     SET_REVIEW_ID(state, reviewId){
       state.currentReviewId = reviewId
+    },
+    SET_FAVORITE_PLANT(state, favoriteId){
+      state.currentFavoriteId = favoriteId;
     }
     
   }

@@ -6,12 +6,11 @@ import axios from 'axios'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import Toasted from 'vue-toasted';
+// import Toasted from 'vue-toasted';
 
-Vue.use(Toasted, {
-  duration: 1500,
-  position: 'top-center'
-})
+// Vue.use(Toasted, {
+//   duration: 1500
+// })
 
 
 Vue.use(BootstrapVue)

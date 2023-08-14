@@ -2,8 +2,8 @@
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
       <div>
-
-      <b-card
+        {{this.currentPlantId}}
+      <!-- <b-card
             :title="favoriteItem.plantObj.common_name"
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
             alt="Plant Image"
@@ -32,17 +32,23 @@
             </b-card-text>
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
-          </b-card>
-
+          </b-card> -->
       </div>
+      <plant-care :plantId="currentPlantId" />
     </div>
+    
   </div>
 </template>
 
 <script>
 import PlantData from "../services/PlantData"
 import FavoriteService from "../services/FavoriteService";
+import PlantCare from "../components/PlantCare.vue"
+
 export default {
+  components: {
+    PlantCare
+  },
   data() {
     return {
       favoriteList: [
@@ -51,8 +57,10 @@ export default {
           plantId: '',
           username: '',
           plantObj: {}
+          
           }
       ],
+      currentPlantId: 0
     };
   },
 
@@ -103,7 +111,8 @@ export default {
      
   },
   created() {
-     this.showFavoritesList()
+     this.showFavoritesList(),
+     this.currentPlantId = this.$store.state.active;
   },
 };
 </script>
