@@ -15,6 +15,7 @@
 
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
             <b-button href="#" @click="updateOwned(favoriteItem.favoriteId)" variant="secondary">Own this Plant?</b-button>
+            <b-button href="#" v-if="favoriteItem.ownedPlant === true" @click="sendToSellerForm" variant="secondary">Sell this Plant?</b-button>
           </b-card>
     </div>
     
@@ -103,6 +104,10 @@ export default {
 
       return default_image;
     },
+
+    sendToSellerForm(){
+      this.$router.push()
+    }
     
      
   },
