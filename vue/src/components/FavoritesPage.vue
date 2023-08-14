@@ -16,13 +16,19 @@
             <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
           </b-card>
     </div>
+    
   </div>
 </template>
 
 <script>
 import PlantData from "../services/PlantData"
 import FavoriteService from "../services/FavoriteService";
+// import PlantCare from "../components/PlantCare.vue"
+
 export default {
+  components: {
+    // PlantCare
+  },
   data() {
     return {
       favoriteList: [
@@ -34,6 +40,7 @@ export default {
           plantObj: {}
         }
       ],
+      currentPlantId: 0
     };
   },
 
@@ -91,10 +98,11 @@ export default {
      
   },
   created() {
-     this.showFavoritesList()
+     this.showFavoritesList(),
+     this.currentPlantId = this.$store.state.active;
   },
 };
 </script>
 
-<style>
-</style>
+<style scoped>
+</style> 

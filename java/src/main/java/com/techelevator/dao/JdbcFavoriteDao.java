@@ -40,6 +40,11 @@ public class JdbcFavoriteDao implements FavoriteDao {
     }
 
     @Override
+    public void updateFavorites(Favorite favorite) {
+
+    }
+
+    @Override
     public List<Favorite> getFavoritesList(String username) {
         List<Favorite> favorites = new ArrayList<>();
         String sql = "SELECT * FROM favorites WHERE username = ?;";

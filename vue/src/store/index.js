@@ -48,9 +48,9 @@ export default new Vuex.Store({
     SET_REVIEW_ID(state, reviewId){
       state.currentReviewId = reviewId
     },
-    ADD_TO_CART_ARRAY(state, listing){
-      state.cartArray.push(listing)
-    }
+    // SET_FAVORITE_PLANT(state, favoriteId){
+    //   state.currentFavoriteId = favoriteId;
+    // }
     
   }
   ////////// USE THIS TO ROUTE /////

@@ -152,7 +152,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #backbtn {
   grid-area: btn;
   height: 3vh;

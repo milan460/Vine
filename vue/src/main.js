@@ -9,8 +9,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // import Toasted from 'vue-toasted';
 
 // Vue.use(Toasted, {
-//   duration: 1500,
-//   position: 'top-center'
+//   duration: 1500
 // })
 
 

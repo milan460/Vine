@@ -375,7 +375,7 @@ onload = () => {
   --dark-color: #000;
 }
 
-/* body {
+body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -383,7 +383,7 @@ onload = () => {
   background-color: var(--dark-color);
   overflow: hidden;
   perspective: 1000px;
-} */
+}
 
 /* .night {
   position: fixed;
@@ -431,6 +431,10 @@ onload = () => {
   grid-area: flower;
   position: relative;
   transform: scale(0.7);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  
 }
 
 .flower {
