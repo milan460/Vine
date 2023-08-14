@@ -34,11 +34,11 @@ export default {
     },
     methods:{
         confirmPurchase(){
-            SellerService.deleteListing(this.$store.state.cartArray.favoriteId)
-            FavoriteService
             //call the sellersService and delete an entry based on favorite Id
+            SellerService.deleteListing(this.$store.state.cartArray.favoriteId)
+
             //call the favoritesService and update an entry based on favorite object from the cartArray in the store
-            //call the receiptService and post the entry with the transaction object from the data properties above
+            FavoriteService.updateFavoriteOwnedPlant(this.$store.state.cartArray.favoriteId)
         }
         
     }
