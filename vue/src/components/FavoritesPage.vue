@@ -1,7 +1,6 @@
 <template>
   <div>
     <div v-for="favoriteItem in favoriteList" v-bind:key="favoriteItem.favoriteId" >
-
        <b-card
             :title="favoriteItem.plantObj.common_name"
             v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
