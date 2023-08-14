@@ -10,6 +10,7 @@ import SearchPage from '../views/SearchPage.vue'
 import FavoritesPage from '../views/FavoritesPageView.vue'
 import Test from '../views/TestCSS.vue'
 import MarketPlaceView from '../views/MarketPlaceView.vue'
+import CheckoutPageView from '../views/CheckoutPageView.vue'
 Vue.use(Router)
 
 /**
@@ -96,7 +97,16 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/checkout",
+      name: "checkout",
+      component: CheckoutPageView,
+      meta: {
+        requiresAuth: true
+      }
     }
+
     
     
   ]

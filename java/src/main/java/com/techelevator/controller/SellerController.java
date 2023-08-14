@@ -33,8 +33,8 @@ public class SellerController {
 
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(path = "/addListing", method = RequestMethod.POST)
-    public int addNewListing(@RequestBody Seller seller, Principal principal){
+    public void addNewListing(@RequestBody Seller seller, Principal principal){
         seller.setUsername(principal.getName());
-        return sellerDao.addListing(seller);
+        sellerDao.addListing(seller);
     }
 }

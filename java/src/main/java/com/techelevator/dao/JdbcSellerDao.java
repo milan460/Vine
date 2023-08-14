@@ -21,8 +21,10 @@ public class JdbcSellerDao implements SellerDao{
     @Override
     public List<Seller> getAllSellersPlants() {
         List<Seller> listOfAllPlantsBeingSold = new ArrayList<>();
-        String sql = "SELECT * FROM plant_sellers JOIN favorites ON favorites.favorite_id = sellers.favorite" +
-                "WHERE owned_plants = true";
+        String sql = "SELECT sellers.favorites_id, description, price, is_available, stock_quantity, plant_id, username\n" +
+                "FROM sellers\n" +
+                "JOIN favorites ON sellers.favorites_id = favorites.favorites_id\n" +
+                "WHERE owned_plant = true";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -41,32 +43,31 @@ public class JdbcSellerDao implements SellerDao{
 
 
     @Override
-    public int addListing(Seller seller) {
-        int newPlantSellerId = 0;
-        String sql = "INSERT INTO plant_sellers (username, plant_id, description, price, stock_quantity)\n" +
-                "VALUES (?, ?, ?, ?, ?) \n" +
-                "RETURNING plant_seller_id";
+    public void addListing(Seller seller) {
+
+        String sql = "INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity)\n" +
+                "VALUES (?, ?, ?, ?, ?) ";
 
         try{
-            newPlantSellerId = jdbcTemplate.queryForObject(sql, int.class, seller.getUsername(), seller.getPlantId(), seller.getDescription(), seller.getPrice(), seller.getStockQuantity());
-            seller.setPlantSellerId(newPlantSellerId);
+           jdbcTemplate.update(sql, seller.getFavorites_id(), seller.getDescription(), seller.getPrice(), seller.isAvailable(),seller.getStockQuantity());
+
         }
         catch (Exception e){
             e.printStackTrace();
             throw new DaoException("Cannot find seller plants", e);
         }
-        return newPlantSellerId;
     }
 
     private Seller mapToRowSeller(SqlRowSet sqlRowSet){
         Seller seller = new Seller();
 
-        seller.setPlantSellerId(sqlRowSet.getInt("plant_seller_id"));
-        seller.setPlantId(sqlRowSet.getInt("plant_id"));
-        seller.setUsername(sqlRowSet.getString("username"));
+        seller.setFavorites_id(sqlRowSet.getInt("favorites_id"));
         seller.setDescription(sqlRowSet.getString("description"));
         seller.setPrice(sqlRowSet.getBigDecimal("price"));
+        seller.setAvailable(sqlRowSet.getBoolean("is_available"));
         seller.setStockQuantity(sqlRowSet.getInt("stock_quantity"));
+        seller.setPlantId(sqlRowSet.getInt("plant_id"));
+        seller.setUsername(sqlRowSet.getString("username"));
 
         return seller;
     }

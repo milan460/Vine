@@ -1,9 +1,12 @@
 <template>
   <div class="mainSeller">
+    <div>
+      <cart></cart>
+    </div>
       <div id="listingCard" v-for="listingItem in SellerListings" v-bind:key="listingItem.plantSellerId">
 
-        {{listingItem.plantObj.common_name}}
-          <!-- <b-card
+        <!-- {{listingItem.plantObj.common_name}} -->
+          <b-card
             :title="listingItem.plantObj.common_name"
             v-bind:img-src="listingItem.plantObj.default_image.medium_url"
             alt="Plant Image"
@@ -17,45 +20,50 @@
               <img
           class="ratingStar"
           src="../assets/drop.png"
-          v-bind:title="favoriteItem.plantObj.watering"
+          v-bind:title="listingItem.plantObj.watering"
         /> //watering
-              <ul v-for="sunlight in favoriteItem.plantObj.sunlight" v-bind:key="sunlight">
+              <ul v-for="sunlight in listingItem.plantObj.sunlight" v-bind:key="sunlight">
                 <ol>
                   <img
           class="ratingStar"
           src="../assets/sun.png"
-          v-bind:title="favoriteItem.plantObj.sunlight"
+          v-bind:title="listingItem.plantObj.sunlight"
         /> //sunlight
                 </ol>
 
               </ul>
             </b-card-text>
 
-            <b-button href="#" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" variant="primary">delete From Favorites</b-button>
+            <b-button href="#" @click="addToCart(listingItem.favoritesId)" variant="primary">Add To Cart</b-button>
           </b-card>
 
-      </div> -->
+      </div>
   </div>
 </template>
 
 <script>
 import PlantData from '../services/PlantData.js'
 import SellerService from '../services/SellerService.js'
+import Cart from '../components/Cart.vue'
 export default {
   data(){
     return{
       SellerListings: [
         {
           username: '',
-          plantSellerId: '',
+          favoritesId: '',
           plantId: '',
           description: '',
           price: '',
           stockQuantity: '',
+          isAvailable: '',
           plantObj: {}
         }
       ]
     }
+  },
+  components:{
+    Cart
   },
   methods:{
     getAllListings(){
@@ -64,15 +72,17 @@ export default {
         this.SellerListings = response.data.map( (listingItem) => {
           return {
             username: listingItem.username,
-            plantSellerId: listingItem.plantSellerId,
+            favoritesId: listingItem.favorites_id,
             plantId: listingItem.plantId,
             description: listingItem.description,
             price: listingItem.price,
             stockQuantity: listingItem.stockQuantity,
+            isAvailable: listingItem.available,
             plantObj: listingItem.plantObj
           }
         })
         this.getPlantData()
+        console.log('this is the seller listing')
         console.log(this.SellerListings)
     
     
@@ -88,6 +98,17 @@ export default {
         })
       })
     },
+
+    addToCart(favoriteId){
+      console.log(favoriteId)
+      let listingItem = this.SellerListings.filter( (listingItem) => {
+        return listingItem.favoritesId === favoriteId
+      })
+      console.log('this is the add to cart item')
+      console.log(listingItem)
+      this.$store.commit('ADD_TO_CART_ARRAY', listingItem)
+      console.log(this.$store.state.cartArray)
+    }
   },
 
   created(){

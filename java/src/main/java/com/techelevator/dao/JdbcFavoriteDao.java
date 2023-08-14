@@ -18,15 +18,15 @@ public class JdbcFavoriteDao implements FavoriteDao {
 
     @Override
     public int addToFavorites(Favorite favorite) {
-        int newFavorite = 0;
-        String sql = "INSERT INTO favorites (plant_id, username) VALUES (?, ?) RETURNING favorites_id;";
+        int newFavoriteId = 0;
+        String sql = "INSERT INTO favorites (plant_id, username, owned_plant) VALUES (?, ?, ?) RETURNING favorites_id;";
         try {
-            newFavorite = jdbcTemplate.queryForObject(sql, int.class, favorite.getPlantId(), favorite.getUsername());
-            favorite.setFavoriteId(newFavorite);
+            newFavoriteId = jdbcTemplate.queryForObject(sql, int.class, favorite.getPlantId(), favorite.getUsername(), favorite.isOwnedPlant());
+            favorite.setFavoriteId(newFavoriteId);
         } catch (NullPointerException e) {
             throw new NullPointerException("Login to add to the garden");
         }
-        return newFavorite;
+        return newFavoriteId;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class JdbcFavoriteDao implements FavoriteDao {
     @Override
     public List<Favorite> getFavoritesList(String username) {
         List<Favorite> favorites = new ArrayList<>();
-        String sql = "SELECT favorites_id, plant_id, username FROM favorites WHERE username = ?;";
+        String sql = "SELECT * FROM favorites WHERE username = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
             while (results.next()) {
@@ -51,7 +51,7 @@ public class JdbcFavoriteDao implements FavoriteDao {
             }
         } catch (Exception e){
             e.printStackTrace();
-            throw new DaoException("Cannot Add to favorites", e);
+            throw new DaoException("Cannot get the favorites list", e);
 
 
         }
@@ -65,6 +65,7 @@ public class JdbcFavoriteDao implements FavoriteDao {
         favorite.setUsername(sqlRowSet.getString("username"));
         favorite.setFavoriteId(sqlRowSet.getInt("favorites_id"));
         favorite.setPlantId(sqlRowSet.getInt("plant_id"));
+        favorite.setOwnedPlant(sqlRowSet.getBoolean("owned_plant"));
 
         return favorite;
     }

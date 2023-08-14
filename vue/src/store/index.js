@@ -22,7 +22,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     activePlant: 0,
     currentReviewId: 0,
-    plantsArray: []
+    plantsArray: [],
+    cartArray: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     SET_REVIEW_ID(state, reviewId){
       state.currentReviewId = reviewId
+    },
+    ADD_TO_CART_ARRAY(state, listing){
+      state.cartArray.push(listing)
     }
     
   }
