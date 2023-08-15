@@ -12,18 +12,33 @@
             <p class="item-quantity">{{ item.stockQuantity }} in stock</p>
           </b-card-text>
         </b-card>
-        <b-button @click="routeToCheckoutPage" variant="primary" class="checkout-button">Checkout</b-button>
+        <b-button @click="confirmPurchase" variant="primary" class="checkout-button">Checkout</b-button>
       </div>
     </b-sidebar>
   </div>
 </template>
 
 <script>
+import FavoriteService from '../services/FavoriteService';
+import SellerService from '../services/SellerService';
 export default {
   methods: {
     routeToCheckoutPage() {
       this.$router.push({ name: 'checkout' });
     },
+    deleteFromCart(){
+        //mutation to delete from cart array in store
+    },
+    confirmPurchase(){
+            //call the sellersService and delete an entry based on favorite Id
+            SellerService.deleteListing(this.$store.state.cartArray.favoriteId)
+
+            //call the favoritesService and update an entry based on favorite object from the cartArray in the store
+            FavoriteService.updateFavoriteOwnedPlant(this.$store.state.cartArray.favoriteId)
+
+            //mutation clear the cart array create mutation in store
+            
+        }
   },
 };
 </script>

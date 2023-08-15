@@ -49,7 +49,7 @@ public class JdbcSellerDao implements SellerDao{
                 "VALUES (?, ?, ?, ?, ?) ";
 
         try{
-           jdbcTemplate.update(sql, seller.getFavoritesId(), seller.getDescription(), seller.getPrice(), seller.isAvailable(),seller.getStockQuantity());
+           jdbcTemplate.update(sql, seller.getFavoritesId(), seller.getDescription(), seller.getPrice(), seller.getAvailable(),seller.getStockQuantity());
 
         }
         catch (Exception e){

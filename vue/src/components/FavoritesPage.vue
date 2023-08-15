@@ -196,7 +196,7 @@ export default {
           favoriteId: "",
           plantId: "",
           username: "",
-          ownedPlant: "",
+          ownedPlant: false,
           plantObj: {},
         },
       ],
@@ -216,8 +216,9 @@ export default {
     },
   },
   methods: {
-    updateOwned(favoriteId) {
-      FavoriteService.updateFavoriteOwnedPlant(favoriteId).then((response) => {
+    updateOwned(favoriteId, ownedPlant) {
+      ownedPlant = !ownedPlant
+      FavoriteService.updateFavoriteOwnedPlant(favoriteId, ownedPlant).then((response) => {
         console.log(response);
         if (response.status === 200) {
           console.log("this went thru");

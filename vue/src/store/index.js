@@ -54,7 +54,18 @@ export default new Vuex.Store({
     },
     SET_FAVORITE_PLANT(state, favoriteId){
       state.currentFavoriteId = Number(favoriteId);
-    }
+    },
+    CLEAR_CART_ARRAY(state){
+      state.cartArray = [];
+    },
+    // DELETE_FROM_CART_ARRAY(state, favoriteId){
+    //   const item = state.cartArray.find( (cartItem) => {
+    //     return cartItem
+    //   })
+
+
+
+    // }
     
   }
   ////////// USE THIS TO ROUTE /////
