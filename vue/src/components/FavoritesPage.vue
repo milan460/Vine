@@ -77,6 +77,7 @@
         
         <b-button
         class="btns"
+        id="own"
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
           variant="secondary"
@@ -102,34 +103,77 @@
         img-left
         class="mb-3"
       >
-        <b-card-text>
-          <strong>Watering Instructions: </strong>
-          {{ favoriteItem.wateringInstructions }}
-          <strong> Sun Instructions: </strong>
-          {{ favoriteItem.sunInstructions }}
-          <strong> Pruning Instructions: </strong>
-          {{ favoriteItem.pruningInstructions }}
-        </b-card-text>
+      
+         <b-card-text>
+          <div class="accordion" role="tablist">
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-1 variant="info"
+                  >Watering</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-1"
+                visible
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{
+                    favoriteItem.wateringInstructions
+                  }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
 
-        <b-button
-          href="#"
-          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
-          variant="primary"
-          >Delete</b-button
-        >
-        <b-button
-          href="#"
-          @click="updateOwned(favoriteItem.favoriteId)"
-          variant="secondary"
-          >Own?</b-button
-        >
-        <b-button
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-2 variant="info"
+                  >Sunlight</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-2"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{ favoriteItem.sunInstructions }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-3 variant="info"
+                  >Pruning</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-3"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{
+                    favoriteItem.pruningInstructions
+                  }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+          </div>
+        </b-card-text>
+        
+
+          <b-button
+        id="sell"
           href="#"
           v-if="favoriteItem.ownedPlant === true"
           @click="sendToSellerForm(favoriteItem.favoriteId)"
           variant="secondary"
-          >Sell</b-button
+          >Sell?</b-button
         >
+        <img id="delete" src="../assets/trash-can.png" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" >        
       </b-card>
     </div>
   </div>
@@ -296,13 +340,19 @@ export default {
   margin-right: 8%;
   margin-top: 4%;
 }
-.btns{
-  margin-left: 50px;
-}
+
 #delete{
   height: 6vh;
+  margin-left: 79%;
+  margin-top: 3%;
 }
 h1{
+  margin-top: 3%;
   margin-left: 8%;
 }
+#own{
+   margin-top: 3%;
+  margin-right: 5%;
+}
+
 </style> 
