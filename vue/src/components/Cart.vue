@@ -14,7 +14,7 @@
             <p class="item-quantity">{{ item.stockQuantity }} in stock</p>
           </b-card-text>
         </b-card>
-         <p class="total-price">Total Price: ${{ totalPrice }}</p>
+        <p class="total-price">Total Price: ${{ totalPrice }}</p>
         <b-button @click="confirmPurchase()" variant="primary" class="checkout-button">Checkout</b-button>
       </div>
     </b-sidebar>
@@ -25,11 +25,14 @@
 import FavoriteService from '../services/FavoriteService';
 import SellerService from '../services/SellerService';
 export default {
-  computed:{
-    totalPrice() {
+  
+computed:{
+ totalPrice() {
       return this.$store.state.cartArray.reduce((total, item) => total + item.price, 0);
-    },
+    
   },
+  
+},
   methods: {
     routeToCheckoutPage() {
       this.$router.push({ name: 'checkout' });
@@ -46,7 +49,7 @@ export default {
             console.log(this.$store.state.cartArray)
             this.$store.state.cartArray.forEach(item => {
               SellerService.deleteListing(item.favoritesId)
-              FavoriteService.updateFavoriteOwnedPlant(item.favoritesId, true)
+              FavoriteService.updateFavoritesUsername(item.favoritesId)
               this.deleteFromCart(item.favoritesId)
             });
             //SellerService.deleteListing(this.$store.state.cartArray.favoritesId)
