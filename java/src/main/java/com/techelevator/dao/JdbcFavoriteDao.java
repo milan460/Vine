@@ -58,10 +58,10 @@ public class JdbcFavoriteDao implements FavoriteDao {
     @Override
     public void updateFavoriteOwnedPlants(Favorite favorite) {
         String sql = "UPDATE favorites\n" +
-                "SET owned_plant = true\n" +
+                "SET owned_plant = ?\n" +
                 "WHERE favorites_id = ?";
         try{
-            jdbcTemplate.update(sql, favorite.getFavoriteId());
+            jdbcTemplate.update(sql, favorite.isOwnedPlant(),favorite.getFavoriteId());
         }
         catch (Exception e) {
             throw new DaoException("Unable to delete the favorites item", e);

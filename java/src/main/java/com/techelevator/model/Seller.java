@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -8,26 +10,27 @@ public class Seller {
     private int favoritesId;
     private String description;
     private BigDecimal price;
-    private boolean isAvailable;
+    @JsonProperty(value = "Available")
+    private boolean Available;
     private int stockQuantity;
     private String username;
     private int plantId;
 
-    public Seller(int favoritesId, String description, BigDecimal price, boolean isAvailable, int stockQuantity, String username, int plantId) {
+    public Seller(int favoritesId, String description, BigDecimal price, boolean Available, int stockQuantity, String username, int plantId) {
         this.favoritesId = favoritesId;
         this.description = description;
         this.price = price;
-        this.isAvailable = isAvailable;
+        this.Available = Available;
         this.stockQuantity = stockQuantity;
         this.username = username;
         this.plantId = plantId;
     }
 
-    public Seller(int favorites_id, String description, BigDecimal price, boolean isAvailable, int stockQuantity) {
+    public Seller(int favorites_id, String description, BigDecimal price, boolean Available, int stockQuantity) {
         this.favoritesId = favorites_id;
         this.description = description;
         this.price = price;
-        this.isAvailable = isAvailable;
+        this.Available = Available;
         this.stockQuantity = stockQuantity;
     }
 
@@ -58,12 +61,12 @@ public class Seller {
         this.price = price;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean getAvailable() {
+        return Available;
     }
 
-    public void setAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setAvailable(boolean Available) {
+        this.Available = Available;
     }
 
     public int getStockQuantity() {
@@ -96,7 +99,7 @@ public class Seller {
                 "favoritesId=" + favoritesId +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", isAvailable=" + isAvailable +
+                ", isAvailable=" + Available +
                 ", stockQuantity=" + stockQuantity +
                 ", username='" + username + '\'' +
                 ", plantId=" + plantId +
@@ -108,12 +111,12 @@ public class Seller {
         if (this == o) return true;
         if (!(o instanceof Seller)) return false;
         Seller seller = (Seller) o;
-        return favoritesId == seller.favoritesId && isAvailable == seller.isAvailable && stockQuantity == seller.stockQuantity && plantId == seller.plantId && description.equals(seller.description) && price.equals(seller.price) && username.equals(seller.username);
+        return favoritesId == seller.favoritesId && Available == seller.Available && stockQuantity == seller.stockQuantity && plantId == seller.plantId && description.equals(seller.description) && price.equals(seller.price) && username.equals(seller.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(favoritesId, description, price, isAvailable, stockQuantity, username, plantId);
+        return Objects.hash(favoritesId, description, price, Available, stockQuantity, username, plantId);
     }
 }
 

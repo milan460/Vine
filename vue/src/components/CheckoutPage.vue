@@ -39,6 +39,8 @@ export default {
 
             //call the favoritesService and update an entry based on favorite object from the cartArray in the store
             FavoriteService.updateFavoriteOwnedPlant(this.$store.state.cartArray.favoriteId)
+
+            //Clear the cart array
         }
         
     }
