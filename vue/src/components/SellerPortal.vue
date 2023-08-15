@@ -55,7 +55,7 @@ export default {
         favoritesId: this.$store.state.currentFavoriteId,
         description: "",
         price: "",
-        isAvailable: true,
+        Available: true,
         stockQuantity: "",
       },
     };
@@ -88,10 +88,12 @@ export default {
     //   }
     //   console.log(listingParse)
     //   console.log('this is the listing object')
-    if(this.listing.isAvailable === true){
+    if(this.listing.Available === true){
+      SellerService
       SellerService.addListing(this.listing).then( (response) => {
           if(response.status === 201){
               console.log('this has gone thru')
+              this.$router.push( {name: 'favorites-page'} )
           }
       })
     }

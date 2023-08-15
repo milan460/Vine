@@ -1,11 +1,14 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class Favorite {
     private int favoriteId;
     private int plantId;
     private String username;
+    @JsonProperty(value = "ownedPlant")
     private boolean ownedPlant;
 
 

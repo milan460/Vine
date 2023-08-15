@@ -1,9 +1,11 @@
 <template>
   <div class="mainSeller">
-    
+    <div>
+      <h1>Current Listings</h1>
+    </div>
     <div
       id="listingCard"
-      v-for="listingItem in SellerListings"
+      v-for="listingItem in filteredAvailablePlants"
       v-bind:key="listingItem.favoritesId"
     >
       <!-- {{listingItem.plantObj.common_name}} -->
@@ -101,6 +103,11 @@ export default {
       ],
     };
   
+  },
+  computed:{
+       filteredAvailablePlants() {
+      return this.SellerListings.filter((sellerItem) => sellerItem.isAvailable === true);
+    },
   },
   methods: {
     getAllListings() {
