@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
-      <h1>Your Wish List</h1>
+      <h1>Favorites</h1>
     </div>
-       <div
+    <div
       v-for="favoriteItem in filteredWishListPlants"
       v-bind:key="favoriteItem.favoriteId"
     >
@@ -15,42 +15,83 @@
         class="mb-3"
       >
         <b-card-text>
-          <strong>Watering Instructions: </strong>
-          {{ favoriteItem.wateringInstructions }}
-          <strong> Sun Instructions: </strong>
-          {{ favoriteItem.sunInstructions }}
-          <strong> Pruning Instructions: </strong>
-          {{ favoriteItem.pruningInstructions }}
+          <div class="accordion" role="tablist">
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-1 variant="info"
+                  >Watering</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-1"
+                visible
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{
+                    favoriteItem.wateringInstructions
+                  }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-2 variant="info"
+                  >Sunlight</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-2"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{ favoriteItem.sunInstructions }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-3 variant="info"
+                  >Pruning</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-3"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{
+                    favoriteItem.pruningInstructions
+                  }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+          </div>
         </b-card-text>
 
+        
         <b-button
-          href="#"
-          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
-          variant="primary"
-          >Delete</b-button
-        >
-        <b-button
+        class="btns"
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
           variant="secondary"
-          >Owned?</b-button
+          >Own?</b-button
         >
-          <b-button
-            href="#"
-            v-if="favoriteItem.ownedPlant === true"
-            @click="sendToSellerForm(favoriteItem.favoriteId)"
-            variant="secondary"
-            >Sell</b-button
-          >
+        <img id="delete" src="../assets/trash-can.png" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" >
       </b-card>
     </div>
 
     <!--the div and b-card containers below are the filterFavorite Plants that the user does own -->
 
     <div>
-      <h1>Your Favorites</h1>
+      <h1>Personal Garden</h1>
     </div>
-       <div
+    <div
       v-for="favoriteItem in filteredOwnedPlants"
       v-bind:key="favoriteItem.favoriteId"
     >
@@ -80,22 +121,17 @@
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
           variant="secondary"
-          >Owned?</b-button
+          >Own?</b-button
         >
-          <b-button
-            href="#"
-            v-if="favoriteItem.ownedPlant === true"
-            @click="sendToSellerForm(favoriteItem.favoriteId)"
-            variant="secondary"
-            >Sell</b-button
-          >
+        <b-button
+          href="#"
+          v-if="favoriteItem.ownedPlant === true"
+          @click="sendToSellerForm(favoriteItem.favoriteId)"
+          variant="secondary"
+          >Sell</b-button
+        >
       </b-card>
     </div>
-
-
-
-
-    
   </div>
 </template>
 
@@ -123,12 +159,16 @@ export default {
       currentPlantId: 0,
     };
   },
-  computed:{
+  computed: {
     filteredOwnedPlants() {
-      return this.favoriteList.filter((favoriteItem) => favoriteItem.ownedPlant === true);
+      return this.favoriteList.filter(
+        (favoriteItem) => favoriteItem.ownedPlant === true
+      );
     },
     filteredWishListPlants() {
-      return this.favoriteList.filter((favoriteItem) => favoriteItem.ownedPlant === false);
+      return this.favoriteList.filter(
+        (favoriteItem) => favoriteItem.ownedPlant === false
+      );
     },
   },
   methods: {
@@ -202,7 +242,6 @@ export default {
 
     getPlantData() {
       this.favoriteList.forEach((favorite) => {
-        
         PlantData.getPlantDetails(favorite.plantId).then((response) => {
           if (response.status === 200) {
             favorite.plantObj = response.data;
@@ -211,7 +250,6 @@ export default {
       });
     },
 
-    
     sendToSellerForm(favoriteId) {
       this.$router.push({ name: "listing", params: { id: favoriteId } });
     },
@@ -250,4 +288,21 @@ export default {
 </script>
 
 <style scoped>
+.mb-3{
+  box-shadow: 3px 3px 3px 5px gray;
+  width: 80vw;
+  /* margin: 8%; */
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-top: 4%;
+}
+.btns{
+  margin-left: 50px;
+}
+#delete{
+  height: 6vh;
+}
+h1{
+  margin-left: 8%;
+}
 </style> 

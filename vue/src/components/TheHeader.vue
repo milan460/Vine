@@ -26,7 +26,7 @@
               class="link"
               v-bind:to="{ name: 'favorites-page' }"
               v-if="$store.state.token != ''"
-              >Personal Garden</router-link
+              >Favorites</router-link
             ></b-nav-item
           >
           <b-nav-item id="home"
