@@ -9,8 +9,9 @@ INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('
 
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (1, 'user', true);
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (2, 'user', true);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (1, 'admin', true);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (20, 'admin', true);
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (2, 'admin', true);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (144, 'admin', true);
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (24, 'user', false);
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (89, 'user', false);
 INSERT INTO favorites (plant_id, username, owned_plant) VALUES (10, 'admin', false);
@@ -21,8 +22,8 @@ INSERT INTO sellers (favorites_id, description, price, is_available, stock_quant
 INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (2, '', 50.00, true, 1);
 INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (3, 'cool', 15.24, true, 1);
 INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (4, 'test', 256.76, true,1);
-
-
+INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (5, 'TEST CART PLANT', 500.67, true, 1);
+INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (6, 'TEST CART PLANT 2', 756.76, true, 1);
 
 
 
