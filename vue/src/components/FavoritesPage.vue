@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div
-      v-for="favoriteItem in favoriteList"
+    <div>
+      <h1>Your Wish List</h1>
+    </div>
+       <div
+      v-for="favoriteItem in filteredWishListPlants"
       v-bind:key="favoriteItem.favoriteId"
     >
       <b-card
@@ -41,6 +44,58 @@
           >
       </b-card>
     </div>
+
+    <!--the div and b-card containers below are the filterFavorite Plants that the user does own -->
+
+    <div>
+      <h1>Your Favorites</h1>
+    </div>
+       <div
+      v-for="favoriteItem in filteredOwnedPlants"
+      v-bind:key="favoriteItem.favoriteId"
+    >
+      <b-card
+        :title="favoriteItem.plantObj.common_name"
+        v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
+        alt="Plant Image"
+        img-left
+        class="mb-3"
+      >
+        <b-card-text>
+          <strong>Watering Instructions: </strong>
+          {{ favoriteItem.wateringInstructions }}
+          <strong> Sun Instructions: </strong>
+          {{ favoriteItem.sunInstructions }}
+          <strong> Pruning Instructions: </strong>
+          {{ favoriteItem.pruningInstructions }}
+        </b-card-text>
+
+        <b-button
+          href="#"
+          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
+          variant="primary"
+          >Delete</b-button
+        >
+        <b-button
+          href="#"
+          @click="updateOwned(favoriteItem.favoriteId)"
+          variant="secondary"
+          >Owned?</b-button
+        >
+          <b-button
+            href="#"
+            v-if="favoriteItem.ownedPlant === true"
+            @click="sendToSellerForm(favoriteItem.favoriteId)"
+            variant="secondary"
+            >Sell</b-button
+          >
+      </b-card>
+    </div>
+
+
+
+
+    
   </div>
 </template>
 
@@ -68,7 +123,14 @@ export default {
       currentPlantId: 0,
     };
   },
-
+  computed:{
+    filteredOwnedPlants() {
+      return this.favoriteList.filter((favoriteItem) => favoriteItem.ownedPlant === true);
+    },
+    filteredWishListPlants() {
+      return this.favoriteList.filter((favoriteItem) => favoriteItem.ownedPlant === false);
+    },
+  },
   methods: {
     updateOwned(favoriteId) {
       FavoriteService.updateFavoriteOwnedPlant(favoriteId).then((response) => {
@@ -140,6 +202,7 @@ export default {
 
     getPlantData() {
       this.favoriteList.forEach((favorite) => {
+        
         PlantData.getPlantDetails(favorite.plantId).then((response) => {
           if (response.status === 200) {
             favorite.plantObj = response.data;
@@ -147,6 +210,8 @@ export default {
         });
       });
     },
+
+    
     sendToSellerForm(favoriteId) {
       this.$router.push({ name: "listing", params: { id: favoriteId } });
     },
