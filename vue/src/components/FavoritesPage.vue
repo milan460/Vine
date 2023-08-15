@@ -74,16 +74,19 @@
           </div>
         </b-card-text>
 
-        
         <b-button
-        class="btns"
-        id="own"
+          class="btns"
+          id="own"
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
           variant="secondary"
           >Own?</b-button
         >
-        <img id="delete" src="../assets/trash-can.png" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" >
+        <img
+          id="delete"
+          src="../assets/trash-can.png"
+          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
+        />
       </b-card>
     </div>
 
@@ -103,8 +106,7 @@
         img-left
         class="mb-3"
       >
-      
-         <b-card-text>
+        <b-card-text>
           <div class="accordion" role="tablist">
             <b-card no-body class="mb-1">
               <b-card-header header-tag="header" class="p-1" role="tab">
@@ -163,17 +165,20 @@
             </b-card>
           </div>
         </b-card-text>
-        
 
-          <b-button
-        id="sell"
+        <b-button
+          id="sell"
           href="#"
           v-if="favoriteItem.ownedPlant === true"
           @click="sendToSellerForm(favoriteItem.favoriteId)"
           variant="secondary"
           >Sell?</b-button
         >
-        <img id="delete" src="../assets/trash-can.png" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" >        
+        <img
+          id="delete"
+          src="../assets/trash-can.png"
+          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
+        />
       </b-card>
     </div>
   </div>
@@ -183,12 +188,8 @@
 import PlantData from "../services/PlantData.js";
 import FavoriteService from "../services/FavoriteService";
 import SellerService from "../services/SellerService.js";
-// import PlantCare from "../components/PlantCare.vue"
 
 export default {
-  components: {
-    // PlantCare
-  },
   data() {
     return {
       favoriteList: [
@@ -217,13 +218,15 @@ export default {
   },
   methods: {
     updateOwned(favoriteId, ownedPlant) {
-      ownedPlant = !ownedPlant
-      FavoriteService.updateFavoriteOwnedPlant(favoriteId, ownedPlant).then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          console.log("this went thru");
+      ownedPlant = !ownedPlant;
+      FavoriteService.updateFavoriteOwnedPlant(favoriteId, ownedPlant).then(
+        (response) => {
+          console.log(response);
+          if (response.status === 200) {
+            console.log("this went thru");
+          }
         }
-      });
+      );
     },
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
@@ -333,7 +336,7 @@ export default {
 </script>
 
 <style scoped>
-.mb-3{
+.mb-3 {
   box-shadow: 3px 3px 3px 5px gray;
   width: 80vw;
   /* margin: 8%; */
@@ -342,18 +345,17 @@ export default {
   margin-top: 4%;
 }
 
-#delete{
+#delete {
   height: 6vh;
   margin-left: 79%;
   margin-top: 3%;
 }
-h1{
+h1 {
   margin-top: 3%;
   margin-left: 8%;
 }
-#own{
-   margin-top: 3%;
+#own {
+  margin-top: 3%;
   margin-right: 5%;
 }
-
 </style> 
