@@ -1,75 +1,34 @@
 <template>
   <div class="mainSeller">
-    
+    <div>
+      <h1>Current Listings</h1>
+    </div>
     <div
       id="listingCard"
-      v-for="listingItem in SellerListings"
+      v-for="listingItem in filteredAvailablePlants"
       v-bind:key="listingItem.favoritesId"
     >
-      <!-- {{listingItem.plantObj.common_name}} -->
-      <!-- <b-card
-        :title="listingItem.plantObj.common_name"
+      <b-card
+     :title="listingItem.plantObj.common_name"
         v-bind:img-src="listingItem.plantObj.default_image.medium_url"
         alt="Plant Image"
         img-top
-        tag="article"
-        style="max-width: 20rem"
-        class="mb-2 flex1"
+            tag="article"
+            style="max-width: 20rem"
+            class="mb-2 flex1"
       >
         <b-card-text>
-          <img
-            src="../assets/indoor-plants.png"
-            v-if="checkIndoorPlants === true"
-            :title="plant.indoor"
-          />
-          //indoor
-          <img
-            class="ratingStar"
-            src="../assets/drop.png"
-            v-bind:title="listingItem.plantObj.watering"
-          />
-          //watering
-          <ul
-            v-for="sunlight in listingItem.plantObj.sunlight"
-            v-bind:key="sunlight"
-          >
-            <ol>
-              <img
-                class="ratingStar"
-                src="../assets/sun.png"
-                v-bind:title="listingItem.plantObj.sunlight"
-              />
-              //sunlight
-            </ol>
-          </ul>
-        </b-card-text>
-
-        <b-button
-          href="#"
-          @click="addToCart(listingItem.favoritesId)"
-          variant="primary"
-          >Add To Cart</b-button
-        >
-      </b-card> -->
-      <!-- DIVIDING COMMENT -->
-  <b-card
-        :title="listingItem.plantObj.common_name"
-        v-bind:img-src="listingItem.plantObj.default_image.medium_url"
-        alt="Plant Image"
-        img-left
-        class="mb-3"
-      >
-        <b-card-text>
-          Seller Name: 
+          
+          Seller Name:
           <strong>{{ listingItem.username }}</strong>
-           Plant Description:
+          Plant Description:
           <strong>{{ listingItem.description }}</strong>
           Price:
-          <strong>${{listingItem.price}}</strong>
-           Stock:
-          <strong>{{listingItem.stockQuantity}}</strong>
-
+          <strong>${{ listingItem.price }}</strong>
+          Stock:
+          <strong>{{ listingItem.stockQuantity }}</strong>
         </b-card-text>
+
         <b-button
           href="#"
           @click="addToCart(listingItem.favoritesId)"
@@ -77,6 +36,12 @@
           >Add To Cart</b-button
         >
       </b-card>
+      <!-- <b-card
+       
+      >
+       
+        </b-card-text> -->
+      <!-- </b-card> -->
     </div>
   </div>
 </template>
@@ -100,7 +65,13 @@ export default {
         },
       ],
     };
-  
+  },
+  computed: {
+    filteredAvailablePlants() {
+      return this.SellerListings.filter(
+        (sellerItem) => sellerItem.isAvailable === true
+      );
+    },
   },
   methods: {
     getAllListings() {

@@ -25,8 +25,8 @@ deleteFromFavoritesWithPlantId(favoriteId){
     return axios.delete('/deleteFavorites/' + favoriteId)
 },
 
-updateFavoritesUsername(favoriteId){
-    const requestData = {favoriteId: favoriteId};
+updateFavoritesUsername(favoriteId, ownedPlant){
+    const requestData = {favoriteId: favoriteId, ownedPlant: ownedPlant};
     
     const headers = {
         'Content-Type': 'application/json',
@@ -35,8 +35,8 @@ updateFavoritesUsername(favoriteId){
     return axios.put('/updateFavorite', requestData, {headers})
 },
 
-updateFavoriteOwnedPlant(favoriteId){
-    const requestData = {favoriteId: favoriteId};
+updateFavoriteOwnedPlant(favoriteId, ownedPlant){
+    const requestData = {favoriteId: favoriteId, ownedPlant: ownedPlant};
     
     const headers = {
         'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ favorites_id int NOT NULL UNIQUE, --this is the unique identifier for the plant 
  --track of what plant is what, its a completely unique identifier that allows us to keep track of how many plants were in the favorites table from earlier
 description varchar(300),
 price money NOT NULL DEFAULT 0.00, -- this is the price that the user will set to the plant, the user on the client side will have to give the price to the server through a form
-is_available boolean NOT NULL,
+is_available boolean NOT NULL DEFAULT TRUE,
 stock_quantity int NOT NULL,
 CONSTRAINT FK_sellers_favorites FOREIGN KEY (favorites_id) REFERENCES favorites(favorites_id) --like i said, this was referencing the individual plant that they have in their virtual garden
 -- as a second note, this also makes a bug in the virtual garden where they could add multiple of the same plant to the garden a feature so this is why we are tying these two together
