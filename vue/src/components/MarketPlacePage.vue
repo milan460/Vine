@@ -9,6 +9,7 @@
       v-bind:key="listingItem.favoritesId"
     >
       <b-card
+      id="card"
      :title="listingItem.plantObj.common_name"
         v-bind:img-src="listingItem.plantObj.default_image.medium_url"
         alt="Plant Image"
@@ -19,29 +20,27 @@
       >
         <b-card-text>
           
-          Seller Name:
-          <strong>{{ listingItem.username }}</strong>
-          Plant Description:
-          <strong>{{ listingItem.description }}</strong>
-          Price:
+          
+          <h5>Description:</h5>
+
+          {{ listingItem.description }}
+          <br>
           <strong>${{ listingItem.price }}</strong>
-          Stock:
+          <br>
+          Qty:
           <strong>{{ listingItem.stockQuantity }}</strong>
+          <br>
+          Sold By:
+          <strong>{{ listingItem.username }}</strong>
         </b-card-text>
 
-        <b-button
-          href="#"
+       
+        <img
+          id="delete"
+          src="../assets/flower-basket.png"
           @click="addToCart(listingItem.favoritesId)"
-          variant="primary"
-          >Add To Cart</b-button
-        >
+        />
       </b-card>
-      <!-- <b-card
-       
-      >
-       
-        </b-card-text> -->
-      <!-- </b-card> -->
     </div>
   </div>
 </template>
@@ -128,5 +127,22 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+#listingCard{
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 3%;
+  
+}
+#card{
+  /* height: vh; */
+  box-shadow: 3px 3px 5px gray;
+}
+#delete {
+  height: 6vh;
+  margin-left: 79%;
+  margin-top: 3%;
+}
 </style>

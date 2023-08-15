@@ -8,7 +8,7 @@
     </header>
     <img
       id="pic"
-      v-bind:src="plantObject.default_image.regular_url"
+      v-bind:src="checkThumbnail(plantObject.default_image)"
       alt="Image of Plant"
     />
     <div class="icon-details">
@@ -78,7 +78,13 @@
 
     <div v-show="showreviews" id="review">
       <review-page :plantId="currentPlantId" />
-      <button v-if="$store.state.token != ''"  @click="showForm = !showForm" id="addReview">Add Review</button>
+      <button
+        v-if="$store.state.token != ''"
+        @click="showForm = !showForm"
+        id="addReview"
+      >
+        Add Review
+      </button>
       <create-review
         @form-submitted="handleFormSubmitted"
         :show-tag="showForm"
@@ -148,6 +154,12 @@ export default {
         }
       });
     },
+    checkThumbnail(default_image) {
+      if (default_image === null) {
+        return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
+      }
+      return default_image.regular_url;
+    },
   },
 };
 </script>
@@ -182,7 +194,7 @@ export default {
 
 #pic {
   grid-area: pic;
-  height: 50vh;
+  height: 60vh;
   width: 30vw;
 }
 
@@ -247,5 +259,4 @@ button {
   height: 5vh;
   margin: 2%;
 }
-
 </style>
