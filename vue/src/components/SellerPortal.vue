@@ -89,7 +89,6 @@ export default {
     //   console.log(listingParse)
     //   console.log('this is the listing object')
     if(this.listing.isAvailable === true){
-      SellerService
       SellerService.addListing(this.listing).then( (response) => {
           if(response.status === 201){
               console.log('this has gone thru')
