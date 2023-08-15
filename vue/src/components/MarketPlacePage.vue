@@ -36,12 +36,6 @@
           >Add To Cart</b-button
         >
       </b-card>
-      <!-- <b-card
-       
-      >
-       
-        </b-card-text> -->
-      <!-- </b-card> -->
     </div>
   </div>
 </template>
@@ -128,5 +122,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+#listingCard{
+  display: inline-flex;
+  flex-wrap: wrap;
+  
+}
 </style>

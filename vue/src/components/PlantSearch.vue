@@ -2,8 +2,8 @@
   <div id="main">
     <div id="filters">
       <b-form-input id="src"
-        size="sm"
-        class="mr-sm-2"
+        size="med"
+        class="mr-sed-2"
         placeholder="Search"
         v-model="filter.common_name"
       ></b-form-input>
