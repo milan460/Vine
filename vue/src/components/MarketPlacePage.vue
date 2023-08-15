@@ -1,7 +1,7 @@
 <template>
   <div class="mainSeller">
     <div>
-      <cart></cart>
+      
     </div>
     <div
       id="listingCard"
@@ -86,7 +86,6 @@
 <script>
 import PlantData from "../services/PlantData.js";
 import SellerService from "../services/SellerService.js";
-import Cart from "../components/Cart.vue";
 export default {
   data() {
     return {
@@ -104,9 +103,7 @@ export default {
       ],
     };
   },
-  components: {
-    Cart,
-  },
+  
   methods: {
     getAllListings() {
       SellerService.getAllSellerListings().then((response) => {
