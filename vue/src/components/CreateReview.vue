@@ -17,6 +17,57 @@
             <button type="cancel" @click="resetForm();">Cancel</button>
         </div>
     </form>
+
+    <!-- <form @submit.prevent class="mt-3">
+         <h1>Plant Information</h1>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          class="form-control"
+          rows="4"
+          v-model="review.title"
+        ></textarea>
+      </div>
+
+        <div class="form-group">
+        <label for="detial">detail:</label>
+        <textarea
+          id=""
+          class="form-control"
+          rows="4"
+          v-model="review.reviewDetail"
+        ></textarea>
+      </div> -->
+
+      <!-- <div class="form-group">
+        <label for="star">Price:</label>
+        <input
+            type="number"
+            class="form-control"
+            placeholder="0"
+            min="0"
+            step="0"
+            v-model="review.rating"
+        />
+      </div> -->
+
+
+      <!-- <div class="form-group">
+        <label for="stockQuantity">Stock Quantity:</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="0"
+          min="1"
+          v-model="listing.stockQuantity"
+        />
+      </div> -->
+        <!-- <div>
+            <button type="submit" class="btn btn-primary" @click="submitReview(); setCurrentReviewId(); resetForm();">Submit</button>
+            <button type="cancel" class="btn btn-primary" @click="resetForm();">Cancel</button>
+        </div>
+    </form> --> 
 </template>
 
 <script>
