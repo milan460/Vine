@@ -74,15 +74,19 @@
           </div>
         </b-card-text>
 
-        
         <b-button
-        class="btns"
+          class="btns"
+          id="own"
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
           variant="secondary"
           >Own?</b-button
         >
-        <img id="delete" src="../assets/trash-can.png" @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)" >
+        <img
+          id="delete"
+          src="../assets/trash-can.png"
+          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
+        />
       </b-card>
     </div>
 
@@ -103,33 +107,78 @@
         class="mb-3"
       >
         <b-card-text>
-          <strong>Watering Instructions: </strong>
-          {{ favoriteItem.wateringInstructions }}
-          <strong> Sun Instructions: </strong>
-          {{ favoriteItem.sunInstructions }}
-          <strong> Pruning Instructions: </strong>
-          {{ favoriteItem.pruningInstructions }}
+          <div class="accordion" role="tablist">
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-1 variant="info"
+                  >Watering</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-1"
+                visible
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{
+                    favoriteItem.wateringInstructions
+                  }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-2 variant="info"
+                  >Sunlight</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-2"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{ favoriteItem.sunInstructions }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.accordion-3 variant="info"
+                  >Pruning</b-button
+                >
+              </b-card-header>
+              <b-collapse
+                id="accordion-3"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                  <b-card-text>{{
+                    favoriteItem.pruningInstructions
+                  }}</b-card-text>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+          </div>
         </b-card-text>
 
         <b-button
-          href="#"
-          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
-          variant="primary"
-          >Delete</b-button
-        >
-        <b-button
-          href="#"
-          @click="updateOwned(favoriteItem.favoriteId, favoriteItem.ownedPlant)"
-          variant="secondary"
-          >Own?</b-button
-        >
-        <b-button
+          id="sell"
           href="#"
           v-if="favoriteItem.ownedPlant === true"
           @click="sendToSellerForm(favoriteItem.favoriteId)"
           variant="secondary"
-          >Sell</b-button
+          >Sell?</b-button
         >
+        <img
+          id="delete"
+          src="../assets/trash-can.png"
+          @click="removeFromfavoritesDatabase(favoriteItem.favoriteId)"
+        />
       </b-card>
     </div>
   </div>
@@ -139,12 +188,8 @@
 import PlantData from "../services/PlantData.js";
 import FavoriteService from "../services/FavoriteService";
 import SellerService from "../services/SellerService.js";
-// import PlantCare from "../components/PlantCare.vue"
 
 export default {
-  components: {
-    // PlantCare
-  },
   data() {
     return {
       favoriteList: [
@@ -173,13 +218,15 @@ export default {
   },
   methods: {
     updateOwned(favoriteId, ownedPlant) {
-      ownedPlant = !ownedPlant
-      FavoriteService.updateFavoriteOwnedPlant(favoriteId, ownedPlant).then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          console.log("this went thru");
+      ownedPlant = !ownedPlant;
+      FavoriteService.updateFavoriteOwnedPlant(favoriteId, ownedPlant).then(
+        (response) => {
+          console.log(response);
+          if (response.status === 200) {
+            console.log("this went thru");
+          }
         }
-      });
+      );
     },
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
@@ -289,7 +336,7 @@ export default {
 </script>
 
 <style scoped>
-.mb-3{
+.mb-3 {
   box-shadow: 3px 3px 3px 5px gray;
   width: 80vw;
   /* margin: 8%; */
@@ -297,13 +344,18 @@ export default {
   margin-right: 8%;
   margin-top: 4%;
 }
-.btns{
-  margin-left: 50px;
-}
-#delete{
+
+#delete {
   height: 6vh;
+  margin-left: 79%;
+  margin-top: 3%;
 }
-h1{
+h1 {
+  margin-top: 3%;
   margin-left: 8%;
+}
+#own {
+  margin-top: 3%;
+  margin-right: 5%;
 }
 </style> 

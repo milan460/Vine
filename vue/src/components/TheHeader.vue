@@ -36,18 +36,18 @@
               v-if="$store.state.token == ''"
               >Login</router-link
             >
-            <!-- THIS IS THE PLACEHOLDER/ style this up-->
-            <div>
-              <b-button  v-b-toggle.sidebar-right>Toggle Sidebar</b-button>
-              <cart></cart>
-            </div>
             <router-link
               class="link"
               v-bind:to="{ name: 'logout' }"
               v-if="$store.state.token != ''"
               >Logout</router-link
-            ></b-nav-item
+            >
+            </b-nav-item
           >
+          <b-nav-item id="cart">
+          <img id="basket" src="../assets/flower-basket.png" v-b-toggle.sidebar-right>
+              <cart></cart>
+          </b-nav-item>
         </b-nav>
       </b-card-header>
     </b-card>
@@ -90,5 +90,12 @@ export default {
   text-align: center;
   font-size: 60px;
   height: 10vh;
+}
+
+#basket{
+  height: 7vh;
+}
+#cart{
+  margin-left: 62%;
 }
 </style>
