@@ -73,7 +73,7 @@
               href="#"
               @click="addToFavorites(plant.id)"
               variant="primary"
-              >Add to Garden</b-button
+              >Add to Favorties</b-button
             >
           </b-card>
         </router-link>
