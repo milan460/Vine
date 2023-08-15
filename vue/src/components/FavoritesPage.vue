@@ -30,15 +30,15 @@
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
           variant="secondary"
-          >Own this Plant?</b-button
+          >Owned?</b-button
         >
-        <b-button
-          href="#"
-          v-if="favoriteItem.ownedPlant === true"
-          @click="sendToSellerForm"
-          variant="secondary"
-          >Sell this Plant?</b-button
-        >
+          <b-button
+            href="#"
+            v-if="favoriteItem.ownedPlant === true"
+            @click="sendToSellerForm(favoriteItem.favoriteId)"
+            variant="secondary"
+            >Sell</b-button
+          >
       </b-card>
     </div>
   </div>
@@ -140,12 +140,15 @@ export default {
 
     getPlantData() {
       this.favoriteList.forEach((favorite) => {
-        PlantData.getPlantDetails(favorite.plantId).then( (response) => {
+        PlantData.getPlantDetails(favorite.plantId).then((response) => {
           if (response.status === 200) {
             favorite.plantObj = response.data;
           }
         });
       });
+    },
+    sendToSellerForm(favoriteId) {
+      this.$router.push({ name: "listing", params: { id: favoriteId } });
     },
     removeFromfavoritesDatabase(favoriteId) {
       SellerService.deleteListing(favoriteId).then((response) => {
@@ -173,10 +176,6 @@ export default {
       }
 
       return default_image;
-    },
-
-    sendToSellerForm() {
-      this.$router.push();
     },
   },
   created() {

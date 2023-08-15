@@ -21,6 +21,7 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     activePlant: 0,
+    currentFavoriteId: 0,
     currentReviewId: 0,
     plantsArray: [],
     cartArray: []
@@ -42,15 +43,18 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
+    ADD_TO_CART_ARRAY(state, listingItem){
+      state.cartArray.push(listingItem)
+    },
     SET_ACTIVE_PLANT(state, nPlantId){
       state.activePlant = nPlantId;
     },
     SET_REVIEW_ID(state, reviewId){
       state.currentReviewId = reviewId
     },
-    // SET_FAVORITE_PLANT(state, favoriteId){
-    //   state.currentFavoriteId = favoriteId;
-    // }
+    SET_FAVORITE_PLANT(state, favoriteId){
+      state.currentFavoriteId = Number(favoriteId);
+    }
     
   }
   ////////// USE THIS TO ROUTE /////

@@ -108,7 +108,7 @@ const router = new Router({
       }
     },
     {
-      path: "/listing",
+      path: "/listing/:id",
       name: "listing",
       component: SellerPortalView,
       meta: {

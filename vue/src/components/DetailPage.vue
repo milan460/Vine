@@ -78,7 +78,7 @@
 
     <div v-show="showreviews" id="review">
       <review-page :plantId="currentPlantId" />
-      <button  v-if="$store.state.token != ''" @click="showForm = !showForm" id="addReview">Add Review</button>
+      <button v-if="$store.state.token != ''"  @click="showForm = !showForm" id="addReview">Add Review</button>
       <create-review
         @form-submitted="handleFormSubmitted"
         :show-tag="showForm"
@@ -230,6 +230,7 @@ export default {
 .nav-extended {
   grid-area: nav;
 }
+
 button {
   background-color: rgb(163, 231, 163);
   border: rgb(163, 231, 163);
@@ -241,12 +242,10 @@ button {
 .button {
   padding-top: 2%;
 }
+
 #water {
   height: 5vh;
   margin: 2%;
 }
-/* .active, .btn:hover {
-  background-color: rgb(127, 209, 127);
-  color: white;
-} */
+
 </style>

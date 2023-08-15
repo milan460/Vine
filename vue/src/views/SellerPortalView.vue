@@ -1,13 +1,18 @@
 <template>
-  <seller-form></seller-form>
+  <seller-portal></seller-portal>
 </template>
 
 <script>
-import SellerForm from '../components/SellerPortal.vue'
+import SellerPortal from '../components/SellerPortal.vue'
 export default {
-components:{
-    SellerForm
-}
+  components:{
+      SellerPortal
+  },
+
+  created(){
+    this.$store.commit('SET_FAVORITE_PLANT', this.$route.params.id)
+  }
+
 }
 </script>
 

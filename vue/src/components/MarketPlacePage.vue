@@ -3,7 +3,7 @@
     <div>
       <cart></cart>
     </div>
-      <div id="listingCard" v-for="listingItem in SellerListings" v-bind:key="listingItem.plantSellerId">
+      <div id="listingCard" v-for="listingItem in SellerListings" v-bind:key="listingItem.favoritesId">
 
         <!-- {{listingItem.plantObj.common_name}} -->
           <b-card
@@ -72,7 +72,7 @@ export default {
         this.SellerListings = response.data.map( (listingItem) => {
           return {
             username: listingItem.username,
-            favoritesId: listingItem.favorites_id,
+            favoritesId: listingItem.favoritesId,
             plantId: listingItem.plantId,
             description: listingItem.description,
             price: listingItem.price,
@@ -100,6 +100,7 @@ export default {
     },
 
     addToCart(favoriteId){
+      console.log(this.$store.state.currentFavoriteId)
       console.log(favoriteId)
       let listingItem = this.SellerListings.filter( (listingItem) => {
         return listingItem.favoritesId === favoriteId

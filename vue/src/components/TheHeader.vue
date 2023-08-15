@@ -38,19 +38,8 @@
             >
             <!-- THIS IS THE PLACEHOLDER/ style this up-->
             <div>
-              <b-button v-b-toggle.sidebar-right>Toggle Sidebar</b-button>
-              <b-sidebar id="sidebar-right" title="Sidebar" right shadow>
-                <div class="px-3 py-2">
-                  <p>
-                    Our Checkout Items
-                  </p>
-                  <b-img
-                    src="https://picsum.photos/500/500/?image=54"
-                    fluid
-                    thumbnail
-                  ></b-img>
-                </div>
-              </b-sidebar>
+              <b-button  v-b-toggle.sidebar-right>Toggle Sidebar</b-button>
+              <cart></cart>
             </div>
             <router-link
               class="link"
@@ -66,8 +55,12 @@
 </template>
 
 <script>
+import Cart from '../components/Cart.vue'
 export default {
   name: "the-header",
+  components: {
+    Cart
+  }
 };
 </script>
 
