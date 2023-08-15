@@ -58,10 +58,12 @@ export default new Vuex.Store({
     CLEAR_CART_ARRAY(state){
       state.cartArray = [];
     },
-    // DELETE_FROM_CART_ARRAY(state, favoriteId){
-    //   const item = state.cartArray.find( (cartItem) => {
-    //     return cartItem
-    //   })
+    DELETE_FROM_CART_ARRAY(state, favoriteId){
+      console.log(favoriteId)
+        const filterFunction = state.cartArray.filter((cartItem) => cartItem.favoritesId !== favoriteId)
+        console.log(filterFunction)
+        state.cartArray = filterFunction;
+      }
 
 
 
