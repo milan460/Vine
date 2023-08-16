@@ -1,9 +1,10 @@
 <template>
   <div id="main">
     <div id="filters">
-      <b-form-input id="src"
-        size="med"
-        class="mr-sed-2"
+      <b-form-input
+        id="src"
+        size="sm"
+        class="mr-sm-2"
         placeholder="Search"
         v-model="filter.common_name"
       ></b-form-input>
@@ -16,28 +17,22 @@
         </label>
 
         <label for="outdoorPlants">
-          <button id="btn"  @click="checkOutdoorPlants">Outdoor</button>
+          <button id="btn" @click="checkOutdoorPlants">Outdoor</button>
         </label>
 
         <label for="ediblePlants">
-          <button id="btn"  @click="checkEdiblePlants">Edible</button>
+          <button id="btn" @click="checkEdiblePlants">Edible</button>
         </label>
       </div>
     </div>
-    <b-alert
-      @click="favoriteAdded = false"
-      v-show="favoriteAdded"
-      variant="success"
-      show
-      >Success Alert</b-alert
-    >
+
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link
           class="link"
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
         >
-          <b-card id="card"
+          <b-card
             :title="plant.common_name"
             v-bind:img-src="plant.medium_url"
             alt="Plant Image"
@@ -47,7 +42,8 @@
             class="mb-2 flex1"
           >
             <b-card-text>
-              <img id="water"
+              <img
+                id="water"
                 src="../assets/indoor-plants.png"
                 v-if="indoorFilterOn"
                 :title="plant.indoor"
@@ -55,25 +51,24 @@
               <img
                 class="ratingStar"
                 src="../assets/drop.png"
-              
                 v-bind:title="plant.watering"
                 v-if="plant.watering == 'Minimum'"
               />
-              <img id="water" src="../assets/water.png" v-else>
-                  <img
-                    class="ratingStar"
-                    src="../assets/sun.png"
-                    v-bind:title="plant.sunlight" v-if="plant.sunlight == 'full sun'"
-                  />
-                  <img id="water" src="../assets/partly-cloudy.png" v-else>
+              <img id="water" src="../assets/water.png" v-else />
+              <img
+                class="ratingStar"
+                src="../assets/sun.png"
+                v-bind:title="plant.sunlight"
+                v-if="plant.sunlight == 'full sun'"
+              />
+              <img id="water" src="../assets/partly-cloudy.png" v-else />
             </b-card-text>
 
             <b-button
-            v-if="$store.state.token != ''"
               href="#"
               @click="addToFavorites(plant.id)"
               variant="primary"
-              >Add to Favorties</b-button
+              >Add to Garden</b-button
             >
           </b-card>
         </router-link>
@@ -88,7 +83,7 @@
 </template>
 
 <script>
-import FavoriteService from '../services/FavoriteService.js';
+import FavoriteService from "../services/FavoriteService.js";
 import plantData from "../services/PlantData.js";
 export default {
   data() {
@@ -101,22 +96,21 @@ export default {
       outdoorFilterOn: false,
       ediblePlants: [],
       edibleFilterOn: false,
-      pagecounter: 1,
+      pageCounter: 1,
       sortAlphabetically: false,
-      
+
       filter: {
         common_name: "",
         cycle: "",
         watering: "",
         sunlight: "",
         imageURL: "",
-
+        scientific_name: ""
       },
-      favoriteAdded: false,
     };
   },
   created() {
-    plantData.getPlantData(this.pagecounter).then((response) => {
+    plantData.getPlantSearch(this.pagecounter, this.filter.common_name).then((response) => {
       this.plants = response.data.data.map((plantData) => {
         return {
           id: plantData.id,
@@ -130,7 +124,8 @@ export default {
               : plantData.default_image.medium_url,
         };
       });
-    });
+    })
+
   },
   mounted() {},
   methods: {
@@ -282,7 +277,7 @@ export default {
                   cycle: plantData.cycle,
                   watering: plantData.watering,
                   sunlight: plantData.sunlight,
-                  medium_url:
+                  thumbnail:
                     plantData.default_image === null
                       ? this.checkThumbnail(plantData.default_image)
                       : plantData.default_image.medium_url,
@@ -302,7 +297,7 @@ export default {
                 cycle: plantData.cycle,
                 watering: plantData.watering,
                 sunlight: plantData.sunlight,
-                medium_url:
+                thumbnail:
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
@@ -324,7 +319,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              medium_url:
+              thumbnail:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
@@ -345,7 +340,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              medium_url:
+              thumbnail:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
@@ -363,7 +358,7 @@ export default {
             cycle: plantData.cycle,
             watering: plantData.watering,
             sunlight: plantData.sunlight,
-            medium_url:
+            thumbnail:
               plantData.default_image === null
                 ? this.checkThumbnail(plantData.default_image)
                 : plantData.default_image.medium_url,
@@ -372,13 +367,13 @@ export default {
       });
     },
     addToFavorites(plantId) {
-        FavoriteService.addToFavorites(plantId).then((response) => {
-          if (response.status === 201) {
-            this.favoriteAdded = true;
-          }
-        });
-        
-      
+      console.log("this is the plant Id");
+      console.log(plantId);
+      FavoriteService.addToFavorites(plantId).then((response) => {
+        if (response.status === 201) {
+          //alert("Was added to your garden")
+        }
+      });
     },
   },
   computed: {
@@ -435,6 +430,13 @@ export default {
           })
         );
       }
+        if (this.filter.scientific_name != "") {
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.scientific_name
+            .toLowerCase()
+            .includes(this.filter.scientific_name.toLocaleLowerCase())
+        );
+      }
 
       return filteredPlants;
     },
@@ -457,10 +459,10 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              medium_url:
+              thumbnail:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.medium_url,
+                  : plantData.default_image.thumbnail,
               indoor: "",
             };
           });
@@ -472,9 +474,10 @@ export default {
 </script>
 
 <style scoped>
-#main{
+#main {
   height: 100%;
   background-color: rgb(206, 245, 206);
+  
 }
 .link {
   display: inline-block;
@@ -490,32 +493,11 @@ export default {
   display: flex;
   flex-basis: 30%;
   padding: 3%;
-  
-}
-#card{
-   box-shadow: 5px 5px 5px gray;
-   border: black solid 1px;
-}
-#card > img{
-  width: 20.75vw;
-  height: 43vh;
-
 }
 
 #main {
   background-color: rgb(206, 245, 206);
 }
-
-#card{
-   box-shadow: 5px 5px 5px gray;
-   border: black solid 1px;
-}
-#card > img{
-  width: 20.75vw;
-  height: 43vh;
-
-}
-
 
 .flex1 {
   display: flex;
@@ -534,23 +516,24 @@ export default {
   background-color: rgb(206, 245, 206);
   box-shadow: 5px 5px 5px gray;
 }
-#water{
+#water {
   height: 5vh;
   margin: 2%;
 }
 
-#pageDown, #pageUp{
+#pageDown,
+#pageUp {
   margin: 1%;
   background-color: rgb(174, 230, 174);
   box-shadow: 3px 3px 3px rgb(167, 166, 166);
   justify-content: space-between;
 }
 
-#pageUp{
+#pageUp {
   margin-left: 83%;
 }
 
-#btn{
+#btn {
   width: 98%;
   height: 4vh;
   box-shadow: 5px 5px 5px gray;
@@ -558,9 +541,8 @@ export default {
   background-color: rgb(206, 245, 206);
 }
 
-#src{
+#src {
   width: 55vw;
   box-shadow: 5px 5px 5px gray;
 }
-
 </style>

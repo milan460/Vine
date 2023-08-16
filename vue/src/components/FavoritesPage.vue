@@ -221,13 +221,14 @@ export default {
       ownedPlant = !ownedPlant;
       FavoriteService.updateFavoriteOwnedPlant(favoriteId, ownedPlant).then(
         (response) => {
-          console.log(response);
+          
           if (response.status === 200) {
-            console.log("this went thru");
+            window.location.reload();
           }
         }
       );
     },
+    
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
         if (response.status === 200) {

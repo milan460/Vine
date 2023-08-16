@@ -105,19 +105,21 @@ export default {
     },
 
     addToCart(favoriteId) {
-      console.log(this.$store.state.currentFavoriteId);
-      console.log(favoriteId);
+
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
       if (selectedListing.username === this.$store.state.user.username) {
         alert("This is your own listing. Please select a different listing");
+      } else if (this.listingItem.stockQuantity >= selectedListing.stockQuantity){
+
+        alert('dont')
+        
       } else {
-        console.log("this is the add to cart item");
-        console.log(this.$store.state.user.username);
-        this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
-        console.log(this.$store.state.cartArray);
+        
+        this.$store.commit("ADD_TO_CART_ARRAY", selectedListing)
       }
+      
     },
   },
 
@@ -145,4 +147,5 @@ export default {
   margin-left: 79%;
   margin-top: 3%;
 }
+
 </style>
