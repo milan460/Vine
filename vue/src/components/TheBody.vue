@@ -365,6 +365,8 @@ onload = () => {
   justify-content: center;
   min-height: 100vh;
   background-color: rgb(206, 245, 206);
+
+
   overflow: hidden;
   perspective: 1000px;
  

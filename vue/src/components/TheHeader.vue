@@ -45,7 +45,7 @@
             </b-nav-item
           >
           <b-nav-item id="cart">
-          <img id="basket" src="../assets/flower-basket.png" v-b-toggle.sidebar-right>
+          <img v-if="$store.state.token != ''" id="basket" src="../assets/flower-basket.png" v-b-toggle.sidebar-right>
               <cart></cart>
           </b-nav-item>
         </b-nav>
