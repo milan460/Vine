@@ -47,12 +47,13 @@ computed:{
     },
     confirmPurchase(){
             //call the sellersService and delete an entry based on favorite Id
-            console.log("this is the favorites id")
-            console.log(this.$store.state.cartArray)
             this.$store.state.cartArray.forEach(item => {
               SellerService.deleteListing(item.favoritesId)
               FavoriteService.updateFavoritesUsername(item.favoritesId)
               this.deleteFromCart(item.favoritesId)
+              if(item.stockQuantity == 0){
+                window.location.reload();
+              }
             });
             //SellerService.deleteListing(this.$store.state.cartArray.favoritesId)
           SellerService
