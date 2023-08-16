@@ -27,7 +27,7 @@ export default{
     getPlantCareData(nPlantId){
         return http.get('species-care-guide-list?key=' + apiKey + '&species_id=' + nPlantId)
     },
-    getPlantSearch(plantName, page){
-        return http.get('species-list?key=' + apiKey, {params: {page: page, search: plantName}})
+    getPlantSearch(plantName){
+        return http.get('species-list?key=' + apiKey + '&q=' + plantName)
     }
 }

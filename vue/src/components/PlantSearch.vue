@@ -1,6 +1,7 @@
 <template>
   <div id="main">
     <div id="filters">
+      <div>
       <b-form-input
         id="src"
         size="sm"
@@ -8,7 +9,8 @@
         placeholder="Search"
         v-model="filter.common_name"
       ></b-form-input>
-
+      <button id="Plant query" @click="findPlantByCommonName(filter.common_name)">search for a plant</button>
+      </div>
       <button id="button" @click="filterToggle">Filter</button>
 
       <div id="filterCheckbox" v-if="filterToggleOn">
@@ -34,7 +36,7 @@
         >
           <b-card
             :title="plant.common_name"
-            v-bind:img-src="plant.medium_url"
+            v-bind:img-src="plant.thumbnail"
             alt="Plant Image"
             img-top
             tag="article"
@@ -96,6 +98,8 @@ export default {
       outdoorPlants: [],
       outdoorFilterOn: false,
       ediblePlants: [],
+      plantSearch: [],
+      specificPlantFilter: false,
       edibleFilterOn: false,
       pageCounter: 1,
       sortAlphabetically: false,
@@ -111,7 +115,9 @@ export default {
     };
   },
   created() {
-    plantData.getPlantSearch(this.pagecounter, this.filter.common_name).then((response) => {
+    plantData.getPlantSearch(this.filter.common_name).then((response) => {
+      console.log("this is the initialized data")
+      console.log(response.data.data)
       this.plants = response.data.data.map((plantData) => {
         return {
           id: plantData.id,
@@ -119,7 +125,7 @@ export default {
           cycle: plantData.cycle,
           watering: plantData.watering,
           sunlight: plantData.sunlight,
-          medium_url:
+          thumbnail:
             plantData.default_image === null
               ? this.checkThumbnail(plantData.default_image)
               : plantData.default_image.medium_url,
@@ -376,6 +382,27 @@ export default {
         }
       });
     },
+    findPlantByCommonName(sCommonName){
+      console.log(sCommonName)
+      this.specificPlantFilter = !this.specificPlantFilter
+      plantData.getPlantSearch(sCommonName).then((response) => {
+        console.log("this is the response for the specific query")
+        console.log(response.data.data)
+          this.plantSearch = response.data.data.map((plantData) => {
+            return {
+              id: plantData.id,
+              common_name: plantData.common_name,
+              cycle: plantData.cycle,
+              watering: plantData.watering,
+              sunlight: plantData.sunlight,
+              thumbnail:
+                plantData.default_image === null
+                  ? this.checkThumbnail(plantData.default_image)
+                  : plantData.default_image.medium_url,
+            };
+          });
+        });
+    }
   },
   computed: {
     filteredList() {
@@ -399,7 +426,13 @@ export default {
         !this.indoorFilterOn
       ) {
         filteredPlants = this.ediblePlants;
-      } else {
+      }
+      else if(this.specificPlantFilter &&
+      !this.edibleFilterOn && !this.outdoorFilterOn && !this.indoorFilterOn){
+       filteredPlants = this.plantSearch
+       console.log(filteredPlants)
+      }
+      else {
         filteredPlants = this.plants;
       }
 
