@@ -7,8 +7,10 @@
         <label for="description">Description:</label>
         <textarea
           id="description"
+          placeholder="(1000 character limit)"
           class="form-control"
           maxlength="1000"
+          required
           rows="4"
           v-model="listing.description"
         ></textarea>
@@ -20,8 +22,10 @@
             type="number"
             class="form-control"
             placeholder="0.00"
+            required
             min="0"
-            max="922,337,203,685"
+            max="922337203685"
+            step="0.01"
             v-model="listing.price"
         />
       </div>
@@ -33,6 +37,7 @@
           type="number"
           class="form-control"
           placeholder="0"
+          required
           max="1000000"
           min="1"
           v-model="listing.stockQuantity"

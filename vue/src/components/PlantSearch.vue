@@ -13,15 +13,36 @@
 
       <div id="filterCheckbox" v-if="filterToggleOn">
         <label for="indoorPlants">
-          <button id="btn" @click="checkIndoorPlants">Indoor</button>
+          <button
+            id="btn"
+            :class="{ clicked: indoorButtonClicked }"
+            @click="
+              checkIndoorPlants();
+              toggleIndoorButton();
+            "
+          >
+            Indoor
+          </button>
         </label>
 
         <label for="outdoorPlants">
-          <button id="btn" @click="checkOutdoorPlants">Outdoor</button>
+          <button
+            id="btn"
+            :class="{ clicked: outdoorButtonClicked }"
+            @click="checkOutdoorPlants"
+          >
+            Outdoor
+          </button>
         </label>
 
         <label for="ediblePlants">
-          <button id="btn" @click="checkEdiblePlants">Edible</button>
+          <button
+            id="btn"
+            :class="{ clicked: edibleButtonClicked }"
+            @click="checkEdiblePlants"
+          >
+            Edible
+          </button>
         </label>
       </div>
     </div>
@@ -65,8 +86,11 @@
             </b-card-text>
 
             <b-button
+              id="favoriteBtn"
               href="#"
+              v-if="$store.state.token != ''"
               @click="addToFavorites(plant.id)"
+              :disabled="plant.itemAlreadyfavorited"
               variant="primary"
               >Add to Garden</b-button
             >
@@ -85,9 +109,13 @@
 <script>
 import FavoriteService from "../services/FavoriteService.js";
 import plantData from "../services/PlantData.js";
+
 export default {
   data() {
     return {
+      indoorButtonClicked: false,
+      outdoorButtonClicked: false,
+      edibleButtonClicked: false,
       filterToggleOn: false,
       plants: [],
       indoorPlants: [],
@@ -105,30 +133,62 @@ export default {
         watering: "",
         sunlight: "",
         imageURL: "",
-        scientific_name: ""
+        scientific_name: "",
       },
     };
   },
   created() {
-    plantData.getPlantSearch(this.pagecounter, this.filter.common_name).then((response) => {
-      this.plants = response.data.data.map((plantData) => {
-        return {
-          id: plantData.id,
-          common_name: plantData.common_name,
-          cycle: plantData.cycle,
-          watering: plantData.watering,
-          sunlight: plantData.sunlight,
-          medium_url:
-            plantData.default_image === null
-              ? this.checkThumbnail(plantData.default_image)
-              : plantData.default_image.medium_url,
-        };
+    plantData
+      .getPlantSearch(this.pagecounter, this.filter.common_name)
+      .then((response) => {
+        this.plants = response.data.data.map((plantData) => {
+          return {
+            id: plantData.id,
+            common_name: plantData.common_name,
+            cycle: plantData.cycle,
+            watering: plantData.watering,
+            sunlight: plantData.sunlight,
+            medium_url:
+              plantData.default_image === null
+                ? this.checkThumbnail(plantData.default_image)
+                : plantData.default_image.medium_url,
+            itemAlreadyfavorited: this.checkFavoriteItems(plantData.id),
+          };
+        });
       });
-    })
-
   },
-  mounted() {},
   methods: {
+    async checkFavoriteItems(plantId) {
+      console.log("this ran");
+      try {
+        const response = await FavoriteService.getFavoritesList();
+        if (response.status === 200) {
+          const favoriteObj = response.data.find(
+            (favoriteItem) => favoriteItem.plantId === plantId
+          );
+          console.log("this is the plantId in the checkFavoriteItems function");
+          console.log(plantId);
+          if (typeof favoriteObj.plantId === "undefined") {
+            return false;
+          } else if (favoriteObj.plantId === plantId) {
+            return true;
+          } else {
+            return false;
+          }
+          // for (let i = 0; i < response.data.length; i++) {
+          //   // console.log("this is the favorites items");
+          //   // console.log(response.data[i]);
+          //   // console.log(response.data[i].plantId);
+          //   if (response.data[i].plantId === plantId) {
+          //     return true;
+          //   }
+          // }
+        }
+      } catch (error) {
+        console.error("Error fetching favorite items:", error);
+        return false;
+      }
+    },
     filterToggle() {
       this.filterToggleOn = !this.filterToggleOn;
     },
@@ -308,6 +368,7 @@ export default {
       }
     },
     checkIndoorPlants() {
+      this.indoorButtonClicked = !this.indoorButtonClicked;
       this.indoorFilterOn = !this.indoorFilterOn;
       plantData
         .getIndoorOrOutdoorPlants(this.pagecounter, 1)
@@ -329,6 +390,7 @@ export default {
     },
 
     checkOutdoorPlants() {
+      this.outdoorButtonClicked = !this.outdoorButtonClicked;
       this.outdoorFilterOn = !this.outdoorFilterOn;
       plantData
         .getIndoorOrOutdoorPlants(this.pagecounter, 0)
@@ -349,6 +411,7 @@ export default {
         });
     },
     checkEdiblePlants() {
+      this.edibleButtonClicked = !this.outdoorButtonClicked;
       this.edibleFilterOn = !this.edibleFilterOn;
       plantData.getEdiblePlants(this.pagecounter, 1).then((response) => {
         this.ediblePlants = response.data.data.map((plantData) => {
@@ -366,12 +429,45 @@ export default {
         });
       });
     },
+    toggleIndoorButton() {
+      this.indoorButtonClicked = !this.indoorButtonClicked;
+    },
+
+    toggleOutdoorButton() {
+      this.outdoorButtonClicked = !this.outdoorButtonClicked;
+    },
+
+    toggleEdibleButton() {
+      this.edibleButtonClicked = !this.edibleButtonClicked;
+    },
     addToFavorites(plantId) {
-      console.log("this is the plant Id");
-      console.log(plantId);
-      FavoriteService.addToFavorites(plantId).then((response) => {
-        if (response.status === 201) {
-          //alert("Was added to your garden")
+      let alreadyAddedPlantId = 0;
+      FavoriteService.getFavoritesList().then((response) => {
+        if (response.status === 200) {
+          for (let i = 0; i < response.data.length; i++) {
+            console.log("this is the favorites items");
+            console.log(response.data[i]);
+            console.log(response.data[i].plantId);
+            if (response.data[i].plantId === plantId) {
+              alreadyAddedPlantId = response.data[i].plantId;
+            }
+          }
+          console.log("this is the plant Id");
+          console.log(plantId);
+
+          console.log("this is the alreadyAddedPlantId");
+          console.log(alreadyAddedPlantId);
+          if (plantId !== alreadyAddedPlantId) {
+            FavoriteService.addToFavorites(plantId)
+              .then((response) => {
+                if (response.status === 201) {
+                  //alert("Was added to your garden")
+                }
+              })
+              .catch((error) => {
+                alert(error.response.data.message);
+              });
+          }
         }
       });
     },
@@ -430,7 +526,7 @@ export default {
           })
         );
       }
-        if (this.filter.scientific_name != "") {
+      if (this.filter.scientific_name != "") {
         filteredPlants = filteredPlants.filter((plant) =>
           plant.scientific_name
             .toLowerCase()
@@ -477,7 +573,6 @@ export default {
 #main {
   height: 100%;
   background-color: rgb(206, 245, 206);
-  
 }
 .link {
   display: inline-block;
@@ -544,5 +639,9 @@ export default {
 #src {
   width: 55vw;
   box-shadow: 5px 5px 5px gray;
+}
+
+.click {
+  background-color: darkgreen;
 }
 </style>

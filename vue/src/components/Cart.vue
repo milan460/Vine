@@ -9,7 +9,7 @@
     
           <b-card-text>
             <p class="item-name">{{ item.plantObj.common_name }}</p>
-            <img :src="item.plantObj.default_image.medium_url" alt="Plant image" class="item-image">
+            <img :src="checkThumbnail(item.plantObj.default_image)" alt="Plant image" class="item-image">
             <p class="item-price">${{ item.price }}</p>
             <p class="item-quantity">{{ item.stockQuantity }} in stock</p>
           </b-card-text>
@@ -62,7 +62,13 @@ computed:{
             FavoriteService
             //mutation clear the cart array create mutation in store
             
-        }
+        },
+            checkThumbnail(default_image) {
+      if (default_image === null) {
+        return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
+      }
+      return default_image.medium_url;
+    },
   },
 };
 </script>

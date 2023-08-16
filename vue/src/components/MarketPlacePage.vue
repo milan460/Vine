@@ -9,32 +9,29 @@
       v-bind:key="listingItem.favoritesId"
     >
       <b-card
-      id="card"
-     :title="listingItem.plantObj.common_name"
-        v-bind:img-src="listingItem.plantObj.default_image.medium_url"
+        id="card"
+        :title="listingItem.plantObj.common_name"
+        v-bind:img-src="checkThumbnail(listingItem.plantObj.default_image)"
         alt="Plant Image"
         img-top
-            tag="article"
-            style="max-width: 20rem"
-            class="mb-2 flex1"
+        tag="article"
+        style="max-width: 20rem"
+        class="mb-2 flex1"
       >
         <b-card-text>
-          
-          
           <h5>Description:</h5>
 
           {{ listingItem.description }}
-          <br>
+          <br />
           <strong>${{ listingItem.price }}</strong>
-          <br>
+          <br />
           Qty:
           <strong>{{ listingItem.stockQuantity }}</strong>
-          <br>
+          <br />
           Sold By:
           <strong>{{ listingItem.username }}</strong>
         </b-card-text>
 
-       
         <img
           id="delete"
           src="../assets/flower-basket.png"
@@ -61,6 +58,7 @@ export default {
           stockQuantity: "",
           isAvailable: "",
           plantObj: {},
+          default_image: "",
         },
       ],
     };
@@ -103,23 +101,35 @@ export default {
         });
       });
     },
+    checkSufficentQuantity(favoriteId){
+      this.$store.state.cartArray.forEach(item => {
+        if(item.favoriteId == favoriteId && item.stockQuantity > 0){
+          return true;
+        }
+      })
+      return false;
+    },
 
     addToCart(favoriteId) {
-
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
+      let hasSufficentQuantity = this.checkSufficentQuantity(favoriteId);
       if (selectedListing.username === this.$store.state.user.username) {
         alert("This is your own listing. Please select a different listing");
-      } else if (this.listingItem.stockQuantity >= selectedListing.stockQuantity){
-
-        alert('dont')
-        
-      } else {
-        
-        this.$store.commit("ADD_TO_CART_ARRAY", selectedListing)
+        //hide this with the state token thing
+      } else if(!hasSufficentQuantity) {
+        alert('insufficient quantity')
+      } else{
+        this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
       }
-      
+    },
+
+    checkThumbnail(default_image) {
+      if (default_image === null) {
+        return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
+      }
+      return default_image.medium_url;
     },
   },
 
@@ -130,22 +140,22 @@ export default {
 </script>
 
 <style scoped>
-
-#listingCard{
+#listingCard {
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-left: 3%;
-  
 }
-#card{
-  /* height: vh; */
+#card {
+  /* height: 5vh; */
   box-shadow: 3px 3px 5px gray;
+}
+#card > img {
+  height: 45vh;
 }
 #delete {
   height: 6vh;
   margin-left: 79%;
   margin-top: 3%;
 }
-
 </style>

@@ -9,6 +9,11 @@
               >Home</router-link
             ></b-nav-item
           >
+          <b-nav-item id="image"
+            ><router-link class="link" v-bind:to="{ name: 'plantImage' }"
+              >Plant identifier</router-link
+            ></b-nav-item
+          >
           <b-nav-item id="home"
             ><router-link class="link" v-bind:to="{ name: 'plant-search' }"
               >Search</router-link

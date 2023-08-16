@@ -9,7 +9,7 @@
     >
       <b-card
         :title="favoriteItem.plantObj.common_name"
-        v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
+        v-bind:img-src="checkThumbnail(favoriteItem.plantObj.default_image)"
         alt="Plant Image"
         img-left
         class="mb-3"
@@ -101,7 +101,7 @@
     >
       <b-card
         :title="favoriteItem.plantObj.common_name"
-        v-bind:img-src="favoriteItem.plantObj.default_image.medium_url"
+        v-bind:img-src="checkThumbnail(favoriteItem.plantObj.default_image)"
         alt="Plant Image"
         img-left
         class="mb-3"
@@ -199,6 +199,7 @@ export default {
           username: "",
           ownedPlant: false,
           plantObj: {},
+          default_image: ""
         },
       ],
       currentPlantId: 0,
@@ -229,6 +230,7 @@ export default {
       );
     },
     
+    
     showFavoritesList() {
       FavoriteService.getFavoritesList().then((response) => {
         if (response.status === 200) {
@@ -242,6 +244,7 @@ export default {
               wateringInstructions: "",
               sunInstructions: "",
               pruningInstructions: "",
+              default_image: ""
             };
           });
           this.getPlantData();
@@ -327,7 +330,7 @@ export default {
         return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
       }
 
-      return default_image;
+      return default_image.medium_url;
     },
   },
   created() {
@@ -344,6 +347,10 @@ export default {
   margin-left: 8%;
   margin-right: 8%;
   margin-top: 4%;
+}
+
+.mb-3 > img {
+  width: 30vw;
 }
 
 #delete {
