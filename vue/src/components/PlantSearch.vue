@@ -475,6 +475,7 @@ export default {
 #main{
   height: 100%;
   background-color: rgb(206, 245, 206);
+  
 }
 .link {
   display: inline-block;

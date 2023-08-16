@@ -145,4 +145,5 @@ export default {
   margin-left: 79%;
   margin-top: 3%;
 }
+
 </style>
