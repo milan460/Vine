@@ -2,13 +2,15 @@ package com.techelevator.model;
 
 public class UpdateStockDTO {
     private int favoriteId;
-    private int requestQuantity;
+    private int requestQty;
 
-    public UpdateStockDTO(){}
+    public UpdateStockDTO(){
+
+    }
 
     public UpdateStockDTO(int favoriteId, int requestQuantity) {
         this.favoriteId = favoriteId;
-        this.requestQuantity = requestQuantity;
+        this.requestQty = requestQuantity;
     }
 
     public int getFavoriteId() {
@@ -20,10 +22,10 @@ public class UpdateStockDTO {
     }
 
     public int getRequestQuantity() {
-        return requestQuantity;
+        return requestQty;
     }
 
     public void setRequestQuantity(int requestQuantity) {
-        this.requestQuantity = requestQuantity;
+        this.requestQty = requestQuantity;
     }
 }
