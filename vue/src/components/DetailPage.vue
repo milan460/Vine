@@ -4,7 +4,7 @@
       <img id="backbtn" src="../assets/arrow.png" @click="goBack" /> Back
     </div>
     <header id="header">
-      <h1>{{ plantObject.common_name }}</h1>
+      <strong><h1>{{ plantObject.common_name }}</h1></strong>
     </header>
     <img
       id="pic"
@@ -40,13 +40,6 @@
         :title="plantObject.edible_fruit"
       />
 
-      <!-- <img
-      id="water"
-        src="../assets/sakura.png"
-        v-if="!flowers"
-        :title="plantObject.flowers"
-      /> -->
-
       <img
         id="water"
         src="../assets/indoor-plants.png"
@@ -55,7 +48,7 @@
       />
     </div>
     <div id="description">
-      <h2>Description</h2>
+      <strong><h2>Description</h2></strong>
       <p>{{ plantObject.description }}</p>
     </div>
 
@@ -182,7 +175,7 @@ export default {
     ". review . ."
     ". addReview . .";
 
-  grid-template-rows: 0.3fr 0.3fr 0.3fr 0.3fr 0.1fr;
+  grid-template-rows: 0.1fr 0.4fr 0.3fr 0.2fr 0.4fr;
   grid-template-areas:
     "btn header header ."
     ". pic icons ."
@@ -196,7 +189,11 @@ export default {
   grid-area: pic;
   height: 60vh;
   width: 30vw;
+  box-shadow:  5px 5px 5px gray;
+  border: black solid 1px;
+  
 }
+
 
 #tabs {
   grid-area: tab;
@@ -212,6 +209,7 @@ export default {
 
 .icon-details {
   grid-area: icons;
+  vertical-align: middle;
 }
 
 #header {

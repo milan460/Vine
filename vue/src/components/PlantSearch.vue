@@ -34,7 +34,7 @@
           class="link"
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
         >
-          <b-card
+          <b-card id="card"
             :title="plant.common_name"
             v-bind:img-src="plant.medium_url"
             alt="Plant Image"
@@ -71,7 +71,7 @@
               v-if="$store.state.token != ''"
               @click="addToFavorites(plant.id)"
               variant="primary"
-              >Add to Garden</b-button
+              >Add to Favorites</b-button
             >
           </b-card>
         </router-link>
@@ -508,9 +508,11 @@ export default {
 </script>
 
 <style scoped>
+
 #main {
   height: 100%;
   background-color: rgb(206, 245, 206);
+ 
   
 }
 .link {
@@ -521,13 +523,41 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  
+  
 }
 
 #cards {
   display: flex;
   flex-basis: 30%;
   padding: 3%;
+  
 }
+
+#cards:hover{
+  background-color: rgb(206, 245, 206);
+  border: rgb(206,245, 206) solid 2px;
+ 
+
+}
+#card{
+   box-shadow: 5px 5px 5px 5px gray;
+   border: black solid 1px;
+}
+
+
+
+#card > img{
+  width: 20.75vw;
+  height: 43vh;
+}
+
+#card > img:hover{
+  background-color: white;
+  border: black solid 1px;
+}
+
+
 
 #main {
   background-color: rgb(206, 245, 206);
@@ -549,10 +579,19 @@ export default {
   height: 34px;
   background-color: rgb(206, 245, 206);
   box-shadow: 5px 5px 5px gray;
+  margin: 0.5%;
+  margin-right: 10px;
+  
 }
+/* #search:hover{
+  background-color: rgb(169, 252, 169);
+  border: solid 2px green
+} */
 #water {
   height: 5vh;
   margin: 2%;
+  
+  
 }
 
 #pageDown,
@@ -570,7 +609,7 @@ export default {
 #btn {
   width: 98%;
   height: 4vh;
-  box-shadow: 5px 5px 5px gray;
+  box-shadow: 2px 2px 2px gray;
   margin-right: 50px;
   background-color: rgb(206, 245, 206);
 }
@@ -578,5 +617,6 @@ export default {
 #src {
   width: 55vw;
   box-shadow: 5px 5px 5px gray;
+  margin-left: 0.5%;
 }
 </style>
