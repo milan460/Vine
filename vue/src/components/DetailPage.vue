@@ -40,13 +40,6 @@
         :title="plantObject.edible_fruit"
       />
 
-      <!-- <img
-      id="water"
-        src="../assets/sakura.png"
-        v-if="!flowers"
-        :title="plantObject.flowers"
-      /> -->
-
       <img
         id="water"
         src="../assets/indoor-plants.png"

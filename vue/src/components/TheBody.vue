@@ -304,7 +304,7 @@
     
       <div>
           <p id = "description">Begin your own garden journey today and witness the magic unfold. Kick-start your garden using Vine.</p>
-          <button id = "search"><router-link v-bind:to=" { name: 'plant-search' } ">Search</router-link></button>
+          <button id = "search"><router-link class="link" v-bind:to=" { name: 'plant-search' } ">Search</router-link></button>
       </div>
 
    </div>
@@ -328,21 +328,28 @@ onload = () => {
 
 
 #description {
-  font-size: 48px;
+  font-size: 40px;
   text-align: center;
   width: 60vh;
   margin-left: 75%;
+  margin-bottom: 10%;
 }
 
 #search {
-  width: 120px;
+  width: 250px;
   height: 60px;
-  margin-left: 75%;
+  margin-left: 95%;
   font-size: 20px;
   box-shadow: 5px 5px 5px gray;
   background-color: rgb(157, 238, 157);
   border-radius: 10px;
-  border: none;
+  border: solid 2px green;
+  
+
+}
+#search:hover{
+  background-color: rgb(169, 252, 169);
+  border: solid 2px green
 }
 
 *,
@@ -370,6 +377,12 @@ onload = () => {
   overflow: hidden;
   perspective: 1000px;
  
+}
+.link{
+
+  text-decoration: none;
+  color: black;
+
 }
 
 

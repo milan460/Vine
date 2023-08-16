@@ -101,6 +101,6 @@ export default {
   height: 7vh;
 }
 #cart{
-  margin-left: 62%;
+  margin-left: 50%;
 }
 </style>
