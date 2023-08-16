@@ -36,7 +36,7 @@
         >
           <b-card
             :title="plant.common_name"
-            v-bind:img-src="plant.thumbnail"
+            v-bind:img-src="plant.medium_url"
             alt="Plant Image"
             img-top
             tag="article"
@@ -101,7 +101,7 @@ export default {
       plantSearch: [],
       specificPlantFilter: false,
       edibleFilterOn: false,
-      pageCounter: 1,
+      pagecounter: 1,
       sortAlphabetically: false,
 
       filter: {
@@ -115,7 +115,7 @@ export default {
     };
   },
   created() {
-    plantData.getPlantSearch(this.filter.common_name).then((response) => {
+    plantData.getPlantData(this.pagecounter).then((response) => {
       console.log("this is the initialized data")
       console.log(response.data.data)
       this.plants = response.data.data.map((plantData) => {
@@ -125,7 +125,7 @@ export default {
           cycle: plantData.cycle,
           watering: plantData.watering,
           sunlight: plantData.sunlight,
-          thumbnail:
+          medium_url:
             plantData.default_image === null
               ? this.checkThumbnail(plantData.default_image)
               : plantData.default_image.medium_url,
@@ -284,7 +284,7 @@ export default {
                   cycle: plantData.cycle,
                   watering: plantData.watering,
                   sunlight: plantData.sunlight,
-                  thumbnail:
+                  medium_url:
                     plantData.default_image === null
                       ? this.checkThumbnail(plantData.default_image)
                       : plantData.default_image.medium_url,
@@ -304,7 +304,7 @@ export default {
                 cycle: plantData.cycle,
                 watering: plantData.watering,
                 sunlight: plantData.sunlight,
-                thumbnail:
+                medium_url:
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
@@ -326,7 +326,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
@@ -347,7 +347,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
@@ -365,7 +365,7 @@ export default {
             cycle: plantData.cycle,
             watering: plantData.watering,
             sunlight: plantData.sunlight,
-            thumbnail:
+            medium_url:
               plantData.default_image === null
                 ? this.checkThumbnail(plantData.default_image)
                 : plantData.default_image.medium_url,
@@ -395,7 +395,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
@@ -493,7 +493,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.thumbnail,
