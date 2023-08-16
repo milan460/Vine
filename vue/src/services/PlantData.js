@@ -12,9 +12,9 @@ const apiKey = 'sk-cWXs64d07319aced21784';
 
 export default{
 
-    // getPlantData(nPage){
-    //     return http.get('species-list?page=' + nPage + '&key=' + apiKey);
-    // },
+    getPlantData(nPage){
+        return http.get('species-list?page=' + nPage + '&key=' + apiKey);
+    },
     getPlantDetails(nPlantId){
         return http.get('species/details/' + nPlantId + '?key=' + apiKey);
     },
