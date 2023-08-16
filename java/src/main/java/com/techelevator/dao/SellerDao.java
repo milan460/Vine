@@ -11,4 +11,5 @@ public interface SellerDao {
     void addListing(Seller seller);
 
     void deleteListing(int favoritesId);
+    void updateQuantity(int favoriteId, int requestQty);
 }
