@@ -12,5 +12,13 @@ export default{
 
     deleteListing(favoriteId){
         return axios.delete('/deleteListing/' + favoriteId)
+    },
+
+    updateStock(favoritesId, requestQty){
+        const requestData = {favoriteId: favoritesId, requestQuantity: requestQty}
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+        return axios.put('/updateStock/', requestData, {headers})
     }
 }

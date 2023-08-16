@@ -1,8 +1,10 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.BuyersDao;
 import com.techelevator.dao.SellerDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Seller;
+import com.techelevator.model.UpdateStockDTO;
 import com.techelevator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,10 +21,14 @@ public class SellerController {
     @Autowired
     private final UserDao userDao;
 
+    @Autowired
+    private final BuyersDao buyersDao;
 
-    public SellerController(SellerDao sellerDao, UserDao userDao){
+
+    public SellerController(SellerDao sellerDao, UserDao userDao, BuyersDao buyersDao){
         this.sellerDao = sellerDao;
         this.userDao = userDao;
+        this.buyersDao = buyersDao;
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -43,4 +49,21 @@ public class SellerController {
     public void deleteListing(@PathVariable int favoriteId){
         sellerDao.deleteListing(favoriteId);
     }
+
+    @RequestMapping(path = "/updateStock", method = RequestMethod.PUT)
+    public void updateQty(@RequestBody UpdateStockDTO updateStock, Principal principal){
+        User user = userDao.getUserByUsername(principal.getName());
+        buyersDao.updateBuyerTable(updateStock.getFavoriteId(),user.getId() , updateStock.getRequestQuantity());
+        sellerDao.updateQuantity(updateStock.getFavoriteId(), updateStock.getRequestQuantity());
+    }
 }
+
+
+
+
+
+
+
+
+
+

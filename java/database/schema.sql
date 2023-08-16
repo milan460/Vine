@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS buyers;
 DROP TABLE IF EXISTS receipt;
 DROP TABLE IF EXISTS sellers;
 DROP TABLE IF EXISTS favorites;
@@ -77,6 +78,18 @@ CONSTRAINT FK_buyers_username FOREIGN KEY (to_username) REFERENCES users(usernam
 
 );
 
+
+
+CREATE TABLE buyers (
+buyer_table_id SERIAL NOT NULL,
+user_id int NOT NULL,
+request_qty int NOT NULL,
+favorites_id int NOT NULL,
+
+CONSTRAINT PK_buyer PRIMARY KEY (buyer_table_id),
+CONSTRAINT FK_buyers_username FOREIGN KEY (user_id) REFERENCES users(user_id),
+CONSTRAINT FK_buyers_plant_id FOREIGN KEY (favorites_id) REFERENCES favorites(favorites_id)
+);
 
 COMMIT TRANSACTION;
 

@@ -1,6 +1,7 @@
 <template>
   <div id="main">
     <div id="filters">
+      <div>
       <b-form-input
         id="src"
         size="sm"
@@ -8,7 +9,8 @@
         placeholder="Search"
         v-model="filter.common_name"
       ></b-form-input>
-
+      <button id="Plant query" @click="findPlantByCommonName(filter.common_name)">search for a plant</button>
+      </div>
       <button id="button" @click="filterToggle">Filter</button>
 
       <div id="filterCheckbox" v-if="filterToggleOn">
@@ -123,8 +125,10 @@ export default {
       outdoorPlants: [],
       outdoorFilterOn: false,
       ediblePlants: [],
+      plantSearch: [],
+      specificPlantFilter: false,
       edibleFilterOn: false,
-      pageCounter: 1,
+      pagecounter: 1,
       sortAlphabetically: false,
 
       filter: {
@@ -138,57 +142,98 @@ export default {
     };
   },
   created() {
-    plantData
-      .getPlantSearch(this.pagecounter, this.filter.common_name)
-      .then((response) => {
-        this.plants = response.data.data.map((plantData) => {
-          return {
-            id: plantData.id,
-            common_name: plantData.common_name,
-            cycle: plantData.cycle,
-            watering: plantData.watering,
-            sunlight: plantData.sunlight,
-            medium_url:
-              plantData.default_image === null
-                ? this.checkThumbnail(plantData.default_image)
-                : plantData.default_image.medium_url,
-            itemAlreadyfavorited: this.checkFavoriteItems(plantData.id),
-          };
-        });
-      });
+    this.getPlantPage()
+// <<<<<<< HEAD
+//     plantData
+//       .getPlantSearch(this.pagecounter, this.filter.common_name)
+//       .then((response) => {
+//         this.plants = response.data.data.map((plantData) => {
+//           return {
+//             id: plantData.id,
+//             common_name: plantData.common_name,
+//             cycle: plantData.cycle,
+//             watering: plantData.watering,
+//             sunlight: plantData.sunlight,
+//             medium_url:
+//               plantData.default_image === null
+//                 ? this.checkThumbnail(plantData.default_image)
+//                 : plantData.default_image.medium_url,
+//             itemAlreadyfavorited: this.checkFavoriteItems(plantData.id),
+//           };
+//         });
+// =======
+    
   },
   methods: {
-    async checkFavoriteItems(plantId) {
-      console.log("this ran");
-      try {
-        const response = await FavoriteService.getFavoritesList();
-        if (response.status === 200) {
-          const favoriteObj = response.data.find(
-            (favoriteItem) => favoriteItem.plantId === plantId
-          );
-          console.log("this is the plantId in the checkFavoriteItems function");
-          console.log(plantId);
-          if (typeof favoriteObj.plantId === "undefined") {
-            return false;
-          } else if (favoriteObj.plantId === plantId) {
-            return true;
-          } else {
-            return false;
-          }
-          // for (let i = 0; i < response.data.length; i++) {
-          //   // console.log("this is the favorites items");
-          //   // console.log(response.data[i]);
-          //   // console.log(response.data[i].plantId);
-          //   if (response.data[i].plantId === plantId) {
-          //     return true;
-          //   }
-          // }
-        }
-      } catch (error) {
-        console.error("Error fetching favorite items:", error);
-        return false;
-      }
+    getPlantPage(){
+    plantData.getPlantData(this.pagecounter).then((response) => {
+      console.log("this is the initialized data")
+      console.log(response.data.data)
+      this.plants = response.data.data.map((plantData) => {
+        return {
+          id: plantData.id,
+          common_name: plantData.common_name,
+          cycle: plantData.cycle,
+          watering: plantData.watering,
+          sunlight: plantData.sunlight,
+          medium_url:
+            plantData.default_image === null
+              ? this.checkThumbnail(plantData.default_image)
+              : plantData.default_image.medium_url,
+          itemAlreadyfavorited: false
+        };
+// >>>>>>> 8a2f0935e00df7f757ccca7e8e08fa76276f9a7d
+      });
+      this.updateFavoritesStatus();
+    })
     },
+    // async checkFavoriteItems(plantId) {
+    //   console.log("this ran");
+    //   try {
+    //     const response = await FavoriteService.getFavoritesList();
+    //     if (response.status === 200) {
+    //       const favoriteObj = response.data.find(
+    //         (favoriteItem) => favoriteItem.plantId === plantId
+    //       );
+    //       console.log("this is the plantId in the checkFavoriteItems function");
+    //       console.log(plantId);
+    //       if (typeof favoriteObj.plantId === "undefined") {
+    //         return false;
+    //       } else if (favoriteObj.plantId === plantId) {
+    //         return true;
+    //       } else {
+    //         return false;
+    //       }
+    //       // for (let i = 0; i < response.data.length; i++) {
+    //       //   // console.log("this is the favorites items");
+    //       //   // console.log(response.data[i]);
+    //       //   // console.log(response.data[i].plantId);
+    //       //   if (response.data[i].plantId === plantId) {
+    //       //     return true;
+    //       //   }
+    //       // }
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching favorite items:", error);
+    //     return false;
+    //   }
+    // },
+    async updateFavoritesStatus() {
+    const favoritesResponse = await FavoriteService.getFavoritesList();
+    if (favoritesResponse.status === 200) {
+      const favoritesData = favoritesResponse.data;
+      
+      this.plants.forEach((plant) => {
+        const favoriteObj = favoritesData.find(
+          (favoriteItem) => favoriteItem.plantId === plant.id
+        );
+        
+        if (favoriteObj) {
+          plant.itemAlreadyfavorited = true;
+        }
+      });
+    }
+  },
     filterToggle() {
       this.filterToggleOn = !this.filterToggleOn;
     },
@@ -337,7 +382,7 @@ export default {
                   cycle: plantData.cycle,
                   watering: plantData.watering,
                   sunlight: plantData.sunlight,
-                  thumbnail:
+                  medium_url:
                     plantData.default_image === null
                       ? this.checkThumbnail(plantData.default_image)
                       : plantData.default_image.medium_url,
@@ -357,7 +402,7 @@ export default {
                 cycle: plantData.cycle,
                 watering: plantData.watering,
                 sunlight: plantData.sunlight,
-                thumbnail:
+                medium_url:
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
@@ -380,7 +425,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
@@ -402,7 +447,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
@@ -421,7 +466,7 @@ export default {
             cycle: plantData.cycle,
             watering: plantData.watering,
             sunlight: plantData.sunlight,
-            thumbnail:
+            medium_url:
               plantData.default_image === null
                 ? this.checkThumbnail(plantData.default_image)
                 : plantData.default_image.medium_url,
@@ -471,6 +516,27 @@ export default {
         }
       });
     },
+    findPlantByCommonName(sCommonName){
+      console.log(sCommonName)
+      this.specificPlantFilter = !this.specificPlantFilter
+      plantData.getPlantSearch(sCommonName).then((response) => {
+        console.log("this is the response for the specific query")
+        console.log(response.data.data)
+          this.plantSearch = response.data.data.map((plantData) => {
+            return {
+              id: plantData.id,
+              common_name: plantData.common_name,
+              cycle: plantData.cycle,
+              watering: plantData.watering,
+              sunlight: plantData.sunlight,
+              medium_url:
+                plantData.default_image === null
+                  ? this.checkThumbnail(plantData.default_image)
+                  : plantData.default_image.medium_url,
+            };
+          });
+        });
+    }
   },
   computed: {
     filteredList() {
@@ -494,7 +560,13 @@ export default {
         !this.indoorFilterOn
       ) {
         filteredPlants = this.ediblePlants;
-      } else {
+      }
+      else if(this.specificPlantFilter &&
+      !this.edibleFilterOn && !this.outdoorFilterOn && !this.indoorFilterOn){
+       filteredPlants = this.plantSearch
+       console.log(filteredPlants)
+      }
+      else {
         filteredPlants = this.plants;
       }
 
@@ -535,7 +607,10 @@ export default {
       }
 
       return filteredPlants;
-    },
+    }
+  
+  
+
   },
   watch: {
     sortAlphabetically(newValue) {
@@ -555,7 +630,7 @@ export default {
               cycle: plantData.cycle,
               watering: plantData.watering,
               sunlight: plantData.sunlight,
-              thumbnail:
+              medium_url:
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.thumbnail,

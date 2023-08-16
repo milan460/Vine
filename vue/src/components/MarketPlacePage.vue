@@ -101,12 +101,19 @@ export default {
         });
       });
     },
-    checkSufficentQuantity(favoriteId){
-      this.$store.state.cartArray.forEach(item => {
-        if(item.favoriteId == favoriteId && item.stockQuantity > 0){
+    checkSufficentQuantity(favoriteId) {
+      console.log("this is the favorites id");
+      console.log(favoriteId);
+       const selectedListing = this.SellerListings.find(
+        (listingItem) => listingItem.favoritesId === favoriteId
+      );
+    
+        if (selectedListing.favoritesId == favoriteId && selectedListing.stockQuantity > 0) {
           return true;
+          // console.log("it updated it");
+          // console.log(item.stockQuantity);
         }
-      })
+      
       return false;
     },
 
@@ -114,13 +121,16 @@ export default {
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
-      let hasSufficentQuantity = this.checkSufficentQuantity(favoriteId);
+      let hasSufficentQuantity = this.checkSufficentQuantity(selectedListing.stockQuantity);
       if (selectedListing.username === this.$store.state.user.username) {
         alert("This is your own listing. Please select a different listing");
         //hide this with the state token thing
-      } else if(!hasSufficentQuantity) {
-        alert('insufficient quantity')
-      } else{
+      } else if (!hasSufficentQuantity) {
+        alert("insufficient quantity");
+      } else {
+        selectedListing.stockQuantity--;
+        SellerService.updateStock(favoriteId);
+
         this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
       }
     },

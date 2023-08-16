@@ -72,6 +72,18 @@ public class JdbcSellerDao implements SellerDao{
         }
     }
 
+    @Override
+    public void updateQuantity(int favoriteId, int requestQty) {
+        String sql ="UPDATE sellers " +
+                "SET stock_quantity = stock_quantity - (SELECT request_qty " +
+                "FROM buyers " +
+                "WHERE favorites_id = ?) " +
+                " WHERE favorites_id = ?";
+
+        jdbcTemplate.update(sql, favoriteId, favoriteId);
+    }
+
+
     private Seller mapToRowSeller(SqlRowSet sqlRowSet){
         Seller seller = new Seller();
 
