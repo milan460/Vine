@@ -12,7 +12,7 @@
           v-model="listing.description"
         ></textarea>
       </div>
-
+  
       <div class="form-group">
         <label for="price">Price:</label>
         <input
