@@ -349,7 +349,8 @@ onload = () => {
 }
 #search:hover{
   background-color: rgb(169, 252, 169);
-  border: solid 2px green
+  border: solid 2px rgba(92, 223, 92, 0.897);
+  
 }
 
 *,

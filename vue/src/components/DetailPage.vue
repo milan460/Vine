@@ -189,6 +189,8 @@ export default {
   grid-area: pic;
   height: 60vh;
   width: 30vw;
+  box-shadow:  5px 5px 5px gray;
+  border: black solid 1-x
 }
 
 #tabs {

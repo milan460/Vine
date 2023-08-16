@@ -34,7 +34,7 @@
           class="link"
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
         >
-          <b-card
+          <b-card id="card"
             :title="plant.common_name"
             v-bind:img-src="plant.medium_url"
             alt="Plant Image"
@@ -71,7 +71,7 @@
               v-if="$store.state.token != ''"
               @click="addToFavorites(plant.id)"
               variant="primary"
-              >Add to Garden</b-button
+              >Add to Favorites</b-button
             >
           </b-card>
         </router-link>
@@ -532,8 +532,32 @@ export default {
   flex-basis: 30%;
   padding: 3%;
   
+}
+
+#cards:hover{
+  background-color: rgb(206, 245, 206);
+  border: rgb(206,245, 206) solid 2px;
+ 
 
 }
+#card{
+   box-shadow: 5px 5px 5px 5px gray;
+   border: black solid 1px;
+}
+
+
+
+#card > img{
+  width: 20.75vw;
+  height: 43vh;
+}
+
+#card > img:hover{
+  background-color: white;
+  border: black solid 1px;
+}
+
+
 
 #main {
   background-color: rgb(206, 245, 206);
