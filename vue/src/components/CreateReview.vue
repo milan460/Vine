@@ -9,7 +9,7 @@
             <input type="text" id="reviewDetail" name="reviewDetail" v-model="review.reviewDetail"><br>
 
             <label for="rating">Rating</label><br>
-            <input type="number" id="rating" name="rating" v-model="review.rating"><br>
+            <input type="number" id="rating" name="rating" placeholder="1" min="1" max="5" v-model="review.rating"><br>
 
         </div>
         <div>

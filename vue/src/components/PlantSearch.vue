@@ -66,6 +66,7 @@
 
             <b-button
               href="#"
+              v-if="$store.state.token != ''"
               @click="addToFavorites(plant.id)"
               variant="primary"
               >Add to Garden</b-button
