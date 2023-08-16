@@ -48,7 +48,7 @@ CONSTRAINT FK_favorites FOREIGN KEY (username) REFERENCES users(username)
 CREATE TABLE sellers(
 favorites_id int NOT NULL UNIQUE, --this is the unique identifier for the plant from earlier, as stated, this will keep
  --track of what plant is what, its a completely unique identifier that allows us to keep track of how many plants were in the favorites table from earlier
-description varchar(300),
+description varchar(1000),
 price money NOT NULL DEFAULT 0.00, -- this is the price that the user will set to the plant, the user on the client side will have to give the price to the server through a form
 is_available boolean NOT NULL DEFAULT TRUE,
 stock_quantity int NOT NULL,

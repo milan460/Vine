@@ -8,6 +8,7 @@
         <textarea
           id="description"
           class="form-control"
+          maxlength="1000"
           rows="4"
           v-model="listing.description"
         ></textarea>
@@ -20,7 +21,7 @@
             class="form-control"
             placeholder="0.00"
             min="0"
-            step="0.01"
+            max="922,337,203,685"
             v-model="listing.price"
         />
       </div>
@@ -32,12 +33,12 @@
           type="number"
           class="form-control"
           placeholder="0"
+          max="1000000"
           min="1"
           v-model="listing.stockQuantity"
         />
       </div>
-      <router-link to ="/marketPlace"> 
-      <button type="submit" class="btn btn-primary">Add Listing</button> </router-link>
+      <button type="submit" class="btn btn-primary">Add Listing</button>
     </form>
 
     
@@ -94,7 +95,7 @@ export default {
       SellerService.addListing(this.listing).then( (response) => {
           if(response.status === 201){
               console.log('this has gone thru')
-              this.$router.push( {name: 'favorites-page'} )
+              // this.$route.push( {name: 'favorites-page'} )
           }
       })
     }
