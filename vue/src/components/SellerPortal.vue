@@ -36,8 +36,8 @@
           v-model="listing.stockQuantity"
         />
       </div>
-
-      <button type="submit" class="btn btn-primary">Add Listing</button>
+      <router-link to ="/marketPlace"> 
+      <button type="submit" class="btn btn-primary">Add Listing</button> </router-link>
     </form>
 
     
