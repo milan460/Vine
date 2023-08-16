@@ -12,6 +12,7 @@ import Test from '../views/TestCSS.vue'
 import MarketPlaceView from '../views/MarketPlaceView.vue'
 import CheckoutPageView from '../views/CheckoutPageView.vue'
 import SellerPortalView from '../views/SellerPortalView.vue'
+import PlantIdentification from '../components/PlantIdentification.vue'
 Vue.use(Router)
 
 /**
@@ -113,7 +114,13 @@ const router = new Router({
       component: SellerPortalView,
       meta: {
         requiresAuth: true
-      }
+      },
+     
+    },
+    {
+      path: "/plantImage",
+      name: "plantImage",
+      component: PlantIdentification
     }
 
     
