@@ -1,20 +1,24 @@
 <template>
   <div id="main">
     <div id="filters">
-      <div>
+      <div class="search-container">
+        
         <b-form-input
           id="src"
           size="sm"
           class="mr-sm-2"
           placeholder="Search"
           v-model="filter.common_name"
-        ></b-form-input>
-        <button
-          id="Plant query"
+        > </b-form-input>
+        
+          <button
+          id="plant-query"
           @click="findPlantByCommonName(filter.common_name)"
         >
-          search for a plant
+          Search
         </button>
+        
+        
       </div>
       <button id="button" @click="filterToggle">Filter</button>
 
@@ -55,7 +59,7 @@
     </div>
 
     <div id="indoorPlants">
-      <div id="cards" v-for="(plant, index) in filteredList" v-bind:key="plant.id">
+      <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link
           class="cardLink"
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
@@ -108,7 +112,7 @@
               >Add to Favorites</b-button
             >
           </b-card>
-          
+
           <b-alert
             v-model="plant.showAlert"
             dismissible
@@ -162,6 +166,7 @@ export default {
         scientific_name: "",
         itemAlreadyfavorited: false,
         showAlert: false
+        
       },
     };
   },
@@ -740,7 +745,7 @@ export default {
 }
 
 #card {
-  box-shadow: 5px 5px 5px 5px gray;
+  box-shadow: 2px 2px 3px 3px rgb(172, 170, 170);
   border: black solid 1px;
 }
 
@@ -816,5 +821,17 @@ export default {
 
 .click {
   background-color: darkgreen;
+}
+.search-container{
+  display:flex;
+  align-items: center;
+}
+#plant-query{
+  border-radius: 3px;
+  margin-left: 1%;
+  width: 7vw;
+  height: 4vh;
+  border: none;
+  box-shadow: 5px 5px 5px gray;
 }
 </style>
