@@ -1,5 +1,5 @@
 <template>
-    <form v-on:submit.prevent>
+    <form v-on:submit.prevent="submitReview">
         <div>
 
             <label for="title">Title</label><br>
@@ -13,8 +13,8 @@
 
         </div>
         <div>
-            <button type="submit" @click="submitReview()">Submit</button>
-            <button type="cancel" @click="resetForm();">Cancel</button>
+            <input type="submit" value="Save">
+            <input type="button" value="Cancel" @click="resetForm">
         </div>
     </form>
 </template>
@@ -26,13 +26,13 @@ export default {
     props:['plantId', 'showTag'],
     data(){
         return {
-            showAddForm: false,
+            showNewReview: false,
             review: {
                 username: this.$store.state.user.username,
                 title: '',
                 reviewDetail: '',
                 rating: '',
-                plantID: this.plantId
+                plantID: this.plantId,
             }
         }
     },
@@ -58,13 +58,15 @@ export default {
             this.review.reviewDetail = '',
             this.review.rating = '',
             this.$emit('form-submitted')
+        
         },
        submitReview(){
            this.incrementReviewId
            ReviewService.addReview(this.review).then( response => {
                if(response.status === 201){
                    
-                   this.setCurrentReviewId()
+                //    this.setCurrentReviewId()
+                   this.reviewId++;
                    this.resetForm()
                }
            })

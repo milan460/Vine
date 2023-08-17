@@ -88,9 +88,8 @@ export default {
 }
 .link:hover{
   background-color: rgb(152, 226, 152);
-  border: rgb(118, 206, 118) 1px solid;
-  border-radius: 2px ;
- 
+  border: rgb(152, 226, 152) 10px solid;
+  border-radius: 4px ; 
 
 }
 #nav {

@@ -31,7 +31,7 @@
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link
-          class="link"
+          
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
         >
           <b-card id="card"
@@ -512,19 +512,18 @@ export default {
 #main {
   height: 100%;
   background-color: rgb(206, 245, 206);
- 
-  
-}
-.link {
-  display: inline-block;
 }
 
+/* .link {
+  display: inline-block;
+} */
+
 #indoorPlants {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  
-  
+  /* justify-content: space-betwee; */
+  margin-left: 9%;
+
 }
 
 #cards {
@@ -537,9 +536,8 @@ export default {
 #cards:hover{
   background-color: rgb(206, 245, 206);
   border: rgb(206,245, 206) solid 2px;
- 
-
 }
+
 #card{
    box-shadow: 5px 5px 5px 5px gray;
    border: black solid 1px;
