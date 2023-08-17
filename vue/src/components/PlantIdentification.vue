@@ -40,10 +40,12 @@ export default {
       longitude: 16.608,
       similar_images: true,
     };
-      const response = PlantId.identifyPlant(requestBody);
-        //this.identificationResult = response.data;
-        console.log("this is the response for the identification")
-        console.log(response.data)
+      PlantId.identifyPlant(requestBody).then((response) => {
+          console.log("this is the response data for the identification results")
+          console.log (response)
+          this.identificationResult = response;
+          console.log(this.identificationResult)
+      })
       } catch (error) {
         console.error("Identification error:", error);
         // Handle error

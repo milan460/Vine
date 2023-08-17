@@ -23,6 +23,7 @@ async identifyPlant(requestBody) {
     const response = await http.post(apiUrl, requestBody, config);
     console.log("this is the data for the api call")
     if(response.status === 201){
+      console.log("this is the response.data")
       console.log(response.data)
       return response.data;
     }
