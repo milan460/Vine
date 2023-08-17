@@ -13,6 +13,7 @@ import MarketPlaceView from '../views/MarketPlaceView.vue'
 import CheckoutPageView from '../views/CheckoutPageView.vue'
 import SellerPortalView from '../views/SellerPortalView.vue'
 import PlantIdentification from '../views/PlantAiView.vue'
+import InformationView from '../views/ContactFormView.vue'
 Vue.use(Router)
 
 /**
@@ -121,7 +122,12 @@ const router = new Router({
       path: "/plantImage",
       name: "plantImage",
       component: PlantIdentification
-    }
+    },
+    {
+      path:'/Information',
+      name: 'EmailService',
+      component: InformationView
+    },
 
     
     
