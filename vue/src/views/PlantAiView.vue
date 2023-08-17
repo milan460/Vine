@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import IdentificationRequest from "./IdentificationRequest.vue";
-import ResultDisplay from "./ResultDisplay.vue";
+import IdentificationRequest from "../components/PlantIdentification.vue";
+import ResultDisplay from "../components/ResultDisplay.vue";
 
 export default {
   components: {

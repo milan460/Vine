@@ -11,7 +11,6 @@
             <p class="item-name">{{ item.plantObj.common_name }}</p>
             <img :src="checkThumbnail(item.plantObj.default_image)" alt="Plant image" class="item-image">
             <p class="item-price">${{ item.price }}</p>
-            <p class="item-quantity">{{ item.stockQuantity }} in stock</p>
           </b-card-text>
         </b-card>
         <p class="total-price">Total Price: ${{ totalPrice }}</p>
