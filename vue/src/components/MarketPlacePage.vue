@@ -20,18 +20,15 @@
       >
         <b-card-text>
           <h5>Description:</h5>
-
           {{ listingItem.description }}
           <br />
-          <strong>${{ listingItem.price }}</strong>
-          <br />
+          <strong>${{ listingItem.price }}  </strong>
           Qty:
           <strong>{{ listingItem.stockQuantity }}</strong>
           <br />
           Sold By:
           <strong>{{ listingItem.username }}</strong>
         </b-card-text>
-
         <img
           id="delete"
           src="../assets/flower-basket.png"
@@ -41,7 +38,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import PlantData from "../services/PlantData.js";
 import SellerService from "../services/SellerService.js";
@@ -107,17 +103,15 @@ export default {
        const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
-    
         if (selectedListing.favoritesId == favoriteId && selectedListing.stockQuantity > 0) {
           return true;
           // console.log("it updated it");
           // console.log(item.stockQuantity);
         }
-      
       return false;
     },
-
     addToCart(favoriteId) {
+      const qtyRequest = 1
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
@@ -129,12 +123,10 @@ export default {
         alert("insufficient quantity");
       } else {
         selectedListing.stockQuantity--;
-        SellerService.updateStock(favoriteId);
-
+        SellerService.updateStock(favoriteId, qtyRequest);
         this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
       }
     },
-
     checkThumbnail(default_image) {
       if (default_image === null) {
         return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
@@ -142,13 +134,11 @@ export default {
       return default_image.medium_url;
     },
   },
-
   created() {
     this.getAllListings();
   },
 };
 </script>
-
 <style scoped>
 #listingCard {
   display: inline-flex;
