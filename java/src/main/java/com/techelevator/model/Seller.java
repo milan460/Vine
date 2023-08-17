@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class Seller {
 
+    private int listingId;
+
     private int favoritesId;
     private String description;
     private BigDecimal price;
@@ -16,7 +18,7 @@ public class Seller {
     private String username;
     private int plantId;
 
-    public Seller(int favoritesId, String description, BigDecimal price, boolean Available, int stockQuantity, String username, int plantId) {
+    public Seller(int favoritesId, String description, BigDecimal price, boolean Available, int stockQuantity, String username, int plantId, int listingId) {
         this.favoritesId = favoritesId;
         this.description = description;
         this.price = price;
@@ -24,6 +26,7 @@ public class Seller {
         this.stockQuantity = stockQuantity;
         this.username = username;
         this.plantId = plantId;
+        this.listingId = listingId;
     }
 
     public Seller(int favorites_id, String description, BigDecimal price, boolean Available, int stockQuantity) {
@@ -32,6 +35,14 @@ public class Seller {
         this.price = price;
         this.Available = Available;
         this.stockQuantity = stockQuantity;
+    }
+
+    public int getListingId() {
+        return listingId;
+    }
+
+    public void setListingId(int listingId) {
+        this.listingId = listingId;
     }
 
     public Seller() {

@@ -1,41 +1,44 @@
 <template>
-  <div class="container mt-5">
-    <form v-on:submit.prevent>
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" name="title" v-model="transaction.title">
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-3">
+        <b-sidebar title="Cart" shadow>
+          <div class="cart-content">
+            <h3 class="cart-title">Your Cart</h3>
+            <b-card v-for="item in $store.state.cartArray" :key="item.favoriteId" class="cart-item">
+              <img id="delete" src="../assets/trash-can.png" @click="deleteFromCart(item.favoritesId)">
+              <b-card-text>
+                <p class="item-name">{{ item.plantObj.common_name }}</p>
+                <img :src="checkThumbnail(item.plantObj.default_image)" alt="Plant image" class="item-image">
+                <p class="item-price">${{ item.price }}</p>
+              </b-card-text>
+            </b-card>
+            <p class="total-price">Total Price: ${{ totalPrice }}</p>
+            <router-link to="/checkout">
+              <b-button @click="routeToCheckoutPage()" variant="primary" class="checkout-button">Checkout</b-button>
+            </router-link>
+          </div>
+        </b-sidebar>
       </div>
+      <div class="col-md-9">
+        <form v-on:submit.prevent>
+          <div class="form-group">
+            <label for="title">Email Address</label>
+            <input type="text" class="form-control" id="title" name="title">
+          </div>
 
-      <div class="form-group">
-        <label for="fromUsername">From Username</label>
-        <input type="text" class="form-control" id="fromUsername" name="fromUsername" :value="transaction.fromUsername" disabled>
-      </div>
+          <div class="form-group">
+            <label for="cardInformation">Card Information</label>
+            <input type="text" class="form-control" id="cardInformation" name="cardInformation" v-model="transaction.cardInformation">
+          </div>
 
-      <div class="form-group">
-        <label for="toUsername">To Username</label>
-        <input type="text" class="form-control" id="toUsername" name="toUsername" :value="transaction.toUsername" disabled>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary mr-2" @click="submitReview(); setCurrentReviewId(); resetForm();">Submit</button>
+            <button type="button" class="btn btn-secondary" @click="resetForm();">Cancel</button>
+          </div>
+        </form>
       </div>
-
-      <div class="form-group">
-        <label for="price">Price</label>
-        <input type="text" class="form-control" id="price" name="price" :value="transaction.price" disabled>
-      </div>
-
-      <div class="form-group">
-        <label for="plantId">Plant ID</label>
-        <input type="text" class="form-control" id="plantId" name="plantId" :value="transaction.plantId" disabled>
-      </div>
-
-      <div class="form-group">
-        <label for="cardInformation">Card Information</label>
-        <input type="text" class="form-control" id="cardInformation" name="cardInformation" v-model="transaction.cardInformation">
-      </div>
-
-      <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-primary mr-2" @click="confirmPurchase">Submit</button>
-        <button type="button" class="btn btn-secondary" @click="resetForm();">Cancel</button>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -78,6 +81,13 @@ export default {
         console.log(favoriteId)
         this.$store.commit('DELETE_FROM_CART_ARRAY', favoriteId)
     },
+
+},
+computed:{
+ totalPrice() {
+      return this.$store.state.cartArray.reduce((total, item) => total + item.price, 0);
+    
+  },
 }
 }
 </script>

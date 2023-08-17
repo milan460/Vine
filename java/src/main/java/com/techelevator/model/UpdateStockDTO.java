@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 public class UpdateStockDTO {
+    private int listingId;
     private int favoriteId;
     private int requestQty;
 
@@ -8,9 +9,10 @@ public class UpdateStockDTO {
 
     }
 
-    public UpdateStockDTO(int favoriteId, int requestQuantity) {
-        this.favoriteId = favoriteId;
+    public UpdateStockDTO(int listingId, int requestQuantity, int favoriteId) {
+        this.listingId = listingId;
         this.requestQty = requestQuantity;
+        this.favoriteId = favoriteId;
     }
 
     public int getFavoriteId() {
@@ -27,5 +29,13 @@ public class UpdateStockDTO {
 
     public void setRequestQuantity(int requestQuantity) {
         this.requestQty = requestQuantity;
+    }
+
+    public int getListingId() {
+        return listingId;
+    }
+
+    public void setListingId(int listingId) {
+        this.listingId = listingId;
     }
 }
