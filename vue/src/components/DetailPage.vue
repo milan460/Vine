@@ -12,40 +12,47 @@
       alt="Image of Plant"
     />
     <div class="icon-details">
-      <img
+      <div id="icon">
+        <img
         class="ratingStar"
         src="../assets/drop.png"
         v-bind:title="plantObject.watering"
         v-if="plantObject.watering == 'Minimum'"
       />
-      <img id="water" src="../assets/water.png" v-else />
+      <img id="water" src="../assets/water.png" v-else />  {{plantObject.watering}}
+      </div>
 
-      <img
+     <div id="icon">
+       <img
         class="ratingStar"
         src="../assets/sun.png"
         v-bind:title="plantObject.sunlight"
         v-if="plantObject.sunlight == 'full sun'"
+        
       />
+      
       <img id="water" src="../assets/partly-cloudy.png" v-else />
-      <img
+      {{plantObject.sunlight[0]}}
+      </div>
+      <div id="icon"><img
         id="water"
         src="../assets/salad.png"
         v-if="!edibleFilterOn"
         :title="plantObject.edible_leaf"
-      />
-      <img
+      /> Edible Leaf</div>
+      <div id="icon"><img
         id="water"
         src="../assets/fruits.png"
         v-if="!edibleFilterOn"
         :title="plantObject.edible_fruit"
-      />
+      /> Edible Fruit</div>
 
-      <img
+      <div id="icon"><img
         id="water"
         src="../assets/indoor-plants.png"
         v-if="!indoorFilterOn"
         :title="plantObject.indoor"
-      />
+      /> Indoor</div>
     </div>
     <div id="description">
       <strong><h2>Description</h2></strong>
@@ -115,6 +122,7 @@ export default {
       ediblePlants: [],
       edibleFilterOn: false,
       flowers: false,
+      sunIconDetail: "",
 
       filter: {
         common_name: "",
@@ -128,6 +136,7 @@ export default {
     this.currentPlantId = this.$store.state.activePlant;
     PlantData.getPlantDetails(this.currentPlantId).then((response) => {
       this.plantObject = response.data;
+      // this.plantObject
     });
   },
   methods: {
@@ -153,6 +162,20 @@ export default {
       }
       return default_image.regular_url;
     },
+    // displaySunIconDetails() {
+    //   console.log('im here')
+    //   this.plantObject.forEach((item) => {
+    //     PlantData.getPlantDetails(item.plantId)
+    //       .then((response) => {
+    //         console.log( response.data.sunlight[0])
+    //         item.displayIconDetails =
+    //           response.data.sunlight[0];
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   });
+    // },
   },
 };
 </script>
@@ -256,6 +279,11 @@ button {
 
 #water {
   height: 5vh;
-  margin: 2%;
+  /* margin: 3%;
+  margin-left: 5%; */
+}
+#icon{
+  margin-left: 10%;
+  margin-bottom: 10%;
 }
 </style>

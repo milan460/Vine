@@ -66,11 +66,9 @@ export default {
        submitReview(){
            this.incrementReviewId
            ReviewService.addReview(this.review).then( response => {
-               if(response.status === 201){
-                   
-                //    this.setCurrentReviewId()
-                   this.reviewId++;
+               if(response.status === 200){
                    this.resetForm()
+                   this.$store.commit('ADD_ONE_REVIEW', response.data)
                }
            })
            .catch(error => {

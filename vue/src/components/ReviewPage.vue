@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="element" v-for="review in reviewObj" :key="review.reviewId">
+    <div class="element" v-for="review in $store.state.reviewObj" :key="review.reviewId">
       <h1 id="title">
         {{ review.title }}
         <img
@@ -25,7 +25,7 @@ export default {
   props: ["plantId"],
   data() {
     return {
-      reviewObj: [],
+     
     };
   },
   created() {
@@ -50,7 +50,7 @@ export default {
     fetchReviews() {
       ReviewService.listOfReview(this.plantId)
         .then((response) => {
-          this.reviewObj = response.data.map((reviews) => {
+          let reviewObj = response.data.map((reviews) => {
             return {
               username: reviews.username,
               title: reviews.title,
@@ -61,6 +61,7 @@ export default {
               
             };
           });
+        this.$store.commit('ADD_ALL_REVIEWS', reviewObj)
         })
         .catch((error) => {
           alert(error.response.data.message);

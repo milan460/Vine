@@ -1,8 +1,8 @@
 <template>
-  <div id="mainSeller">
-    <!-- <div>
+  <div class="mainSeller">
+    <div>
       <h1 id="current">Current Listings</h1>
-    </div> -->
+    </div>
     <div
       id="listingCard"
       v-for="listingItem in filteredAvailablePlants"
@@ -167,8 +167,6 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   margin-left: 3%;
-  margin-top: 3%;
-  
 }
 #card {
   /* height: 5vh; */
@@ -183,7 +181,7 @@ export default {
   margin-top: 3%;
 }
 #current {
-  /* margin: 4%; */
+  margin: 4%;
 }
 span{
   margin-right: 58%;
@@ -193,8 +191,5 @@ span{
 }
 #user{
   height: 3vh;
-}
-#mainSeller{
-  background-image: url(../assets/rotated.jpg);
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <FileInput @images-updated="updateImages" />
-    <button @click="findPlant(images)">Identify Plant</button>
+  <div id="page">
+    
+      <img id="pic" src="../assets/idplant.jpg">
+    
+    <FileInput id="choose" @images-updated="updateImages" />
+    <button id="btn" @click="findPlant(images)">Identify Plant</button>
     <ResultDisplay :identificationResult="identificationResult" />
   </div>
 </template>
@@ -54,3 +57,48 @@ export default {
   },
 };
 </script>
+<style scoped>
+#btn{
+  background-color: rgb(152, 226, 152);
+  border: rgb(152, 226, 152) 3px solid;
+  border-radius: 3px; 
+  margin-left: 47%;
+  margin-top: 1%;
+  
+
+}
+#btn:hover{
+ background-color:rgb(169, 252, 169);
+  border-radius: 2px;
+
+}
+#choose{
+margin-left: 47%;
+
+
+}
+#page{
+  /* background-image: url(../assets/background.jpg); */
+  background-blend-mode: lighten;
+  background-size: contain;
+}
+h1{
+  margin-left: 43%;
+  font-weight: bolder;
+}
+#pic{
+  height: 30vh;
+  margin-left: 35%;
+
+ 
+
+}
+
+
+
+
+
+
+
+
+</style>
