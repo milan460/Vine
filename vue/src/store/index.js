@@ -64,10 +64,7 @@ export default new Vuex.Store({
         console.log(filterFunction)
         state.cartArray = filterFunction;
       }
-
-
-
-    // }
+    
     
   }
   ////////// USE THIS TO ROUTE /////
