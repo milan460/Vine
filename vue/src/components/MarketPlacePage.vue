@@ -6,7 +6,7 @@
     <div
       id="listingCard"
       v-for="listingItem in filteredAvailablePlants"
-      v-bind:key="listingItem.favoritesId"
+      v-bind:key="listingItem.listingId"
     >
       <b-card
         id="card"
@@ -35,7 +35,7 @@
         <img
           id="delete"
           src="../assets/flower-basket.png"
-          @click="addToCart(listingItem.favoritesId)"
+          @click="addToCart(listingItem.listingId)"
         />
       </b-card>
     </div>
@@ -51,12 +51,13 @@ export default {
     return {
       SellerListings: [
         {
+          listingId: "",
           username: "",
           favoritesId: "",
           plantId: "",
           description: "",
           price: "",
-          stockQuantity: "",
+          stockQuantity: 0,
           isAvailable: "",
           plantObj: {},
           default_image: "",
@@ -77,6 +78,7 @@ export default {
         if (response.status === 200) {
           this.SellerListings = response.data.map((listingItem) => {
             return {
+              listingId: listingItem.listingId,
               username: listingItem.username,
               favoritesId: listingItem.favoritesId,
               plantId: listingItem.plantId,
@@ -102,13 +104,17 @@ export default {
         });
       });
     },
-    checkSufficentQuantity(favoriteId) {
-      const selectedListing = this.SellerListings.find(
-        (listingItem) => listingItem.favoritesId === favoriteId
-      );
+    checkSufficentQuantity(listingId) {
 
+      if(listingId === undefined){
+        return false;
+      }
+      const selectedListing = this.SellerListings.find(
+        (listingItem) => listingItem.listingId === listingId
+      );
+      console.log(listingId)
       if (
-        selectedListing.favoritesId == favoriteId &&
+        selectedListing.listingId == listingId &&
         selectedListing.stockQuantity > 0
       ) {
         return true;
@@ -119,13 +125,13 @@ export default {
       return false;
     },
 
-    addToCart(favoriteId) {
+    addToCart(listingId) {
       const qtyRequest = 1;
       const selectedListing = this.SellerListings.find(
-        (listingItem) => listingItem.favoritesId === favoriteId
+        (listingItem) => listingItem.listingId === listingId
       );
       let hasSufficentQuantity = this.checkSufficentQuantity(
-        selectedListing.stockQuantity
+        listingId
       );
       if (selectedListing.username === this.$store.state.user.username) {
         alert("This is your own listing. Please select a different listing");
@@ -134,9 +140,15 @@ export default {
         alert("insufficient quantity");
       } else {
         selectedListing.stockQuantity--;
-        SellerService.updateStock(favoriteId, qtyRequest);
+        SellerService.insertBuyer(listingId, selectedListing.favoritesId, qtyRequest).then((response => {
+          if (response.status === 200){
+          SellerService.updateStock(listingId, qtyRequest);
+          this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
+          }
+        }))
+        
 
-        this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
+        
       }
     },
 

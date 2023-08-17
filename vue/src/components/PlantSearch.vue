@@ -2,28 +2,54 @@
   <div id="main">
     <div id="filters">
       <div>
-      <b-form-input
-        id="src"
-        size="sm"
-        class="mr-sm-2"
-        placeholder="Search"
-        v-model="filter.common_name"
-      ></b-form-input>
-      <button id="Plant query" @click="findPlantByCommonName(filter.common_name)">search for a plant</button>
+        <b-form-input
+          id="src"
+          size="sm"
+          class="mr-sm-2"
+          placeholder="Search"
+          v-model="filter.common_name"
+        ></b-form-input>
+        <button
+          id="Plant query"
+          @click="findPlantByCommonName(filter.common_name)"
+        >
+          search for a plant
+        </button>
       </div>
       <button id="button" @click="filterToggle">Filter</button>
 
       <div id="filterCheckbox" v-if="filterToggleOn">
         <label for="indoorPlants">
-          <button id="btn" @click="checkIndoorPlants">Indoor</button>
+          <button
+            id="btn"
+            :class="{ clicked: indoorButtonClicked }"
+            @click="
+              checkIndoorPlants();
+              toggleIndoorButton();
+            "
+          >
+            Indoor
+          </button>
         </label>
 
         <label for="outdoorPlants">
-          <button id="btn" @click="checkOutdoorPlants">Outdoor</button>
+          <button
+            id="btn"
+            :class="{ clicked: outdoorButtonClicked }"
+            @click="checkOutdoorPlants"
+          >
+            Outdoor
+          </button>
         </label>
 
         <label for="ediblePlants">
-          <button id="btn" @click="checkEdiblePlants">Edible</button>
+          <button
+            id="btn"
+            :class="{ clicked: edibleButtonClicked }"
+            @click="checkEdiblePlants"
+          >
+            Edible
+          </button>
         </label>
       </div>
     </div>
@@ -40,9 +66,15 @@
             alt="Plant Image"
             img-top
             tag="article"
-            style="max-width: 20rem"
+            style="max-width: 50rem"
             class="mb-2 flex1"
           >
+            <!-- <b-card-img
+              :src="plant.medium_url"
+              :alt="plant.common_name"
+              top
+              style="max-width: 100%; max-height: 20rem"
+            /> -->
             <b-card-text>
               <img
                 id="water"
@@ -67,13 +99,25 @@
             </b-card-text>
 
             <b-button
+              id="favoriteBtn"
               href="#"
               v-if="$store.state.token != ''"
-              @click="addToFavorites(plant.id)"
+              @click="addToFavorites(plant.id, index)"
+              :disabled="plant.itemAlreadyfavorited"
               variant="primary"
               >Add to Favorites</b-button
             >
           </b-card>
+
+          <b-alert
+            v-model="plant.showAlert"
+            dismissible
+            fade
+            variant="success"
+            class="mt-3"
+          >
+            Added to Favorites!
+          </b-alert>
         </router-link>
       </div>
     </div>
@@ -88,9 +132,14 @@
 <script>
 import FavoriteService from "../services/FavoriteService.js";
 import plantData from "../services/PlantData.js";
+
 export default {
   data() {
     return {
+      showAlert: false,
+      indoorButtonClicked: false,
+      outdoorButtonClicked: false,
+      edibleButtonClicked: false,
       filterToggleOn: false,
       plants: [],
       indoorPlants: [],
@@ -110,14 +159,14 @@ export default {
         watering: "",
         sunlight: "",
         imageURL: "",
-        scientific_name: ""
+        scientific_name: "",
+        itemAlreadyfavorited: false,
+        showAlert: false
       },
     };
   },
-  created() {
+  async created() {
     plantData.getPlantData(this.pagecounter).then((response) => {
-      console.log("this is the initialized data")
-      console.log(response.data.data)
       this.plants = response.data.data.map((plantData) => {
         return {
           id: plantData.id,
@@ -129,13 +178,109 @@ export default {
             plantData.default_image === null
               ? this.checkThumbnail(plantData.default_image)
               : plantData.default_image.medium_url,
+          itemAlreadyfavorited: false,
+          showAlert: false
         };
       });
-    })
-
+      this.updateFavoritesStatus();
+      this.updateIndoorFavorites();
+    });
   },
-  mounted() {},
   methods: {
+    async updateFavoritesStatus() {
+      const favoritesResponse = await FavoriteService.getFavoritesList();
+      if (favoritesResponse.status === 200) {
+        const favoritesData = favoritesResponse.data;
+
+        if (this.plants.length !== 0) {
+          this.plants.forEach((plant) => {
+            const favoriteObj = favoritesData.find(
+              (favoriteItem) => favoriteItem.plantId === plant.id
+            );
+
+            if (favoriteObj) {
+              plant.itemAlreadyfavorited = true;
+            }
+          });
+        }
+      }
+    },
+    updateIndoorFavorites() {
+      FavoriteService.getFavoritesList().then((favoritesResponse) => {
+        if (favoritesResponse.status === 200) {
+          const favoritesData = favoritesResponse.data;
+
+          this.indoorPlants.forEach((plant) => {
+            const favoriteObj = favoritesData.find(
+              (favoriteItem) => favoriteItem.plantId === plant.id
+            );
+
+            if (favoriteObj) {
+              plant.itemAlreadyfavorited = true;
+            } else {
+              plant.itemAlreadyfavorited = false;
+            }
+          });
+        }
+      });
+    },
+    updateOutdoorFavorites() {
+      FavoriteService.getFavoritesList().then((favoritesResponse) => {
+        if (favoritesResponse.status === 200) {
+          const favoritesData = favoritesResponse.data;
+
+          this.outdoorPlants.forEach((plant) => {
+            const favoriteObj = favoritesData.find(
+              (favoriteItem) => favoriteItem.plantId === plant.id
+            );
+
+            if (favoriteObj) {
+              plant.itemAlreadyfavorited = true;
+            } else {
+              plant.itemAlreadyfavorited = false;
+            }
+          });
+        }
+      });
+    },
+    updateEdibleFavorites() {
+      FavoriteService.getFavoritesList().then((favoritesResponse) => {
+        if (favoritesResponse.status === 200) {
+          const favoritesData = favoritesResponse.data;
+
+          this.ediblePlants.forEach((plant) => {
+            const favoriteObj = favoritesData.find(
+              (favoriteItem) => favoriteItem.plantId === plant.id
+            );
+
+            if (favoriteObj) {
+              plant.itemAlreadyfavorited = true;
+            } else {
+              plant.itemAlreadyfavorited = false;
+            }
+          });
+        }
+      });
+    },
+    updatedPlantSearchFavorites() {
+      FavoriteService.getFavoritesList().then((favoritesResponse) => {
+        if (favoritesResponse.status === 200) {
+          const favoritesData = favoritesResponse.data;
+
+          this.plantSearch.forEach((plant) => {
+            const favoriteObj = favoritesData.find(
+              (favoriteItem) => favoriteItem.plantId === plant.id
+            );
+
+            if (favoriteObj) {
+              plant.itemAlreadyfavorited = true;
+            } else {
+              plant.itemAlreadyfavorited = false;
+            }
+          });
+        }
+      });
+    },
     filterToggle() {
       this.filterToggleOn = !this.filterToggleOn;
     },
@@ -162,8 +307,11 @@ export default {
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
               indoor: "",
+              itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
+          this.updateFavoritesStatus();
         });
       } else if (this.indoorFilterOn && !this.outdoorFilterOn) {
         plantData
@@ -180,8 +328,11 @@ export default {
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
+                itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
+            this.updateIndoorFavorites();
           });
       } else if (!this.indoorFilterOn && this.outdoorFilterOn) {
         plantData
@@ -198,8 +349,11 @@ export default {
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
+                itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
+            this.updateOutdoorFavorites();
           });
       } else if (
         this.edibleFilterOn &&
@@ -218,8 +372,11 @@ export default {
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
+              itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
+          this.updateEdibleFavorites();
         });
       }
     },
@@ -244,8 +401,11 @@ export default {
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
                 indoor: "",
+                itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
+            this.updateFavoritesStatus();
           });
         } else if (
           this.indoorFilterOn &&
@@ -266,8 +426,11 @@ export default {
                     plantData.default_image === null
                       ? this.checkThumbnail(plantData.default_image)
                       : plantData.default_image.medium_url,
+                  itemAlreadyfavorited: false,
+                  showAlert: false
                 };
               });
+              this.updateIndoorFavorites();
             });
         } else if (
           !this.indoorFilterOn &&
@@ -288,8 +451,11 @@ export default {
                     plantData.default_image === null
                       ? this.checkThumbnail(plantData.default_image)
                       : plantData.default_image.medium_url,
+                  itemAlreadyfavorited: false,
+                  showAlert: false
                 };
               });
+              this.updateOutdoorFavorites();
             });
         } else if (
           !this.indoorFilterOn &&
@@ -308,13 +474,17 @@ export default {
                   plantData.default_image === null
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
+                itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
+            this.updateEdibleFavorites();
           });
         }
       }
     },
     checkIndoorPlants() {
+      this.indoorButtonClicked = !this.indoorButtonClicked;
       this.indoorFilterOn = !this.indoorFilterOn;
       plantData
         .getIndoorOrOutdoorPlants(this.pagecounter, 1)
@@ -330,12 +500,16 @@ export default {
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
+              itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
+          this.updateIndoorFavorites();
         });
     },
 
     checkOutdoorPlants() {
+      this.outdoorButtonClicked = !this.outdoorButtonClicked;
       this.outdoorFilterOn = !this.outdoorFilterOn;
       plantData
         .getIndoorOrOutdoorPlants(this.pagecounter, 0)
@@ -351,11 +525,15 @@ export default {
                 plantData.default_image === null
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
+              itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
+          this.updateOutdoorFavorites();
         });
     },
     checkEdiblePlants() {
+      this.edibleButtonClicked = !this.outdoorButtonClicked;
       this.edibleFilterOn = !this.edibleFilterOn;
       plantData.getEdiblePlants(this.pagecounter, 1).then((response) => {
         this.ediblePlants = response.data.data.map((plantData) => {
@@ -369,40 +547,92 @@ export default {
               plantData.default_image === null
                 ? this.checkThumbnail(plantData.default_image)
                 : plantData.default_image.medium_url,
+            itemAlreadyfavorited: false,
+            showAlert: false
           };
         });
+        this.updateEdibleFavorites();
       });
     },
-    addToFavorites(plantId) {
-      console.log("this is the plant Id");
-      console.log(plantId);
-      FavoriteService.addToFavorites(plantId).then((response) => {
-        if (response.status === 201) {
-          //alert("Was added to your garden")
+    toggleIndoorButton() {
+      this.indoorButtonClicked = !this.indoorButtonClicked;
+    },
+
+    toggleOutdoorButton() {
+      this.outdoorButtonClicked = !this.outdoorButtonClicked;
+    },
+
+    toggleEdibleButton() {
+      this.edibleButtonClicked = !this.edibleButtonClicked;
+    },
+    addToFavorites(plantId, index) {
+      let alreadyAddedPlantId = 0;
+      FavoriteService.getFavoritesList().then((response) => {
+        if (response.status === 200) {
+          for (let i = 0; i < response.data.length; i++) {
+            if (response.data[i].plantId === plantId) {
+              alreadyAddedPlantId = response.data[i].plantId;
+            }
+          }
+
+          if (plantId !== alreadyAddedPlantId) {
+            FavoriteService.addToFavorites(plantId)
+              .then((response) => {
+                if (response.status === 200) {
+                  this.filteredList[index].showAlert = true
+                  //alert("Was added to your garden")
+                  setTimeout(() => {
+                    this.filteredList[index].showAlert = false; // Hide the alert after a certain time
+                  }, 3000);
+                }
+              })
+              .catch((error) => {
+                alert(error.response.data.message);
+              });
+          }
         }
       });
     },
-    findPlantByCommonName(sCommonName){
-      console.log(sCommonName)
-      this.specificPlantFilter = !this.specificPlantFilter
+    findPlantByCommonName(sCommonName) {
+      this.specificPlantFilter = !this.specificPlantFilter;
       plantData.getPlantSearch(sCommonName).then((response) => {
-        console.log("this is the response for the specific query")
-        console.log(response.data.data)
-          this.plantSearch = response.data.data.map((plantData) => {
-            return {
-              id: plantData.id,
-              common_name: plantData.common_name,
-              cycle: plantData.cycle,
-              watering: plantData.watering,
-              sunlight: plantData.sunlight,
-              medium_url:
-                plantData.default_image === null
-                  ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.medium_url,
-            };
-          });
+        this.plantSearch = response.data.data.map((plantData) => {
+          return {
+            id: plantData.id,
+            common_name: plantData.common_name,
+            cycle: plantData.cycle,
+            watering: plantData.watering,
+            sunlight: plantData.sunlight,
+            medium_url:
+              plantData.default_image === null
+                ? this.checkThumbnail(plantData.default_image)
+                : plantData.default_image.medium_url,
+            itemAlreadyfavorited: false,
+            showAlert: false
+          };
         });
-    }
+        this.updatedPlantSearchFavorites();
+      });
+    },
+    updateFavoritesStatusForCategory(categoryPlants) {
+      FavoriteService.getFavoritesList().then((favoritesResponse) => {
+        if (favoritesResponse.status === 200) {
+          const favoritesData = favoritesResponse.data;
+
+          categoryPlants.forEach((plant) => {
+            const favoriteObj = favoritesData.find(
+              (favoriteItem) => favoriteItem.plantId === plant.id
+            );
+
+            if (favoriteObj) {
+              plant.itemAlreadyfavorited = true;
+            } else {
+              plant.itemAlreadyfavorited = false;
+            }
+          });
+        }
+      });
+    },
   },
   computed: {
     filteredList() {
@@ -426,13 +656,14 @@ export default {
         !this.indoorFilterOn
       ) {
         filteredPlants = this.ediblePlants;
-      }
-      else if(this.specificPlantFilter &&
-      !this.edibleFilterOn && !this.outdoorFilterOn && !this.indoorFilterOn){
-       filteredPlants = this.plantSearch
-       console.log(filteredPlants)
-      }
-      else {
+      } else if (
+        this.specificPlantFilter &&
+        !this.edibleFilterOn &&
+        !this.outdoorFilterOn &&
+        !this.indoorFilterOn
+      ) {
+        filteredPlants = this.plantSearch;
+      } else {
         filteredPlants = this.plants;
       }
 
@@ -464,7 +695,7 @@ export default {
           })
         );
       }
-        if (this.filter.scientific_name != "") {
+      if (this.filter.scientific_name != "") {
         filteredPlants = filteredPlants.filter((plant) =>
           plant.scientific_name
             .toLowerCase()
@@ -475,40 +706,11 @@ export default {
       return filteredPlants;
     },
   },
-  watch: {
-    sortAlphabetically(newValue) {
-      if (newValue) {
-        this.filteredList.sort((a, b) =>
-          a.common_name.localeCompare(b.common_name, undefined, {
-            sensitivity: "base",
-          })
-        );
-      } else {
-        this.sortAlphabetically = false;
-        plantData.getPlantData(this.pagecounter).then((response) => {
-          this.plants = response.data.data.map((plantData) => {
-            return {
-              id: plantData.id,
-              common_name: plantData.common_name,
-              cycle: plantData.cycle,
-              watering: plantData.watering,
-              sunlight: plantData.sunlight,
-              medium_url:
-                plantData.default_image === null
-                  ? this.checkThumbnail(plantData.default_image)
-                  : plantData.default_image.thumbnail,
-              indoor: "",
-            };
-          });
-        });
-      }
-    },
-  },
+  watch: {},
 };
 </script>
 
 <style scoped>
-
 #main {
   height: 100%;
   /* background-color: rgb(206, 245, 206); */
@@ -531,15 +733,15 @@ export default {
   padding: 3%;
 }
 
-#cards:hover{
+#cards:hover {
   background-color: rgb(206, 245, 206);
   border: rgb(206,245, 206) solid 2px;
   border-radius: 6px;
 }
 
-#card{
-   box-shadow: 5px 5px 5px 5px gray;
-   border: black solid 1px;
+#card {
+  box-shadow: 5px 5px 5px 5px gray;
+  border: black solid 1px;
 }
 
 .cardLink{
@@ -552,12 +754,10 @@ export default {
   height: 43vh;
 }
 
-#card > img:hover{
+#card > img:hover {
   background-color: white;
   border: black solid 1px;
 }
-
-
 
 #main {
   background-color: rgb(206, 245, 206);
@@ -581,7 +781,6 @@ export default {
   box-shadow: 5px 5px 5px gray;
   margin: 0.5%;
   margin-right: 10px;
-  
 }
 
 #water {
@@ -613,5 +812,9 @@ export default {
   width: 55vw;
   box-shadow: 5px 5px 5px gray;
   margin-left: 0.5%;
+}
+
+.click {
+  background-color: darkgreen;
 }
 </style>

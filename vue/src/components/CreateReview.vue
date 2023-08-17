@@ -17,6 +17,8 @@
             <input type="button" value="Cancel" @click="resetForm">
         </div>
     </form>
+
+ 
 </template>
 
 <script>
@@ -46,6 +48,7 @@ export default {
         setCurrentReviewId(){
             ReviewService.getRecentReviewId().then(response => {
                 if(response.status === 200){
+                    console.log('this has run')
                     this.$store.commit('SET_REVIEW_ID', response.data)
                 }
             })
