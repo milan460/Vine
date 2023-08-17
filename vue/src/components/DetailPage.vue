@@ -68,8 +68,8 @@
         >
           Reviews
         </button>
-        <button class="button active" id="rec">Recommendations</button>
-        <button class="button active" id="nursery">Plant Shop</button>
+        <router-link to="/marketplace">
+        <button class="button active" id="nursery">Plant Shop</button></router-link>
         <button class="button active" @click="addToFavorites" id="garden">
           Add to Garden
         </button>
@@ -270,6 +270,7 @@ button {
   height: 40px;
   width: 25%;
   padding: 1%;
+  margin-left: 5%;
 }
 
 .button {
