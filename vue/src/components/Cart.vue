@@ -14,9 +14,9 @@
           </b-card-text>
         </b-card>
         <p class="total-price">Total Price: ${{ totalPrice }}</p>
-         <router-link to ="/checkout">
-        <b-button @click="routeToCheckoutPage()" variant="primary" class="checkout-button">Checkout</b-button>
-         </router-link>
+         
+        <b-button @click="confirmPurchase" variant="primary" class="checkout-button">Checkout</b-button>
+        
       </div>
     </b-sidebar>
   </div>
@@ -49,12 +49,14 @@ computed:{
     confirmPurchase(){
             //call the sellersService and delete an entry based on favorite Id
             this.$store.state.cartArray.forEach(item => {
+             let deleteDuplicates =  this.deleteDuplicatesFromCart(item.favoritesId)
+             if(deleteDuplicates){
               SellerService.deleteListing(item.favoritesId)
               FavoriteService.updateFavoritesUsername(item.favoritesId)
               this.deleteFromCart(item.favoritesId)
               if(item.stockQuantity == 0){
                 window.location.reload();
-              }
+              }}
             });
             //SellerService.deleteListing(this.$store.state.cartArray.favoritesId)
           SellerService
@@ -64,6 +66,30 @@ computed:{
             //mutation clear the cart array create mutation in store
             
         },
+
+        deleteDuplicatesFromCart(favoriteId) {
+        
+      const indexes = [];
+      this.$store.state.cartArray.forEach((item, index) => {
+        if (item.favoritesId === favoriteId) {
+          indexes.push(index);
+        }
+      });
+
+      // Keep the first occurrence and remove the others
+      if (indexes.length >= 1) {
+        // Remove items from the cartArray in reverse order to maintain indexes
+        for (let i = indexes.length - 1; i > 0; i--) {
+          this.$store.commit('DELETE_FROM_CART_ARRAY', this.$store.state.cartArray[indexes[i]].favoritesId);
+        }
+        return true;
+      }
+      else{
+        return false;
+      }
+    },
+
+
             checkThumbnail(default_image) {
       if (default_image === null) {
         return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";

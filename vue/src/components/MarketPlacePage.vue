@@ -74,6 +74,16 @@ export default {
     getAllListings() {
       SellerService.getAllSellerListings().then((response) => {
         if (response.status === 200) {
+          console.log("this is the response")
+          console.log(response.data)
+          response.data.forEach(item => {
+            console.log("this is the item stock quantity")
+            console.log(item.stockQuantity)
+            if (item.stockQuantity === 0){
+              SellerService.deleteListing(item.favoritesId)
+            }
+          })
+          }
           this.SellerListings = response.data.map((listingItem) => {
             return {
               listingId: listingItem.listingId,
@@ -91,7 +101,7 @@ export default {
           console.log("this is the seller listing");
           console.log(this.SellerListings);
         }
-      });
+    );
     },
     getPlantData() {
       this.SellerListings.forEach((listingItem) => {
@@ -138,17 +148,17 @@ export default {
         alert("insufficient quantity");
       } else {
         selectedListing.stockQuantity--;
-        SellerService.insertBuyer(listingId, selectedListing.favoritesId, qtyRequest).then((response => {
-          if (response.status === 200){
+        // SellerService.insertBuyer(listingId, selectedListing.favoritesId, qtyRequest).then((response => {
+        //   if (response.status === 200){
           SellerService.updateStock(listingId, qtyRequest);
           this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
           }
-        }))
+        
         
 
         
-      }
-    },
+      },
+    
     checkThumbnail(default_image) {
       if (default_image === null) {
         return "https://static.vecteezy.com/system/resources/previews/024/551/617/original/gardening-houseplant-error-404-flash-message-environmental-friendly-watering-plant-empty-state-ui-design-page-not-found-popup-cartoon-image-flat-illustration-concept-on-white-background-vector.jpg";
