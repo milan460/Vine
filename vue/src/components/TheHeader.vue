@@ -20,9 +20,7 @@
             ></b-nav-item
           >
           <b-nav-item id="home"
-            ><router-link
-              class="link"
-              v-bind:to="{ name: 'marketplace' }"
+            ><router-link class="link" v-bind:to="{ name: 'marketplace' }"
               >Plant Shop</router-link
             ></b-nav-item
           >
@@ -47,11 +45,16 @@
               v-if="$store.state.token != ''"
               >Logout</router-link
             >
-            </b-nav-item
-          >
+          </b-nav-item>
           <b-nav-item id="cart">
-          <img v-if="$store.state.token != ''" id="basket" src="../assets/flower-basket.png" v-b-toggle.sidebar-right>
-              <cart></cart>
+            <img
+              v-if="$store.state.token != ''"
+              id="basket"
+              src="../assets/flower-basket.png"
+              v-b-toggle.sidebar-right
+            />
+            <cart></cart>
+            
           </b-nav-item>
         </b-nav>
       </b-card-header>
@@ -60,12 +63,12 @@
 </template>
 
 <script>
-import Cart from '../components/Cart.vue'
+import Cart from "../components/Cart.vue";
 export default {
   name: "the-header",
   components: {
-    Cart
-  }
+    Cart,
+  },
 };
 </script>
 
@@ -86,11 +89,10 @@ export default {
   text-decoration: none;
   color: black;
 }
-.link:hover{
+.link:hover {
   background-color: rgb(152, 226, 152);
   border: rgb(152, 226, 152) 10px solid;
-  border-radius: 4px ; 
-
+  border-radius: 4px;
 }
 #nav {
   background-color: rgb(206, 245, 206);
@@ -103,10 +105,10 @@ export default {
   height: 10vh;
 }
 
-#basket{
+#basket {
   height: 7vh;
 }
-#cart{
+#cart {
   margin-left: 50%;
 }
 </style>

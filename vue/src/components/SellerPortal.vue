@@ -83,20 +83,9 @@ export default {
      *
      */
     addListing() {
-        // this.listing.isAvailable = !this.listing.isAvailable
-        // console.log(this.listing.isAvailable)
-    //   let listingParse = {
-    //       username: this.$store.state.user.username,
-    //         favoritesId: (this.$store.state.currentFavoriteId),
-    //         description: this.listing.description,
-    //         price: Number(this.listing.price),
-    //         isAvailable: true,
-    //         stockQuantity: this.listing.stockQuantity,
-    //   }
-    //   console.log(listingParse)
-    //   console.log('this is the listing object')
+    
     if(this.listing.Available === true){
-      // this.$router.push( {name: 'favorites-page'} )
+      this.$router.push( {name: 'favorites-page'} )
       
       SellerService.addListing(this.listing).then( (response) => {
           if(response.status === 200){

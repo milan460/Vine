@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <div id="filters">
-      <div>
+      <div id="same">
         <b-form-input
           id="src"
           size="sm"
@@ -9,23 +9,25 @@
           placeholder="Search"
           v-model="filter.common_name"
         ></b-form-input>
+        
         <button
-          id="Plant query"
+          id="plantQuery"
           @click="findPlantByCommonName(filter.common_name)"
         >
-          search for a plant
+          Search For a Plant
         </button>
       </div>
       <button id="button" @click="filterToggle">Filter</button>
 
       <div id="filterCheckbox" v-if="filterToggleOn">
+
         <label for="indoorPlants">
           <button
             id="btn"
-            :class="{ clicked: indoorButtonClicked }"
+            :class=" {'active': indoorButtonClicked} "
+            :disabled="outdoorButtonClicked === true || edibleButtonClicked === true"
             @click="
               checkIndoorPlants();
-              toggleIndoorButton();
             "
           >
             Indoor
@@ -35,7 +37,8 @@
         <label for="outdoorPlants">
           <button
             id="btn"
-            :class="{ clicked: outdoorButtonClicked }"
+            :class=" {'active': outdoorButtonClicked} "
+            :disabled="indoorButtonClicked === true || edibleButtonClicked === true"
             @click="checkOutdoorPlants"
           >
             Outdoor
@@ -45,7 +48,8 @@
         <label for="ediblePlants">
           <button
             id="btn"
-            :class="{ clicked: edibleButtonClicked }"
+            :class=" {'active': edibleButtonClicked} "
+            :disabled="indoorButtonClicked === true || outdoorButtonClicked === true"
             @click="checkEdiblePlants"
           >
             Edible
@@ -53,7 +57,9 @@
         </label>
       </div>
     </div>
-
+    <!-- <div class="loading" v-if="isLoading">
+      <img src="../assets/ping_pong_loader.gif" />
+    </div> -->
     <div id="indoorPlants">
       <div id="cards" v-for="(plant, index) in filteredList" v-bind:key="plant.id">
         <router-link
@@ -102,10 +108,10 @@
               id="favoriteBtn"
               href="#"
               v-if="$store.state.token != ''"
-              @click="addToFavorites(plant.id, index)"
+              @click="addToFavorites(plant.id, index); checkbuttonPress();"
               :disabled="plant.itemAlreadyfavorited"
               variant="primary"
-              >Add to Favorites</b-button
+              > {{plant.itemAlreadyfavorited === false ? 'Add to Favorites' : 'Added'}}</b-button
             >
           </b-card>
           
@@ -136,6 +142,8 @@ import plantData from "../services/PlantData.js";
 export default {
   data() {
     return {
+      isBtnPressed: false,
+      isLoading: true,
       showAlert: false,
       indoorButtonClicked: false,
       outdoorButtonClicked: false,
@@ -184,9 +192,13 @@ export default {
       });
       this.updateFavoritesStatus();
       this.updateIndoorFavorites();
+      this.isLoading = false;
     });
   },
   methods: {
+    checkbuttonPress(){
+      this.isBtnPressed = true;
+    },
     async updateFavoritesStatus() {
       const favoritesResponse = await FavoriteService.getFavoritesList();
       if (favoritesResponse.status === 200) {
@@ -533,7 +545,7 @@ export default {
         });
     },
     checkEdiblePlants() {
-      this.edibleButtonClicked = !this.outdoorButtonClicked;
+      this.edibleButtonClicked = !this.edibleButtonClicked;
       this.edibleFilterOn = !this.edibleFilterOn;
       plantData.getEdiblePlants(this.pagecounter, 1).then((response) => {
         this.ediblePlants = response.data.data.map((plantData) => {
@@ -554,9 +566,9 @@ export default {
         this.updateEdibleFavorites();
       });
     },
-    toggleIndoorButton() {
-      this.indoorButtonClicked = !this.indoorButtonClicked;
-    },
+    // toggleIndoorButton() {
+    //   this.indoorButtonClicked = !this.indoorButtonClicked;
+    // },
 
     toggleOutdoorButton() {
       this.outdoorButtonClicked = !this.outdoorButtonClicked;
@@ -580,6 +592,11 @@ export default {
               .then((response) => {
                 if (response.status === 200) {
                   this.filteredList[index].showAlert = true
+                  this.updateFavoritesStatus()
+                  this.updateIndoorFavorites()
+                  this.updateOutdoorFavorites()
+                  this.updateEdibleFavorites()
+                  this.updatedPlantSearchFavorites()
                   //alert("Was added to your garden")
                   setTimeout(() => {
                     this.filteredList[index].showAlert = false; // Hide the alert after a certain time
@@ -711,6 +728,7 @@ export default {
 </script>
 
 <style scoped>
+
 #main {
   height: 100%;
   /* background-color: rgb(206, 245, 206); */
@@ -774,6 +792,7 @@ export default {
   grid-area: filt;
 }
 
+
 #button {
   width: 100px;
   height: 34px;
@@ -816,5 +835,9 @@ export default {
 
 .click {
   background-color: darkgreen;
+}
+#btn.active {
+  background-color: rgb(97, 145, 97);
+
 }
 </style>
