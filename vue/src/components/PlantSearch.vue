@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <div id="filters">
-      <div>
+      <div id="same">
         <b-form-input
           id="src"
           size="sm"
@@ -10,10 +10,10 @@
           v-model="filter.common_name"
         ></b-form-input>
         <button
-          id="Plant query"
+          id="plantQuery"
           @click="findPlantByCommonName(filter.common_name)"
         >
-          search for a plant
+          Search For a Plant
         </button>
       </div>
       <button id="button" @click="filterToggle">Filter</button>
@@ -711,6 +711,7 @@ export default {
 </script>
 
 <style scoped>
+
 #main {
   height: 100%;
   /* background-color: rgb(206, 245, 206); */
@@ -773,6 +774,7 @@ export default {
   margin-left: 20px;
   grid-area: filt;
 }
+
 
 #button {
   width: 100px;
