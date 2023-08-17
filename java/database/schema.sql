@@ -47,6 +47,7 @@ CONSTRAINT FK_favorites FOREIGN KEY (username) REFERENCES users(username)
  --a button click that is going to create a listing for the plant that is going to pull
  --the values of what we have for the plants that we already have given to us from the favorites table, along with adding additional information on this table so that we can create the listing
 CREATE TABLE sellers(
+listing_id SERIAL UNIQUE,
 favorites_id int NOT NULL UNIQUE, --this is the unique identifier for the plant from earlier, as stated, this will keep
  --track of what plant is what, its a completely unique identifier that allows us to keep track of how many plants were in the favorites table from earlier
 description varchar(1000),
@@ -81,12 +82,14 @@ CONSTRAINT FK_buyers_username FOREIGN KEY (to_username) REFERENCES users(usernam
 
 
 CREATE TABLE buyers (
+listing_id int NOT NULL,
 buyer_table_id SERIAL NOT NULL,
 user_id int NOT NULL,
 request_qty int NOT NULL,
 favorites_id int NOT NULL,
 
 CONSTRAINT PK_buyer PRIMARY KEY (buyer_table_id),
+CONSTRAINT FK_listing_id FOREIGN KEY (listing_id) REFERENCES sellers(listing_id),
 CONSTRAINT FK_buyers_username FOREIGN KEY (user_id) REFERENCES users(user_id),
 CONSTRAINT FK_buyers_plant_id FOREIGN KEY (favorites_id) REFERENCES favorites(favorites_id)
 );

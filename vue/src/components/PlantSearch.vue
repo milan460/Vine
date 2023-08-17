@@ -57,7 +57,7 @@
       <img src="../assets/ping_pong_loader.gif" />
     </div> -->
     <div id="indoorPlants">
-      <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
+      <div id="cards" v-for="(plant, index) in filteredList" v-bind:key="plant.id">
         <router-link :to="{ name: 'plant-detail', params: { id: plant.id } }">
         <b-card-group>
           <b-card
@@ -103,7 +103,7 @@
               id="favoriteBtn"
               href="#"
               v-if="$store.state.token != ''"
-              @click="addToFavorites(plant.id)"
+              @click="addToFavorites(plant.id, index)"
               :disabled="plant.itemAlreadyfavorited"
               variant="primary"
               >Add to Favorites</b-button
@@ -112,7 +112,7 @@
           </b-card-group>
 
           <b-alert
-            v-model="showAlert"
+            v-model="plant.showAlert"
             dismissible
             fade
             variant="success"
@@ -164,6 +164,7 @@ export default {
         imageURL: "",
         scientific_name: "",
         itemAlreadyfavorited: false,
+        showAlert: false
       },
     };
   },
@@ -181,6 +182,7 @@ export default {
               ? this.checkThumbnail(plantData.default_image)
               : plantData.default_image.medium_url,
           itemAlreadyfavorited: false,
+          showAlert: false
         };
       });
       this.updateFavoritesStatus();
@@ -310,6 +312,7 @@ export default {
                   : plantData.default_image.medium_url,
               indoor: "",
               itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
           this.updateFavoritesStatus();
@@ -330,6 +333,7 @@ export default {
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
                 itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
             this.updateIndoorFavorites();
@@ -350,6 +354,7 @@ export default {
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
                 itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
             this.updateOutdoorFavorites();
@@ -372,6 +377,7 @@ export default {
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
               itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
           this.updateEdibleFavorites();
@@ -400,6 +406,7 @@ export default {
                     : plantData.default_image.medium_url,
                 indoor: "",
                 itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
             this.updateFavoritesStatus();
@@ -424,6 +431,7 @@ export default {
                       ? this.checkThumbnail(plantData.default_image)
                       : plantData.default_image.medium_url,
                   itemAlreadyfavorited: false,
+                  showAlert: false
                 };
               });
               this.updateIndoorFavorites();
@@ -448,6 +456,7 @@ export default {
                       ? this.checkThumbnail(plantData.default_image)
                       : plantData.default_image.medium_url,
                   itemAlreadyfavorited: false,
+                  showAlert: false
                 };
               });
               this.updateOutdoorFavorites();
@@ -470,6 +479,7 @@ export default {
                     ? this.checkThumbnail(plantData.default_image)
                     : plantData.default_image.medium_url,
                 itemAlreadyfavorited: false,
+                showAlert: false
               };
             });
             this.updateEdibleFavorites();
@@ -495,6 +505,7 @@ export default {
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
               itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
           this.updateIndoorFavorites();
@@ -519,6 +530,7 @@ export default {
                   ? this.checkThumbnail(plantData.default_image)
                   : plantData.default_image.medium_url,
               itemAlreadyfavorited: false,
+              showAlert: false
             };
           });
           this.updateOutdoorFavorites();
@@ -540,6 +552,7 @@ export default {
                 ? this.checkThumbnail(plantData.default_image)
                 : plantData.default_image.medium_url,
             itemAlreadyfavorited: false,
+            showAlert: false
           };
         });
         this.updateEdibleFavorites();
@@ -556,7 +569,7 @@ export default {
     toggleEdibleButton() {
       this.edibleButtonClicked = !this.edibleButtonClicked;
     },
-    addToFavorites(plantId) {
+    addToFavorites(plantId, index) {
       let alreadyAddedPlantId = 0;
       FavoriteService.getFavoritesList().then((response) => {
         if (response.status === 200) {
@@ -569,11 +582,11 @@ export default {
           if (plantId !== alreadyAddedPlantId) {
             FavoriteService.addToFavorites(plantId)
               .then((response) => {
-                if (response.status === 201) {
-                  this.showAlert = true;
+                if (response.status === 200) {
+                  this.filteredList[index].showAlert = true
                   //alert("Was added to your garden")
                   setTimeout(() => {
-                    this.showAlert = false; // Hide the alert after a certain time
+                    this.filteredList[index].showAlert = false; // Hide the alert after a certain time
                   }, 3000);
                 }
               })
@@ -599,6 +612,7 @@ export default {
                 ? this.checkThumbnail(plantData.default_image)
                 : plantData.default_image.medium_url,
             itemAlreadyfavorited: false,
+            showAlert: false
           };
         });
         this.updatedPlantSearchFavorites();

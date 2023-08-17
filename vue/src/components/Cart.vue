@@ -14,13 +14,15 @@
           </b-card-text>
         </b-card>
         <p class="total-price">Total Price: ${{ totalPrice }}</p>
-         <router-link to ="/marketPlace">
-        <b-button @click="confirmPurchase()" variant="primary" class="checkout-button">Checkout</b-button>
+         <router-link to ="/checkout">
+        <b-button @click="routeToCheckoutPage()" variant="primary" class="checkout-button">Checkout</b-button>
          </router-link>
       </div>
     </b-sidebar>
   </div>
 </template>
+
+
 
 <script>
 import FavoriteService from '../services/FavoriteService';
