@@ -79,8 +79,8 @@
           id="own"
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
-          variant="secondary"
-          >Own?</b-button
+          variant="success"
+          >Move to Personal Garden</b-button
         >
         <img
           id="delete"
@@ -171,8 +171,9 @@
           href="#"
           v-if="favoriteItem.ownedPlant === true"
           @click="sendToSellerForm(favoriteItem.favoriteId)"
-          variant="secondary"
-          >Sell?</b-button
+          :disabled="favoriteItem.isOnListing"
+          variant="success"
+          >Add a Listing</b-button
         >
         <img
           id="delete"
@@ -218,6 +219,7 @@ export default {
     },
   },
   methods: {
+     
     updateOwned(favoriteId, ownedPlant) {
       ownedPlant = !ownedPlant;
       FavoriteService.updateFavoriteOwnedPlant(favoriteId, ownedPlant).then(
@@ -244,15 +246,31 @@ export default {
               wateringInstructions: "",
               sunInstructions: "",
               pruningInstructions: "",
-              default_image: ""
+              default_image: "",
+              isOnListing: false
             };
           });
           this.getPlantData();
           this.getWateringInstructions();
           this.getSunInstructions();
           this.getPruningInstructions();
+          this.updateListingStatus();
         }
       });
+    },
+    updateListingStatus(){
+      this.favoriteList.forEach( (favorite) => {
+        SellerService.getAllSellerListings().then( (response) => {
+          console.log(response.data)
+          const listingObj = response.data.find(
+            (listingItem) => listingItem.plantId === favorite.plantId && listingItem.username === favorite.username
+          )
+          console.log(listingObj)
+          if(listingObj){
+            favorite.isOnListing = true
+          }
+      })
+      })
     },
 
     getWateringInstructions() {
@@ -260,6 +278,7 @@ export default {
         PlantData.getPlantCareData(favorite.plantId)
           .then((response) => {
             favorite.wateringInstructions =
+            
               response.data.data[0].section[0].description;
           })
           .catch((error) => {
@@ -366,4 +385,5 @@ h1 {
   margin-top: 3%;
   margin-right: 5%;
 }
+
 </style> 

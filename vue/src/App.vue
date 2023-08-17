@@ -27,12 +27,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
 
 a:link {
   color: black;
   text-decoration: none;
   
 }
-
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

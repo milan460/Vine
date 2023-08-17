@@ -53,7 +53,9 @@
         </label>
       </div>
     </div>
-
+    <!-- <div class="loading" v-if="isLoading">
+      <img src="../assets/ping_pong_loader.gif" />
+    </div> -->
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link :to="{ name: 'plant-detail', params: { id: plant.id } }">
@@ -136,6 +138,7 @@ import plantData from "../services/PlantData.js";
 export default {
   data() {
     return {
+      isLoading: true,
       showAlert: false,
       indoorButtonClicked: false,
       outdoorButtonClicked: false,
@@ -182,6 +185,7 @@ export default {
       });
       this.updateFavoritesStatus();
       this.updateIndoorFavorites();
+      this.isLoading = false;
     });
   },
   methods: {
