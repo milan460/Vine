@@ -31,7 +31,7 @@
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
         <router-link
-          
+          class="cardLink"
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
         >
           <b-card id="card"
@@ -511,31 +511,30 @@ export default {
 
 #main {
   height: 100%;
-  background-color: rgb(206, 245, 206);
+  /* background-color: rgb(206, 245, 206); */
+  background-image: url(../assets/rotated.jpg);
+  background-blend-mode: lighten;
+  background-repeat: round;
+  background-size:unset;
 }
 
-/* .link {
-  display: inline-block;
-} */
 
 #indoorPlants {
   display: inline-flex;
   flex-wrap: wrap;
-  /* justify-content: space-betwee; */
   margin-left: 9%;
-
 }
 
 #cards {
   display: flex;
   flex-basis: 30%;
   padding: 3%;
-  
 }
 
 #cards:hover{
   background-color: rgb(206, 245, 206);
   border: rgb(206,245, 206) solid 2px;
+  border-radius: 6px;
 }
 
 #card{
@@ -543,7 +542,10 @@ export default {
    border: black solid 1px;
 }
 
-
+.cardLink{
+  text-decoration: none;
+  color: black;
+}
 
 #card > img{
   width: 20.75vw;
@@ -581,15 +583,10 @@ export default {
   margin-right: 10px;
   
 }
-/* #search:hover{
-  background-color: rgb(169, 252, 169);
-  border: solid 2px green
-} */
+
 #water {
   height: 5vh;
-  margin: 2%;
-  
-  
+  margin: 2%;  
 }
 
 #pageDown,
