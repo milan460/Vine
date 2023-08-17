@@ -50,9 +50,9 @@
       <div id="icon"><img
         id="water"
         src="../assets/indoor-plants.png"
-        v-if="!indoorFilterOn"
+        v-if="indoorFilterOn"
         :title="plantObject.indoor"
-      /> Indoor</div>
+      /></div>
     </div>
     <div id="description">
       <strong><h2>Description</h2></strong>

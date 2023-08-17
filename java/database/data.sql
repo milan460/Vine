@@ -1,29 +1,28 @@
 BEGIN TRANSACTION;
 
-INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
-
-INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('user', 'Awesome', 'I loved it', 5, 1);
-INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('user', 'Awful', 'I hate it', 1, 3);
-INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('admin', 'Okay', 'It was ight', 3, 1);
-
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (1, 'user', true);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (2, 'user', true);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (20, 'admin', true);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (2, 'admin', true);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (144, 'admin', true);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (24, 'user', false);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (89, 'user', false);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (10, 'admin', false);
-INSERT INTO favorites (plant_id, username, owned_plant) VALUES (12, 'user', true);
+INSERT INTO users (username,password_hash,role) VALUES ('parker','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('steve','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 
-INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (1,  'buy this plant', 25.00, false, 1);
-INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (2, '', 50.00, true, 1);
-INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (3, 'cool', 15.24, true, 1);
-INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (4, 'test', 256.76, true,1);
-INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (5, 'TEST CART PLANT', 500.67, true, 1);
-INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (6, 'TEST CART PLANT 2', 756.76, true, 1);
+INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('parker', 'Awesome', 'I loved it', 5, 1);
+INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('parker', 'Awful', 'I hate it', 1, 3);
+INSERT INTO reviews (username, title, review_detail, rating, plant_id) VALUES ('steve', 'Okay', 'It was ok', 3, 1);
+
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (1, 'parker', true);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (2, 'parker', true);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (20, 'steve', true);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (144, 'steve', true);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (24, 'parker', false);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (89, 'parker', false);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (10, 'steve', true);
+INSERT INTO favorites (plant_id, username, owned_plant) VALUES (12, 'parker', true);
+
+
+INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (3,  'this is an amazing plant', 25.00, true, 1);
+INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (2, 'You can effortlessly add a touch of nature elegance to your home with this plant', 50.00, true, 1);
+INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (4, 'This is an exquisite botanical masterpiece', 256.76, true,1);
+INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (5, 'Selling my beautiful plants', 500.67, true, 1);
+INSERT INTO sellers (favorites_id, description, price, is_available, stock_quantity) VALUES (7, 'I would love to sell this beautiful plant', 756.76, true, 1);
 
 
 

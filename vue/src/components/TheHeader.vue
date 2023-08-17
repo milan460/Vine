@@ -21,6 +21,7 @@
           >
           <b-nav-item id="home"
             ><router-link class="link" v-bind:to="{ name: 'marketplace' }"
+             v-if="$store.state.token != ''"
               >Plant Shop</router-link
             ></b-nav-item
           >
