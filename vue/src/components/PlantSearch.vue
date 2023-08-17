@@ -55,7 +55,7 @@
     </div>
 
     <div id="indoorPlants">
-      <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
+      <div id="cards" v-for="(plant, index) in filteredList" v-bind:key="plant.id">
         <router-link
           class="cardLink"
           :to="{ name: 'plant-detail', params: { id: plant.id } }"
@@ -108,7 +108,7 @@
               >Add to Favorites</b-button
             >
           </b-card>
-
+          
           <b-alert
             v-model="plant.showAlert"
             dismissible
