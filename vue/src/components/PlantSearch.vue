@@ -582,7 +582,7 @@ export default {
                   this.filteredList[index].showAlert = true
                   //alert("Was added to your garden")
                   setTimeout(() => {
-                    this.showAlert = false; // Hide the alert after a certain time
+                    this.filteredList[index].showAlert = false; // Hide the alert after a certain time
                   }, 3000);
                 }
               })
