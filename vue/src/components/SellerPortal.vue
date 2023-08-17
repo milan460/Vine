@@ -43,9 +43,8 @@
           v-model="listing.stockQuantity"
         />
       </div>
-      <router-link to ="/marketplace">
-      <button type="submit" class="btn btn-primary">Add Listing</button>
-      </router-link>
+      <button type="submit" @click="addListing" class="btn btn-primary">Add Listing</button>
+      
     </form>
 
     
@@ -100,7 +99,7 @@ export default {
       // this.$router.push( {name: 'favorites-page'} )
       
       SellerService.addListing(this.listing).then( (response) => {
-          if(response.status === 201){
+          if(response.status === 200){
               console.log('this has gone thru')
               alert("listing was added successfully!")
               this.$router.push( {name: 'favorites-page'} )
