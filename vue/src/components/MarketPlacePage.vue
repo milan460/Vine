@@ -19,7 +19,6 @@
         class="mb-2 flex1"
       >
         <b-card-text>
-<<<<<<< HEAD
           <h5>Description:</h5>
           {{ listingItem.description }}
           <br />
@@ -29,19 +28,6 @@
           <br />
           Sold By:
           <strong>{{ listingItem.username }}</strong>
-=======
-          <img id="user" src="../assets/user.png">
-          {{ listingItem.username }}
-          <br>
-          <div id="description">
-            <h5><strong>Description:</strong>
-              {{ listingItem.description }}
-            </h5>
-            
-          </div>
-          <div id="price"><span >${{ listingItem.price }}</span><strong>Qty:</strong>
-            {{ listingItem.stockQuantity }}</div>
->>>>>>> 2888eafdbad13a4a1025065d805a1c1f9f20b912
         </b-card-text>
         <img
           id="delete"
@@ -122,17 +108,6 @@ export default {
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.listingId === listingId
       );
-<<<<<<< HEAD
-        if (selectedListing.favoritesId == favoriteId && selectedListing.stockQuantity > 0) {
-          return true;
-          // console.log("it updated it");
-          // console.log(item.stockQuantity);
-        }
-      return false;
-    },
-    addToCart(favoriteId) {
-      const qtyRequest = 1
-=======
       console.log(listingId)
       if (
         selectedListing.listingId == listingId &&
@@ -148,7 +123,6 @@ export default {
 
     addToCart(listingId) {
       const qtyRequest = 1;
->>>>>>> 2888eafdbad13a4a1025065d805a1c1f9f20b912
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.listingId === listingId
       );
@@ -162,10 +136,6 @@ export default {
         alert("insufficient quantity");
       } else {
         selectedListing.stockQuantity--;
-<<<<<<< HEAD
-        SellerService.updateStock(favoriteId, qtyRequest);
-        this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
-=======
         SellerService.insertBuyer(listingId, selectedListing.favoritesId, qtyRequest).then((response => {
           if (response.status === 200){
           SellerService.updateStock(listingId, qtyRequest);
@@ -175,7 +145,6 @@ export default {
         
 
         
->>>>>>> 2888eafdbad13a4a1025065d805a1c1f9f20b912
       }
     },
     checkThumbnail(default_image) {
