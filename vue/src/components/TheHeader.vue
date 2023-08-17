@@ -11,7 +11,7 @@
           >
           <b-nav-item id="image"
             ><router-link class="link" v-bind:to="{ name: 'plantImage' }"
-              >Plant identifier</router-link
+              >Plant Identifier</router-link
             ></b-nav-item
           >
           <b-nav-item id="home"
@@ -86,6 +86,13 @@ export default {
   text-decoration: none;
   color: black;
 }
+.link:hover{
+  background-color: rgb(152, 226, 152);
+  border: rgb(118, 206, 118) 1px solid;
+  border-radius: 2px ;
+ 
+
+}
 #nav {
   background-color: rgb(206, 245, 206);
   border: none;
@@ -101,6 +108,6 @@ export default {
   height: 7vh;
 }
 #cart{
-  margin-left: 62%;
+  margin-left: 50%;
 }
 </style>

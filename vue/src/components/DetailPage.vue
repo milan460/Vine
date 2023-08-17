@@ -40,13 +40,6 @@
         :title="plantObject.edible_fruit"
       />
 
-      <!-- <img
-      id="water"
-        src="../assets/sakura.png"
-        v-if="!flowers"
-        :title="plantObject.flowers"
-      /> -->
-
       <img
         id="water"
         src="../assets/indoor-plants.png"
@@ -196,6 +189,8 @@ export default {
   grid-area: pic;
   height: 60vh;
   width: 30vw;
+  box-shadow:  5px 5px 5px gray;
+  border: black solid 1-x
 }
 
 #tabs {
