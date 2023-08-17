@@ -21,7 +21,7 @@ public class JdbcSellerDao implements SellerDao{
     @Override
     public List<Seller> getAllSellersPlants() {
         List<Seller> listOfAllPlantsBeingSold = new ArrayList<>();
-        String sql = "SELECT sellers.favorites_id, description, price, is_available, stock_quantity, plant_id, username\n" +
+        String sql = "SELECT sellers.listing_id, sellers.favorites_id, description, price, is_available, stock_quantity, plant_id, username\n" +
                 "FROM sellers\n" +
                 "JOIN favorites ON sellers.favorites_id = favorites.favorites_id\n" +
                 "WHERE owned_plant = true";
@@ -73,20 +73,21 @@ public class JdbcSellerDao implements SellerDao{
     }
 
     @Override
-    public void updateQuantity(int favoriteId, int requestQty) {
+    public void updateQuantity(int listingId) {
         String sql ="UPDATE sellers " +
                 "SET stock_quantity = stock_quantity - (SELECT request_qty " +
                 "FROM buyers " +
-                "WHERE favorites_id = ?) " +
-                " WHERE favorites_id = ?";
+                "WHERE listing_id = ?) " +
+                " WHERE listing_id = ?";
 
-        jdbcTemplate.update(sql, favoriteId, favoriteId);
+        jdbcTemplate.update(sql, listingId, listingId);
     }
 
 
     private Seller mapToRowSeller(SqlRowSet sqlRowSet){
         Seller seller = new Seller();
 
+        seller.setListingId(sqlRowSet.getInt("listing_id"));
         seller.setFavoritesId(sqlRowSet.getInt("favorites_id"));
         seller.setDescription(sqlRowSet.getString("description"));
         seller.setPrice(sqlRowSet.getBigDecimal("price"));

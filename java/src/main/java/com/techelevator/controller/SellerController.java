@@ -51,11 +51,15 @@ public class SellerController {
     }
 
     @RequestMapping(path = "/updateStock", method = RequestMethod.PUT)
-    public void updateQty(@RequestBody UpdateStockDTO updateStock, Principal principal){
-        User user = userDao.getUserByUsername(principal.getName());
-        buyersDao.updateBuyerTable(updateStock.getFavoriteId(),user.getId() , updateStock.getRequestQuantity());
-        sellerDao.updateQuantity(updateStock.getFavoriteId(), updateStock.getRequestQuantity());
+    public void updateQty(@RequestBody UpdateStockDTO updateStock){
+        sellerDao.updateQuantity(updateStock.getListingId());
     }
+
+    @RequestMapping(path= "/insertBuyer", method = RequestMethod.POST)
+    public void addNewBuyer(@RequestBody UpdateStockDTO updateStock, Principal principal){
+        User user = userDao.getUserByUsername(principal.getName());
+        buyersDao.addBuyerTable(updateStock.getListingId(), updateStock.getFavoriteId(), user.getId() , updateStock.getRequestQuantity());
+   }
 }
 
 

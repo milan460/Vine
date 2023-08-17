@@ -15,10 +15,17 @@ export default{
     },
 
     updateStock(favoritesId, requestQty){
-        const requestData = {favoriteId: favoritesId, requestQuantity: requestQty}
+        const requestData = {listingId: favoritesId, requestQuantity: requestQty}
         const headers = {
             'Content-Type': 'application/json',
         };
         return axios.put('/updateStock/', requestData, {headers})
+    },
+    insertBuyer(listingId, favoritesId, requestQty) {
+        const requestData = {listingId: listingId, requestQuantity: requestQty, favoriteId: favoritesId }
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+        return axios.post('/insertBuyer', requestData, {headers})
     }
 }

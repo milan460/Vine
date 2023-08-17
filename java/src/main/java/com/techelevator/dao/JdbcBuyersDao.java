@@ -11,11 +11,11 @@ public class JdbcBuyersDao implements BuyersDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void updateBuyerTable(int favoritesId, int user_id, int requestQty){
-    String sql ="INSERT INTO buyers (request_qty, user_id, favorites_id)\n" +
-            "VALUES (?, ?, ?)";
+    public void addBuyerTable( int listingId, int favoritesId, int user_id, int requestQty){
+    String sql ="INSERT INTO buyers (listing_id, request_qty, user_id, favorites_id)\n" +
+            "VALUES (?, ?, ?, ?)";
 
-    jdbcTemplate.update(sql,requestQty, user_id, favoritesId);
+    jdbcTemplate.update(sql, listingId, requestQty, user_id, favoritesId);
 
 }
 }
