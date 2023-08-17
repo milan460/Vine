@@ -82,7 +82,7 @@
           id="own"
           href="#"
           @click="updateOwned(favoriteItem.favoriteId)"
-          variant="success"
+          
           >Move to Personal Garden</b-button
         >
         <img
@@ -178,7 +178,6 @@
           v-if="favoriteItem.ownedPlant === true"
           @click="sendToSellerForm(favoriteItem.favoriteId)"
           :disabled="favoriteItem.isOnListing"
-          variant="success"
           >Add a Listing</b-button
         >
         <img
@@ -380,7 +379,7 @@ export default {
 
 #delete {
   height: 6vh;
-  margin-left: 79%;
+  margin-left: 60%;
   margin-top: 3%;
 }
 h1 {
@@ -389,7 +388,13 @@ h1 {
 }
 #own {
   margin-top: 3%;
-  margin-right: 5%;
+  
+  background-color: rgb(151, 209, 151);
+}
+#sell{
+   margin-top: 3%;
+  margin-right: 10%;
+  background-color: rgb(151, 209, 151);
 }
 #main{
  background-color: white;
