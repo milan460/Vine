@@ -23,8 +23,8 @@
 
           {{ listingItem.description }}
           <br />
-          <strong>${{ listingItem.price }}</strong>
-          <br />
+          <strong>${{ listingItem.price }}  </strong>
+          
           Qty:
           <strong>{{ listingItem.stockQuantity }}</strong>
           <br />
@@ -118,6 +118,7 @@ export default {
     },
 
     addToCart(favoriteId) {
+      const qtyRequest = 1
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
@@ -129,7 +130,7 @@ export default {
         alert("insufficient quantity");
       } else {
         selectedListing.stockQuantity--;
-        SellerService.updateStock(favoriteId);
+        SellerService.updateStock(favoriteId, qtyRequest);
 
         this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
       }
