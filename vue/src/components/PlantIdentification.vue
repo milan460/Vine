@@ -1,7 +1,8 @@
 <template>
   <div>
+    <h1>Identify a Plant</h1>
     <FileInput @images-updated="updateImages" />
-    <button @click="findPlant(images)">Identify Plant</button>
+    <button id="btn" @click="findPlant(images)">Identify Plant</button>
     <ResultDisplay :identificationResult="identificationResult" />
   </div>
 </template>
@@ -54,3 +55,27 @@ export default {
   },
 };
 </script>
+<style scope>
+
+
+
+#btn{
+  background-color: rgb(152, 226, 152);
+  border: rgb(152, 226, 152) 10px solid;
+  border-radius: 4px ; 
+
+}
+#btn:hover{
+  background-color: rgb(152, 226, 152);
+  border: rgb(152, 226, 152) 10px solid;
+  border-radius: 4px ; 
+
+}
+
+
+
+
+
+
+
+</style>

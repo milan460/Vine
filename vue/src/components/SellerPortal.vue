@@ -43,7 +43,7 @@
           v-model="listing.stockQuantity"
         />
       </div>
-      <button type="submit" @click="addListing" class="btn btn-primary">Add Listing</button>
+      <button type="submit" @click="addListing" class="btn btn-success">Add Listing</button>
       
     </form>
 
@@ -107,6 +107,9 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: url(../assets/testBG.jpg);
+  background-position: bottom;
+  background-size: contain;
 }
 
 .form-group {
@@ -123,6 +126,11 @@ label {
   padding: 20px;
   box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
   border-radius: 20px;
+  
+}
+.mt-3{
+  background-color: rgb(78, 189, 105);
+  opacity: 0.96;
 }
 
 #btn {

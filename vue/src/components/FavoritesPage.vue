@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div id="main">
     <div>
-      <h1>Favorites</h1>
+      <img
+      id="fave"
+          src="../assets/fav.png"
+        />
     </div>
     <div
       v-for="favoriteItem in filteredWishListPlants"
@@ -93,7 +96,10 @@
     <!--the div and b-card containers below are the filterFavorite Plants that the user does own -->
 
     <div>
-      <h1>Personal Garden</h1>
+       <img
+      id="fave"
+          src="../assets/fav2.png"
+        />
     </div>
     <div
       v-for="favoriteItem in filteredOwnedPlants"
@@ -385,5 +391,11 @@ h1 {
   margin-top: 3%;
   margin-right: 5%;
 }
-
+#main{
+ background-color: white;
+}
+#fave{
+  width: 80vh;
+  margin-left: 30%;
+}
 </style> 
