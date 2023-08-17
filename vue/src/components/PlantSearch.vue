@@ -66,7 +66,7 @@
             alt="Plant Image"
             img-top
             tag="article"
-            style="max-width: 50rem"
+            style="max-width: 20rem"
             class="mb-2 flex1"
           >
             <!-- <b-card-img

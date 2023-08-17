@@ -1,8 +1,8 @@
 <template>
-  <div id="mainSeller">
-    <!-- <div>
+  <div class="mainSeller">
+    <div>
       <h1 id="current">Current Listings</h1>
-    </div> -->
+    </div>
     <div
       id="listingCard"
       v-for="listingItem in filteredAvailablePlants"
@@ -19,15 +19,17 @@
         class="mb-2 flex1"
       >
         <b-card-text>
-          <h5>Description:</h5>
-          {{ listingItem.description }}
-          <br />
-          <strong>${{ listingItem.price }}  </strong>
-          Qty:
-          <strong>{{ listingItem.stockQuantity }}</strong>
-          <br />
-          Sold By:
-          <strong>{{ listingItem.username }}</strong>
+          <img id="user" src="../assets/user.png">
+          {{ listingItem.username }}
+          <br>
+          <div id="description">
+            <h5><strong>Description:</strong>
+              {{ listingItem.description }}
+            </h5>
+            
+          </div>
+          <div id="price"><span >${{ listingItem.price }}</span><strong>Qty:</strong>
+            {{ listingItem.stockQuantity }}</div>
         </b-card-text>
         <img
           id="delete"
@@ -175,8 +177,6 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   margin-left: 3%;
-  margin-top: 3%;
-  
 }
 #card {
   /* height: 5vh; */
@@ -191,7 +191,7 @@ export default {
   margin-top: 3%;
 }
 #current {
-  /* margin: 4%; */
+  margin: 4%;
 }
 span{
   margin-right: 58%;
@@ -201,8 +201,5 @@ span{
 }
 #user{
   height: 3vh;
-}
-#mainSeller{
-  background-image: url(../assets/rotated.jpg);
 }
 </style>
