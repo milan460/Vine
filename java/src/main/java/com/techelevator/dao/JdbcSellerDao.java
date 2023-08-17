@@ -75,12 +75,10 @@ public class JdbcSellerDao implements SellerDao{
     @Override
     public void updateQuantity(int listingId) {
         String sql ="UPDATE sellers " +
-                "SET stock_quantity = stock_quantity - (SELECT request_qty " +
-                "FROM buyers " +
-                "WHERE listing_id = ?) " +
+                "SET stock_quantity = stock_quantity - 1" +
                 " WHERE listing_id = ?";
 
-        jdbcTemplate.update(sql, listingId, listingId);
+        jdbcTemplate.update(sql, listingId);
     }
 
 

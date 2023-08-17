@@ -89,7 +89,7 @@ request_qty int NOT NULL,
 favorites_id int NOT NULL,
 
 CONSTRAINT PK_buyer PRIMARY KEY (buyer_table_id),
-CONSTRAINT FK_listing_id FOREIGN KEY (listing_id) REFERENCES sellers(listing_id),
+
 CONSTRAINT FK_buyers_username FOREIGN KEY (user_id) REFERENCES users(user_id),
 CONSTRAINT FK_buyers_plant_id FOREIGN KEY (favorites_id) REFERENCES favorites(favorites_id)
 );
