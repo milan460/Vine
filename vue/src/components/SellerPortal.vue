@@ -43,7 +43,7 @@
           v-model="listing.stockQuantity"
         />
       </div>
-      <button type="submit" @click="addListing" class="btn btn-primary">Add Listing</button>
+      <button type="submit" @click="addListing" class="btn btn-success">Add Listing</button>
       
     </form>
 
@@ -140,7 +140,7 @@ label {
   
 }
 .mt-3{
-  background-color: blanchedalmond;
+  background-color: rgb(78, 189, 105);
   opacity: 0.96;
 }
 

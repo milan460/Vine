@@ -24,7 +24,8 @@ export default new Vuex.Store({
     currentFavoriteId: 0,
     currentReviewId: 0,
     currentFavoritesArray: [],
-    cartArray: []
+    cartArray: [],
+    reviewObj: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -66,6 +67,13 @@ export default new Vuex.Store({
       },
     ADD_TO_FAVORITES_ARRAY(state, listOfFavorites){
       state.currentFavoritesArray = listOfFavorites
+    },
+    ADD_ALL_REVIEWS(state, reviews){
+      state.reviewObj=reviews
+    },
+    ADD_ONE_REVIEW(state, singleReview){
+      state.reviewObj.push(singleReview)
+
     }
 
 
