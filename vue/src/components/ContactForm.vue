@@ -12,17 +12,17 @@
 </template>
 
 <script>
-import emailjs from '@emailjs/browser';
-export default {
-     sendEmail() {
-      emailjs.sendForm('service_nwv2xuv', 'YOUR_TEMPLATE_ID', this.$refs.form, 'U3sYtL-JdrVSbr_CX')
-        .then((result) => {
-            console.log('SUCCESS!', result.text);
-        }, (error) => {
-            console.log('FAILED...', error.text);
-        });
-    }
-  }
+// import emailjs from '@emailjs/browser';
+// export default {
+//      sendEmail() {
+//       emailjs.sendForm('service_nwv2xuv', 'YOUR_TEMPLATE_ID', this.$refs.form, 'U3sYtL-JdrVSbr_CX')
+//         .then((result) => {
+//             console.log('SUCCESS!', result.text);
+//         }, (error) => {
+//             console.log('FAILED...', error.text);
+//         });
+//     }
+//   }
 </script>
 
 <style>

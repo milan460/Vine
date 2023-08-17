@@ -23,7 +23,7 @@ export default new Vuex.Store({
     activePlant: 0,
     currentFavoriteId: 0,
     currentReviewId: 0,
-    plantsArray: [],
+    currentFavoritesArray: [],
     cartArray: []
   },
   mutations: {
@@ -63,11 +63,14 @@ export default new Vuex.Store({
         const filterFunction = state.cartArray.filter((cartItem) => cartItem.favoritesId !== favoriteId)
         console.log(filterFunction)
         state.cartArray = filterFunction;
-      }
+      },
+    ADD_TO_FAVORITES_ARRAY(state, listOfFavorites){
+      state.currentFavoritesArray = listOfFavorites
+    }
 
 
 
-    // }
+  
     
   }
   ////////// USE THIS TO ROUTE /////

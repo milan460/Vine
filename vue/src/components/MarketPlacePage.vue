@@ -1,7 +1,7 @@
 <template>
   <div class="mainSeller">
     <div>
-      <h1>Current Listings</h1>
+      <h1 id="current">Current Listings</h1>
     </div>
     <div
       id="listingCard"
@@ -19,17 +19,17 @@
         class="mb-2 flex1"
       >
         <b-card-text>
-          <h5>Description:</h5>
-
-          {{ listingItem.description }}
-          <br />
-          <strong>${{ listingItem.price }}</strong>
-          <br />
-          Qty:
-          <strong>{{ listingItem.stockQuantity }}</strong>
-          <br />
-          Sold By:
-          <strong>{{ listingItem.username }}</strong>
+          <img id="user" src="../assets/user.png">
+          {{ listingItem.username }}
+          <br>
+          <div id="description">
+            <h5><strong>Description:</strong>
+              {{ listingItem.description }}
+            </h5>
+            
+          </div>
+          <div id="price"><span >${{ listingItem.price }}</span><strong>Qty:</strong>
+            {{ listingItem.stockQuantity }}</div>
         </b-card-text>
 
         <img
@@ -45,6 +45,7 @@
 <script>
 import PlantData from "../services/PlantData.js";
 import SellerService from "../services/SellerService.js";
+
 export default {
   data() {
     return {
@@ -102,26 +103,30 @@ export default {
       });
     },
     checkSufficentQuantity(favoriteId) {
-      console.log("this is the favorites id");
-      console.log(favoriteId);
-       const selectedListing = this.SellerListings.find(
+      const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
-    
-        if (selectedListing.favoritesId == favoriteId && selectedListing.stockQuantity > 0) {
-          return true;
-          // console.log("it updated it");
-          // console.log(item.stockQuantity);
-        }
-      
+
+      if (
+        selectedListing.favoritesId == favoriteId &&
+        selectedListing.stockQuantity > 0
+      ) {
+        return true;
+        // console.log("it updated it");
+        // console.log(item.stockQuantity);
+      }
+
       return false;
     },
 
     addToCart(favoriteId) {
+      const qtyRequest = 1;
       const selectedListing = this.SellerListings.find(
         (listingItem) => listingItem.favoritesId === favoriteId
       );
-      let hasSufficentQuantity = this.checkSufficentQuantity(selectedListing.stockQuantity);
+      let hasSufficentQuantity = this.checkSufficentQuantity(
+        selectedListing.stockQuantity
+      );
       if (selectedListing.username === this.$store.state.user.username) {
         alert("This is your own listing. Please select a different listing");
         //hide this with the state token thing
@@ -129,7 +134,7 @@ export default {
         alert("insufficient quantity");
       } else {
         selectedListing.stockQuantity--;
-        SellerService.updateStock(favoriteId);
+        SellerService.updateStock(favoriteId, qtyRequest);
 
         this.$store.commit("ADD_TO_CART_ARRAY", selectedListing);
       }
@@ -167,5 +172,17 @@ export default {
   height: 6vh;
   margin-left: 79%;
   margin-top: 3%;
+}
+#current {
+  margin: 4%;
+}
+span{
+  margin-right: 58%;
+}
+#price{
+  margin-top: 10%;
+}
+#user{
+  height: 3vh;
 }
 </style>

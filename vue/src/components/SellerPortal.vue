@@ -7,19 +7,24 @@
         <label for="description">Description:</label>
         <textarea
           id="description"
+          placeholder="(1000 character limit)"
           class="form-control"
+          maxlength="1000"
+          required
           rows="4"
           v-model="listing.description"
         ></textarea>
       </div>
-
+  
       <div class="form-group">
         <label for="price">Price:</label>
         <input
             type="number"
             class="form-control"
             placeholder="0.00"
+            required
             min="0"
+            max="922337203685"
             step="0.01"
             v-model="listing.price"
         />
@@ -32,13 +37,13 @@
           type="number"
           class="form-control"
           placeholder="0"
+          required
+          max="1000000"
           min="1"
           v-model="listing.stockQuantity"
         />
       </div>
-      <!-- <router-link to ="/marketplace">  -->
-      <button type="submit" class="btn btn-primary">Add Listing</button> 
-      <!-- </router-link> -->
+      <button type="submit" class="btn btn-primary">Add Listing</button>
     </form>
 
     
@@ -90,11 +95,12 @@ export default {
     //   console.log(listingParse)
     //   console.log('this is the listing object')
     if(this.listing.Available === true){
-      SellerService
+      // this.$router.push( {name: 'favorites-page'} )
+      
       SellerService.addListing(this.listing).then( (response) => {
           if(response.status === 201){
               console.log('this has gone thru')
-              this.$router.push( {name: 'marketplace'} )
+              // this.$route.push( {name: 'favorites-page'} )
           }
       })
     }

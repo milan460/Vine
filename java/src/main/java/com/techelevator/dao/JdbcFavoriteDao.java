@@ -23,8 +23,8 @@ public class JdbcFavoriteDao implements FavoriteDao {
         try {
             newFavoriteId = jdbcTemplate.queryForObject(sql, int.class, favorite.getPlantId(), favorite.getUsername(), favorite.isOwnedPlant());
             favorite.setFavoriteId(newFavoriteId);
-        } catch (NullPointerException e) {
-            throw new NullPointerException("Login to add to the garden");
+        } catch (Exception e) {
+            throw new DaoException("Unable to add to favorites list");
         }
         return newFavoriteId;
     }
