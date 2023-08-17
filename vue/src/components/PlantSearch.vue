@@ -56,10 +56,8 @@
 
     <div id="indoorPlants">
       <div id="cards" v-for="plant in filteredList" v-bind:key="plant.id">
-        <router-link
-          class="link"
-          :to="{ name: 'plant-detail', params: { id: plant.id } }"
-        >
+        <router-link :to="{ name: 'plant-detail', params: { id: plant.id } }">
+        <b-card-group>
           <b-card
             id="card"
             :title="plant.common_name"
@@ -67,9 +65,15 @@
             alt="Plant Image"
             img-top
             tag="article"
-            style="max-width: 20rem"
+            style="max-width: 50rem"
             class="mb-2 flex1"
           >
+            <!-- <b-card-img
+              :src="plant.medium_url"
+              :alt="plant.common_name"
+              top
+              style="max-width: 100%; max-height: 20rem"
+            /> -->
             <b-card-text>
               <img
                 id="water"
@@ -103,6 +107,7 @@
               >Add to Favorites</b-button
             >
           </b-card>
+          </b-card-group>
 
           <b-alert
             v-model="showAlert"
@@ -564,8 +569,8 @@ export default {
                   this.showAlert = true;
                   //alert("Was added to your garden")
                   setTimeout(() => {
-              this.showAlert = false; // Hide the alert after a certain time
-            }, 3000);
+                    this.showAlert = false; // Hide the alert after a certain time
+                  }, 3000);
                 }
               })
               .catch((error) => {
@@ -696,14 +701,16 @@ export default {
   height: 100%;
   background-color: rgb(206, 245, 206);
 }
-.link {
+
+/* .link {
   display: inline-block;
-}
+} */
 
 #indoorPlants {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  /* justify-content: space-betwee; */
+  margin-left: 9%;
 }
 
 #cards {
@@ -716,6 +723,7 @@ export default {
   background-color: rgb(206, 245, 206);
   border: rgb(206, 245, 206) solid 2px;
 }
+
 #card {
   box-shadow: 5px 5px 5px 5px gray;
   border: black solid 1px;

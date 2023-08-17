@@ -2,23 +2,32 @@ import axios from "axios";
 
 
 const apiKey = "Mc1IKHgmm7ME5fFnrsFvwKDKpwpR104BjDZGH06sJvA4MimNuw";
-const apiUrl = "https://plant.id/api/v3/identification";
+const apiUrl = "https://plant.id/api/v3/identification"
+const http = axios.create({baseURL:apiUrl});
+http.defaults.headers = null;
 export default{
 
 
-identifyPlant(requestBody) {
+async identifyPlant(requestBody) {
   const config = {
     headers: {
-      "Content-Type": "application/json",
-      "Api-Key": apiKey,
+      "Api-Key":apiKey,
+      "Content-Type":"application/json"
+      
     },
   };
   console.log("Request Body:", requestBody); // Log the request body
   console.log("Request Headers:", config.headers); // Log the request headers
 
   try {
-    const response = axios.post(apiUrl, requestBody, config);
-    return response.data;
+    const response = await http.post(apiUrl, requestBody, config);
+    console.log("this is the data for the api call")
+    if(response.status === 201){
+      console.log("this is the response.data")
+      console.log(response.data)
+      return response.data;
+    }
+    
   } catch (error) {
     console.error("Identification error:", error);
     throw error;

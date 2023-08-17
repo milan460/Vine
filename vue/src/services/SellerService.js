@@ -15,7 +15,7 @@ export default{
     },
 
     updateStock(favoritesId, requestQty){
-        const requestData = {favoriteId: favoritesId, requestQuantity: requestQty}
+        const requestData = {favoriteId: favoritesId, requestQty: requestQty}
         const headers = {
             'Content-Type': 'application/json',
         };

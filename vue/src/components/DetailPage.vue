@@ -4,7 +4,7 @@
       <img id="backbtn" src="../assets/arrow.png" @click="goBack" /> Back
     </div>
     <header id="header">
-      <h1>{{ plantObject.common_name }}</h1>
+      <strong><h1>{{ plantObject.common_name }}</h1></strong>
     </header>
     <img
       id="pic"
@@ -48,7 +48,7 @@
       />
     </div>
     <div id="description">
-      <h2>Description</h2>
+      <strong><h2>Description</h2></strong>
       <p>{{ plantObject.description }}</p>
     </div>
 
@@ -175,7 +175,7 @@ export default {
     ". review . ."
     ". addReview . .";
 
-  grid-template-rows: 0.3fr 0.3fr 0.3fr 0.3fr 0.1fr;
+  grid-template-rows: 0.1fr 0.4fr 0.3fr 0.2fr 0.4fr;
   grid-template-areas:
     "btn header header ."
     ". pic icons ."
@@ -190,8 +190,10 @@ export default {
   height: 60vh;
   width: 30vw;
   box-shadow:  5px 5px 5px gray;
-  border: black solid 1-x
+  border: black solid 1px;
+  
 }
+
 
 #tabs {
   grid-area: tab;
@@ -207,6 +209,7 @@ export default {
 
 .icon-details {
   grid-area: icons;
+  vertical-align: middle;
 }
 
 #header {
